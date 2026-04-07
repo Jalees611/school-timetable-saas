@@ -1,0 +1,961 @@
+Day,Period,Teacher,Class,Subject
+1,1,Aiman Javed,VII-GIII,Science
+1,1,Anees Anjum,X-BII,Physics
+1,1,Asim Iftikhar,VII-BI,Art
+1,1,Ayesha Arshad,VII-BII,Urdu
+1,1,Ayesha Nazish,IX-GI,English
+1,1,Fatima Akram,Pre-O,Urdu
+1,1,Hina Kanwal,X-GII,Chemistry
+1,1,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp
+1,1,Kiran Adnan,VII-GI,Computer
+1,1,M. Haroon,IX-BI,Computer
+1,1,Mamoona Adnan,VII-BIII,Geography
+1,1,Mehr Un Nissa/Maimoona Asghar,O-II,Bio/Comp
+1,1,Muhammad Junaid Saifi/Nousheen Ansar,OI-BI,Physical Education
+1,1,Qurat Ul Ain,X-GI,Maths
+1,1,Rabia Javed,Pre-IX BII,English
+1,1,Rabia Saeed,IX-GII,T.H.Q
+1,1,Rabiya Ghaffar,O-III,English
+1,1,Rana Bilal Masood,X-BI,Computer
+1,1,Rubina Kausar,VII-GII,Urdu
+1,1,Sadia Masood,IX-GIII,Urdu
+1,1,Sana Qasim,Pre-IX GII,Pak Studies
+1,1,Sehar Abbas,OI-BII,Pak Studies
+1,1,Umair Murtaza,Pre-IX BI,T.H.Q
+1,1,Umm E Zainab,Pre-IX GI,Maths
+1,2,Anees Anjum,IX-BII,Physics
+1,2,Arooj Fatima,Pre-IX GI,Physics
+1,2,Asim Iftikhar,VII-BII,Art
+1,2,Ayesha Rashid,OI-BII,Chemistry
+1,2,Fatima Akram,Pre-IX BII,Urdu
+1,2,Fatima Tu Zahra,Pre-IX GII,Maths
+1,2,Hina Kanwal,IX-GI,Chemistry
+1,2,Kiran Adnan,VII-BI,Computer
+1,2,M. Haroon,OI-BI,Physics
+1,2,Maimoona Asghar,Pre-O,Computer Science
+1,2,Muhammad Junaid Saifi/Muhammad Nawaz,VII-BIII,Physical Education
+1,2,Naeem Amjad,O-III,Maths
+1,2,Nousheen Ansar,IX-GII,Physical Education
+1,2,Qurat Ul Ain,X-GII,Maths
+1,2,Rabia Javed,IX-GIII,English
+1,2,Rabiya Ghaffar,O-II,Islamiyat
+1,2,Raja Bahadar,X-BII,Maths
+1,2,Rubina Kausar,VII-GII,Islamiyat
+1,2,Saba Babar,VII-GIII,English
+1,2,Saima Ali,IX-BI,Islamiyat
+1,2,Sajida Parveen,Pre-IX BI,Urdu
+1,2,Sana Qasim,X-GI,Pak Studies
+1,2,Umair Murtaza,X-BI,T.H.Q
+1,2,Umm E Zainab,VII-GI,Maths
+1,3,Aiman Javed,Pre-IX GII,Chemistry
+1,3,Arooj Fatima,IX-GII,Physics
+1,3,Ayesha Arshad,VII-BI,Urdu
+1,3,Ayesha Rashid,O-II,Chemistry
+1,3,Faiqa Shahzad,VII-BIII,Maths
+1,3,Hina Masood,VII-GIII,Art
+1,3,Kiran Adnan,Pre-IX GI,Computer
+1,3,M. Haroon,IX-BI,Computer
+1,3,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp
+1,3,Mehwish Ishaq,IX-GI,Islamiyat
+1,3,Meh Un Nissa,OI-BII,Biology
+1,3,Nimra Rehman,X-GII,Pak Studies
+1,3,Nimra Saghir,OI-BI,English
+1,3,Rabiya Ghaffar,IX-GIII,T.H.Q
+1,3,Raja Bahadar,IX-BII,Maths
+1,3,Rubina Kausar,VII-GI,Urdu
+1,3,Sadia Masood,X-GI,Urdu
+1,3,Saima Ali,Pre-IX BII,Islamiyat
+1,3,Sajida Parveen,X-BI,Urdu
+1,3,Samiya Shafeeq,VII-BII,History
+1,3,Sana Qasim,X-BII,Pak Studies
+1,3,Sehar Abbas,Pre-O,Islamiyat
+1,3,Shahid Saeed,Pre-IX BI,English
+1,3,Shumaila Quoom,VII-GII,T. H. Q
+1,4,Abdula Hanan,X-BI,Chemistry
+1,4,Anees Anjum,IX-BI,Physics
+1,4,Arooj Fatima,IX-GII,Physics
+1,4,Ayesha Arshad,VII-BI,Urdu
+1,4,Ayesha Manzoor,Pre-IX BII,Library
+1,4,Ayesha Nazish,IX-GI,English
+1,4,Ayesha Rashid,Pre-O,Science
+1,4,Faiqa Shahzad,VII-BII,Maths
+1,4,Humaira Ahamd,X-GII,Biology
+1,4,Iqra Tariq,O-III,Physics
+1,4,M. Haroon,OI-BII,Physics
+1,4,Mamoona Adnan,VII-GI,Geography
+1,4,Mehwish Ishaq,X-GI,T.H.Q
+1,4,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp
+1,4,Raja Bahadar,Pre-IX BI,Maths
+1,4,Nimra Saghir,OI-BI,English
+1,4,Rabia Javed,Pre-IX GII,English
+1,4,Rabiya Ghaffar,O-II,Islamiyat
+1,4,Rubina Kausar,VII-GII,Urdu
+1,4,Sana Qasim,X-BII,Pak Studies
+1,4,Sehar Abbas,Pre-IX GI,Pak Studies
+1,4,Shumaila Quoom,VII-BIII,Islamiyat
+1,4,Umair Murtaza,IX-BII,T.H.Q
+1,4,Umm E Zainab,VII-GIII,Maths
+1,5,Abdula Hanan,Pre-IX BI,Chemistry
+1,5,Aiman Javed,VII-GII,Science
+1,5,Ayesha Manzoor,VII-BII,Library
+1,5,Faiqa Shahzad,VII-BI,Maths
+1,5,Fatima Akram,Pre-IX BII,Urdu
+1,5,Fatima Tu Zahra,Pre-IX GII,Maths
+1,5,Hina Kanwal,IX-GII,Chemistry
+1,5,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp
+1,5,Kashif Butt,OI-BI,Pak Studies
+1,5,M. Haroon,O-II,Physics
+1,5,Maimoona Asghar,Pre-O,Computer Science
+1,5,Naeem Amjad,O-III,Maths
+1,5,Nimra Saghir,X-GI,English
+1,5,Qurat Ul Ain,IX-GIII,Maths
+1,5,Rabia Javed,X-GII,English
+1,5,Rabia Saeed,IX-GI,T.H.Q
+1,5,Rabiya Ghaffar,OI-BII,Islamiyat
+1,5,Raja Bahadar,X-BI,Maths
+1,5,Rubina Kausar,VII-GI,Urdu
+1,5,Saima Ali,IX-BI,Islamiyat
+1,5,Sajida Parveen,X-BII,Urdu
+1,5,Samiya Shafeeq,VII-GIII,Islamiyat
+1,5,Shumaila Quoom,VII-BIII,T. H. Q
+1,5,Umm E Zainab,Pre-IX GI,Maths
+1,6,Abdula Hanan,IX-BII,Chemistry
+1,6,Aiman Javed,VII-GIII,Science
+1,6,Anees Anjum,Pre-IX BII,Physics
+1,6,Arooj Fatima,X-GI,Physics
+1,6,Ayesha Arshad,VII-BIII,Urdu
+1,6,Ayesha Nazish,IX-BI,English
+1,6,Fatima Akram,O-II,Urdu
+1,6,Fatima Tu Zahra,OI-BI,Maths
+1,6,Hina Kanwal,IX-GIII,Chemistry
+1,6,Iqra Tariq,O-III,Physics
+1,6,Kiran Adnan,VII-BI,Computer
+1,6,Mamoona Adnan,VII-GI,History
+1,6,Mehwish Ishaq,IX-GII,Islamiyat
+1,6,Muhammad Junaid Saifi/Muhammad Nawaz/Nousheen Ansar,Pre-O,Physical Education
+1,6,Nimra Rehman,X-GII,Pak Studies
+1,6,Rabiya Ghaffar,OI-BII,Islamiyat
+1,6,Sadia Masood,IX-GI,Urdu
+1,6,Saima Ali,Pre-IX GII,Islamiyat
+1,6,Sajida Parveen,Pre-IX BI,Urdu
+1,6,Samiya Shafeeq,VII-BII,Geography
+1,6,Sana Qasim,X-BI,Pak Studies
+1,6,Sehar Abbas,Pre-IX GI,Pak Studies
+1,6,Umair Murtaza,X-BII,T.H.Q
+1,6,Umm E Zainab,VII-GII,Maths
+1,7,Abdula Hanan,X-BII,Chemistry
+1,7,Aiman Javed,VII-BIII,Science
+1,7,Anees Anjum,Pre-IX BI,Physics
+1,7,Arooj Fatima,VII-GII,Computer
+1,7,Ayesha Arshad,VII-BI,Islamiyat
+1,7,Ayesha Nazish,IX-BII,English
+1,7,Faiqa Shahzad,VII-BII,Maths
+1,7,Fatima Akram,OI-BI,Urdu
+1,7,Fatima Tu Zahra,VII-GIII,Computer
+1,7,Iqra Tariq,X-GII,Physics
+1,7,Kiran Adnan,IX-GI,Computer
+1,7,M. Haroon,O-II,Physics
+1,7,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp
+1,7,Mehwish Ishaq,IX-GIII,Islamiyat
+1,7,Muhammad Junaid Saifi,IX-BI,Physical Education
+1,7,Nimra Saghir,OI-BII,English
+1,7,Qurat Ul Ain,X-GI,Maths
+1,7,Rabia Javed,Pre-IX GII,English
+1,7,Rubina Kausar,Pre-IX GI,Urdu
+1,7,Saba Babar,VII-GI,English
+1,7,Sadia Masood,IX-GII,Urdu
+1,7,Saima Ali,Pre-IX BII,Islamiyat
+1,7,Sajida Parveen,X-BI,Urdu
+1,7,Sehar Abbas,Pre-O,History
+1,8,Abdula Hanan,Pre-IX BI,Chemistry
+1,8,Anees Anjum,X-BII,Physics
+1,8,Arooj Fatima,VII-GII,Computer
+1,8,Ayesha Arshad,VII-BI,Islamiyat
+1,8,Ayesha Nazish,IX-BI,English
+1,8,Ayesha Rashid,O-III,Chemistry
+1,8,Faiqa Shahzad,VII-BIII,Maths
+1,8,Humaira Ahamd,Pre-IX GI,Chemistry
+1,8,Kashif Butt,O-II,Pak Studies
+1,8,Kiran Adnan,IX-GI,Computer
+1,8,Meh Un Nissa,IX-GII,Biology
+1,8,Nimra Saghir,OI-BII,English
+1,8,Rabia Javed,X-GII,English
+1,8,Rabiya Ghaffar,OI-BI,Islamiyat
+1,8,Raja Bahadar,X-BI,Maths
+1,8,Saba Babar,VII-GI,English
+1,8,Sadia Masood,IX-GIII,Urdu
+1,8,Sajida Parveen,IX-BII,Urdu
+1,8,Sana Qasim,X-GI,Pak Studies
+1,8,Sehar Abbas,Pre-O,Islamiyat
+1,8,Shahid Saeed,VII-BII,English
+1,8,Shumaila Quoom,Pre-IX GII,T.H.Q
+1,8,Umair Murtaza,Pre-IX BII,T.H.Q
+1,8,Umm E Zainab,VII-GIII,Maths
+2,1,Aiman Javed,VII-GIII,Science
+2,1,Anees Anjum,IX-BII,Physics
+2,1,Arooj Fatima,X-GI,Physics
+2,1,Ayesha Arshad,VII-BIII,Urdu
+2,1,Ayesha Nazish,IX-BI,English
+2,1,Faiqa Shahzad,VII-BI,Maths
+2,1,Fatima Akram,OI-BI,Urdu
+2,1,Fatima Tu Zahra,Pre-O,Maths
+2,1,Hina Kanwal,IX-GI,Chemistry
+2,1,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp
+2,1,Iqra Tariq,O-III,Physics
+2,1,M. Haroon,Pre-IX BI,Computer
+2,1,Mamoona Adnan,VII-GII,History
+2,1,Mehwish Ishaq,IX-GIII,Islamiyat
+2,1,Nimra Saghir,O-II,English
+2,1,Qurat Ul Ain,X-GII,Maths
+2,1,Rabia Javed,Pre-IX BII,English
+2,1,Rabiya Ghaffar,OI-BII,Islamiyat
+2,1,Raja Bahadar,X-BI,Maths
+2,1,Rubina Kausar,Pre-IX GI,Urdu
+2,1,Sadia Masood,IX-GII,Urdu
+2,1,Sana Qasim,Pre-IX GII,Pak Studies
+2,1,Shahid Saeed,VII-BII,English
+2,1,Shumaila Quoom,VII-GI,Islamiyat
+2,2,Abdula Hanan,X-BI,Chemistry
+2,2,Aiman Javed,VII-GII,Science
+2,2,Anees Anjum,Pre-IX BII,Physics
+2,2,Arooj Fatima,Pre-IX GII,Physics
+2,2,Asim Iftikhar,VII-BIII,Art
+2,2,Ayesha Rashid,O-III,Chemistry
+2,2,Faiqa Shahzad,VII-BII,Maths
+2,2,Fatima Akram,OI-BII,Urdu
+2,2,Hina Kanwal,X-GI,Chemistry
+2,2,Kashif Butt,OI-BI,Pak Studies
+2,2,M. Haroon,O-II,Physics
+2,2,Mamoona Adnan,VII-BI,History
+2,2,Mehwish Ishaq,IX-GI,Islamiyat
+2,2,Nousheen Ansar,IX-GIII,Physical Education
+2,2,Qurat Ul Ain,X-GII,Maths
+2,2,Rabia Saeed,IX-GII,T.H.Q
+2,2,Raja Bahadar,IX-BI,Maths
+2,2,Saba Babar,Pre-IX GI,English
+2,2,Sajida Parveen,X-BII,Urdu
+2,2,Samiya Shafeeq,VII-GIII,Geography
+2,2,Sehar Abbas,Pre-O,Geography
+2,2,Shahid Saeed,Pre-IX BI,English
+2,2,Umair Murtaza,IX-BII,T.H.Q
+2,2,Umm E Zainab,VII-GI,Maths
+2,3,Abdula Hanan,X-BII,Chemistry
+2,3,Ayesha Arshad,VII-BI,Urdu
+2,3,Ayesha Nazish,IX-BII,English
+2,3,Faiqa Shahzad,VII-BII,Maths
+2,3,Fatima Akram,O-II,Urdu
+2,3,Fatima Tu Zahra,OI-BII,Maths
+2,3,Hina Kanwal,X-GII,Chemistry
+2,3,Humaira Ahamd,Pre-IX GI,Chemistry
+2,3,HumairaAhmad/M. Haseeb,Pre-IX BII,Bio/Comp
+2,3,Kashif Butt,OI-BI,Pak Studies
+2,3,M. Haroon,Pre-IX BI,Computer
+2,3,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp
+2,3,Mamoona Adnan,VII-GII,Geography
+2,3,Meh Un Nissa,Pre-IX GII,Biology
+2,3,Nimra Saghir,Pre-O,English
+2,3,Nousheen Ansar,X-GI,Physical Education
+2,3,Qurat Ul Ain,IX-GII,Maths
+2,3,Rabiya Ghaffar,IX-GIII,T.H.Q
+2,3,Rubina Kausar,VII-GI,Urdu
+2,3,Saba Babar,VII-GIII,English
+2,3,Sadia Masood,IX-GI,Urdu
+2,3,Sajida Parveen,X-BI,Urdu
+2,3,Shumaila Quoom,VII-BIII,T. H. Q
+2,3,Umair Murtaza,IX-BI,T.H.Q
+2,4,Abdula Hanan,X-BII,Chemistry
+2,4,Aiman Javed,Pre-IX BII,Chemistry
+2,4,Anees Anjum,VII-BI,Science
+2,4,Arooj Fatima,IX-GII,Physics
+2,4,Ayesha Arshad,VII-BIII,Urdu
+2,4,Ayesha Nazish,X-BI,English
+2,4,Fatima Akram,OI-BI,Urdu
+2,4,Fatima Tu Zahra,Pre-O,Maths
+2,4,Hina Kanwal,X-GII,Chemistry
+2,4,Iqra Tariq,O-II,Maths
+2,4,M. Haroon,IX-BI,Computer
+2,4,Mamoona Adnan,VII-GII,History
+2,4,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp
+2,4,Naeem Amjad,O-III,Maths
+2,4,Qurat Ul Ain,IX-GI,Maths
+2,4,Rabia Javed,Pre-IX GII,English
+2,4,Rabiya Ghaffar,OI-BII,Islamiyat
+2,4,Raja Bahadar,IX-BII,Maths
+2,4,Rubina Kausar,Pre-IX GI,Urdu
+2,4,Saba Babar,VII-GIII,English
+2,4,Samiya Shafeeq,Pre-IX BI,Pak Studies
+2,4,Sana Qasim,X-GI,Pak Studies
+2,4,Shahid Saeed,VII-BII,English
+2,4,Shumaila Quoom,VII-GI,T. H. Q
+2,5,Anees Anjum,Pre-IX BI,Physics
+2,5,Arooj Fatima,Pre-IX GII,Physics
+2,5,Ayesha Arshad,VII-BII,Urdu
+2,5,Ayesha Nazish,IX-GI,English
+2,5,Faiqa Shahzad,VII-BI,Maths
+2,5,Hina Kanwal,IX-GIII,Chemistry
+2,5,Iqra Tariq,O-II,Maths
+2,5,Kiran Adnan,VII-GI,Computer
+2,5,M. Haroon,OI-BII,Physics
+2,5,Maimoona Asghar,Pre-O,Computer Science
+2,5,Mamoona Adnan,VII-BIII,History
+2,5,Mehwish Ishaq,IX-GII,Islamiyat
+2,5,Naeem Amjad,O-III,Maths
+2,5,Nimra Saghir,OI-BI,English
+2,5,Nousheen Ansar,X-GII,Physical Education
+2,5,Rubina Kausar,VII-GII,Urdu
+2,5,Saba Babar,Pre-IX GI,English
+2,5,Sadia Masood,X-GI,Urdu
+2,5,Saima Ali,IX-BII,Islamiyat
+2,5,Sajida Parveen,X-BII,Urdu
+2,5,Samiya Shafeeq,Pre-IX BII,Pak Studies
+2,5,Sana Qasim,X-BI,Pak Studies
+2,5,Shumaila Quoom,VII-GIII,T. H. Q
+2,5,Umair Murtaza,IX-BI,T.H.Q
+2,6,Abdula Hanan,IX-BII,Chemistry
+2,6,Aiman Javed,VII-BIII,Science
+2,6,Anees Anjum,VII-BII,Science
+2,6,Arooj Fatima,IX-GIII,Physics
+2,6,Ayesha Manzoor,VII-GI,Library
+2,6,Ayesha Rashid,O-III,Chemistry
+2,6,Fatima Akram,Pre-O,Urdu
+2,6,Fatima Tu Zahra,OI-BII,Maths
+2,6,Kiran Adnan,Pre-IX GI,Computer
+2,6,M. Haroon,X-BI,Physics
+2,6,Maimoona Asghar,OI-BI,Computer Science
+2,6,Meh Un Nissa,Pre-IX GII,Biology
+2,6,Muhammad Junaid Saifi,Pre-IX BII,Physical Education
+2,6,Nimra Rehman,X-GII,Pak Studies
+2,6,Nimra Saghir,O-II,English
+2,6,Rabia Javed,IX-GII,English
+2,6,Rabia Saeed,IX-GI,T.H.Q
+2,6,Raja Bahadar,IX-BI,Maths
+2,6,Rubina Kausar,VII-GIII,Urdu
+2,6,Saba Babar,VII-GII,English
+2,6,Sadia Masood,X-GI,Urdu
+2,6,Samiya Shafeeq,VII-BI,Geography
+2,6,Sana Qasim,X-BII,Pak Studies
+2,6,Umair Murtaza,Pre-IX BI,T.H.Q
+2,7,Abdula Hanan,IX-BII,Chemistry
+2,7,Aiman Javed,Pre-IX BII,Chemistry
+2,7,Anees Anjum,VII-BI,Science
+2,7,Arooj Fatima,IX-GI,Physics
+2,7,Ayesha Nazish,X-BI,English
+2,7,Ayesha Rashid,OI-BII,Chemistry
+2,7,Fatima Tu Zahra,OI-BI,Maths
+2,7,Kiran Adnan,Pre-IX GI,Computer
+2,7,M. Haroon,IX-BI,Computer
+2,7,Mamoona Adnan,VII-GIII,History
+2,7,Mehwish Ishaq,IX-GIII,Islamiyat
+2,7,Meh Un Nissa,IX-GII,Biology
+2,7,Muhammad Junaid Saifi/Nousheen Ansar,O-III,Physical Education
+2,7,Qurat Ul Ain,X-GI,Maths
+2,7,Rabiya Ghaffar,O-II,Islamiyat
+2,7,Raja Bahadar,X-BII,Maths
+2,7,Saba Babar,VII-GI,English
+2,7,Sadia Masood,X-GII,Urdu
+2,7,Saima Ali,Pre-IX GII,Islamiyat
+2,7,Sajida Parveen,Pre-IX BI,Urdu
+2,7,Sehar Abbas,Pre-O,Geography
+2,7,Shahid Saeed,VII-BIII,English
+2,7,Umair Murtaza,VII-BII,T. H. Q
+2,7,Umm E Zainab,VII-GII,Maths
+2,8,Anees Anjum,IX-BI,Physics
+2,8,Arooj Fatima,X-GI,Physics
+2,8,Ayesha Manzoor,VII-GIII,Library
+2,8,Ayesha Rashid,OI-BI,Chemistry
+2,8,Faiqa Shahzad,VII-BIII,Maths
+2,8,Fatima Akram,OI-BII,Urdu
+2,8,Humaira Ahamd,X-GII,Biology
+2,8,Iqra Tariq,O-III,Physics
+2,8,Kashif Butt,O-II,Pak Studies
+2,8,Mamoona Adnan,VII-BI,History
+2,8,Mehwish Ishaq,IX-GI,Islamiyat
+2,8,Nousheen Ansar,VII-GII,Physical Education
+2,8,Rabia Javed,IX-GII,English
+2,8,Raja Bahadar,X-BII,Maths
+2,8,Rubina Kausar,VII-GI,Urdu
+2,8,Sadia Masood,IX-GIII,Urdu
+2,8,Saima Ali,Pre-IX GII,Islamiyat
+2,8,Sajida Parveen,IX-BII,Urdu
+2,8,Samiya Shafeeq,Pre-IX BII,Pak Studies
+2,8,Sana Qasim,X-BI,Pak Studies
+2,8,Sehar Abbas,Pre-O,History
+2,8,Shahid Saeed,Pre-IX BI,English
+2,8,Shumaila Quoom,Pre-IX GI,T.H.Q
+2,8,Umair Murtaza,VII-BII,T. H. Q
+3,1,Abdula Hanan,X-BI,Chemistry
+3,1,Ayesha Arshad,VII-BII,Islamiyat
+3,1,Ayesha Nazish,X-BII,English
+3,1,Ayesha Rashid,Pre-O,Science
+3,1,Faiqa Shahzad,Pre-IX BII,Maths
+3,1,Fatima Akram,OI-BII,Urdu
+3,1,Fatima Tu Zahra,OI-BI,Maths
+3,1,Hina Kanwal,IX-GII,Chemistry
+3,1,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp
+3,1,Mamoona Adnan,VII-GI,Geography
+3,1,Mehwish Ishaq,IX-GI,Islamiyat
+3,1,Meh Un Nissa,Pre-IX GII,Biology
+3,1,Muhammad Junaid Saifi/Nousheen Ansar,O-II,Physical Education
+3,1,Naeem Amjad,O-III,Maths
+3,1,Nimra Saghir,X-GI,English
+3,1,Qurat Ul Ain,IX-GIII,Maths
+3,1,Rabia Javed,X-GII,English
+3,1,Rubina Kausar,Pre-IX GI,Urdu
+3,1,Saba Babar,VII-GII,English
+3,1,Saima Ali,Pre-IX BI,Islamiyat
+3,1,Samiya Shafeeq,VII-BI,Geography
+3,1,Shahid Saeed,VII-BIII,English
+3,1,Umair Murtaza,IX-BI,T.H.Q
+3,1,Umm E Zainab,VII-GIII,Maths
+3,2,Abdula Hanan,X-BI,Chemistry
+3,2,Aiman Javed,Pre-IX GII,Chemistry
+3,2,Anees Anjum,VII-BII,Science
+3,2,Arooj Fatima,X-GI,Physics
+3,2,Ayesha Arshad,VII-BIII,Urdu
+3,2,Ayesha Nazish,IX-BII,English
+3,2,Faiqa Shahzad,Pre-IX BII,Maths
+3,2,Fatima Tu Zahra,OI-BI,Maths
+3,2,Hina Kanwal,IX-GI,Chemistry
+3,2,M. Haroon,OI-BII,Physics
+3,2,Mehwish Ishaq,X-GII,T.H.Q
+3,2,Mehr Un Nissa/Maimoona Asghar,O-II,Bio/Comp
+3,2,Raja Bahadar,Pre-IX BI,Maths
+3,2,Qurat Ul Ain,IX-GII,Maths
+3,2,Rabia Javed,IX-GIII,English
+3,2,Rabiya Ghaffar,O-III,English
+3,2,Rubina Kausar,VII-GI,Urdu
+3,2,Saba Babar,VII-GIII,English
+3,2,Saima Ali,IX-BI,Islamiyat
+3,2,Sajida Parveen,X-BII,Urdu
+3,2,Sehar Abbas,Pre-O,Islamiyat
+3,2,Shahid Saeed,VII-BI,English
+3,2,Shumaila Quoom,VII-GII,T. H. Q
+3,2,Umm E Zainab,Pre-IX GI,Maths
+3,3,Aiman Javed,VII-GI,Science
+3,3,Arooj Fatima,IX-GI,Physics
+3,3,Ayesha Manzoor,Pre-IX GI,Library
+3,3,Ayesha Nazish,X-BII,English
+3,3,Ayesha Rashid,O-III,Chemistry
+3,3,Faiqa Shahzad,VII-BIII,Maths
+3,3,Fatima Akram,Pre-IX BII,Urdu
+3,3,Hina Kanwal,IX-GII,Chemistry
+3,3,Kashif Butt,O-II,Pak Studies
+3,3,M. Haroon,OI-BI,Physics
+3,3,Maimoona Asghar,Pre-O,Computer Science
+3,3,Muhammad Junaid Saifi/Muhammad Nawaz,VII-BII,Physical Education
+3,3,Qurat Ul Ain,X-GI,Maths
+3,3,Rabia Javed,IX-GIII,English
+3,3,Rubina Kausar,Pre-IX GII,Urdu
+3,3,Saba Babar,VII-GIII,English
+3,3,Sadia Masood,X-GII,Urdu
+3,3,Saima Ali,IX-BII,Islamiyat
+3,3,Sajida Parveen,IX-BI,Urdu
+3,3,Samiya Shafeeq,Pre-IX BI,Pak Studies
+3,3,Sana Qasim,X-BI,Pak Studies
+3,3,Sehar Abbas,OI-BII,Pak Studies
+3,3,Shumaila Quoom,VII-GII,T. H. Q
+3,3,Umair Murtaza,VII-BI,T. H. Q
+3,4,Abdula Hanan,IX-BI,Chemistry
+3,4,Aiman Javed,VII-BIII,Science
+3,4,Anees Anjum,Pre-IX BI,Physics
+3,4,Arooj Fatima,VII-GII,Computer
+3,4,Ayesha Nazish,IX-BII,English
+3,4,Ayesha Rashid,OI-BI,Chemistry
+3,4,Fatima Akram,Pre-IX BII,Urdu
+3,4,Fatima Tu Zahra,Pre-IX GII,Maths
+3,4,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp
+3,4,Iqra Tariq,O-III,Physics
+3,4,M. Haroon,X-BI,Physics
+3,4,Meh Un Nissa,IX-GII,Biology
+3,4,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp
+3,4,Nimra Saghir,Pre-O,English
+3,4,Qurat Ul Ain,X-GI,Maths
+3,4,Rabia Saeed,IX-GI,T.H.Q
+3,4,Rabiya Ghaffar,O-II,Islamiyat
+3,4,Rubina Kausar,VII-GIII,Urdu
+3,4,Sadia Masood,X-GII,Urdu
+3,4,Saima Ali,Pre-IX GI,Islamiyat
+3,4,Samiya Shafeeq,VII-BII,Geography
+3,4,Sehar Abbas,OI-BII,Pak Studies
+3,4,Shahid Saeed,VII-BI,English
+3,4,Shumaila Quoom,VII-GI,T. H. Q
+3,5,Abdula Hanan,IX-BI,Chemistry
+3,5,Anees Anjum,X-BII,Physics
+3,5,Arooj Fatima,X-GI,Physics
+3,5,Ayesha Nazish,IX-GI,English
+3,5,Faiqa Shahzad,VII-BI,Maths
+3,5,Fatima Akram,OI-BII,Urdu
+3,5,HumairaAhmad/M. Haseeb,Pre-IX BII,Bio/Comp
+3,5,M. Haroon,VII-BII,Computer
+3,5,Maimoona Asghar,OI-BI,Computer Science
+3,5,Mehwish Ishaq,X-GII,T.H.Q
+3,5,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp
+3,5,Muhammad Junaid Saifi,Pre-IX BI,Physical Education
+3,5,Naeem Amjad,O-III,Maths
+3,5,Nimra Saghir,O-II,English
+3,5,Qurat Ul Ain,IX-GII,Maths
+3,5,Rabia Javed,Pre-IX GII,English
+3,5,Rubina Kausar,VII-GII,Islamiyat
+3,5,Saima Ali,IX-BII,Islamiyat
+3,5,Samiya Shafeeq,VII-GIII,Geography
+3,5,Sehar Abbas,Pre-O,Geography
+3,5,Shahid Saeed,VII-BIII,English
+3,5,Shumaila Quoom,Pre-IX GI,T.H.Q
+3,5,Umair Murtaza,X-BI,T.H.Q
+3,5,Umm E Zainab,VII-GI,Maths
+3,6,Aiman Javed,VII-GII,Science
+3,6,Anees Anjum,IX-BI,Physics
+3,6,Ayesha Arshad,VII-BII,Urdu
+3,6,Ayesha Manzoor,VII-BI,Library
+3,6,Faiqa Shahzad,VII-BIII,Maths
+3,6,Fatima Akram,O-II,Urdu
+3,6,Fatima Tu Zahra,Pre-O,Maths
+3,6,Hina Kanwal,IX-GI,Chemistry
+3,6,Humaira Ahamd,X-GII,Biology
+3,6,Iqra Tariq,O-III,Physics
+3,6,Kiran Adnan,X-GI,Computer
+3,6,M. Haroon,OI-BI,Physics
+3,6,Mamoona Adnan,VII-GIII,History
+3,6,Meh Un Nissa,IX-GII,Biology
+3,6,Muhammad Junaid Saifi,IX-BII,Physical Education
+3,6,Nimra Saghir,OI-BII,English
+3,6,Rabiya Ghaffar,IX-GIII,T.H.Q
+3,6,Saba Babar,VII-GI,English
+3,6,Sajida Parveen,X-BI,Urdu
+3,6,Samiya Shafeeq,Pre-IX BI,Pak Studies
+3,6,Sana Qasim,X-BII,Pak Studies
+3,6,Shumaila Quoom,Pre-IX GII,T.H.Q
+3,6,Umair Murtaza,Pre-IX BII,T.H.Q
+3,6,Umm E Zainab,Pre-IX GI,Maths
+3,7,Aiman Javed,Pre-IX BII,Chemistry
+3,7,Anees Anjum,IX-BII,Physics
+3,7,Arooj Fatima,Pre-IX GI,Physics
+3,7,Ayesha Arshad,VII-BII,Urdu
+3,7,Ayesha Nazish,X-BI,English
+3,7,Ayesha Rashid,O-II,Chemistry
+3,7,Fatima Tu Zahra,OI-BII,Maths
+3,7,Hina Kanwal,IX-GIII,Chemistry
+3,7,Kiran Adnan,X-GI,Computer
+3,7,M. Haroon,VII-BIII,Computer
+3,7,Maimoona Asghar,OI-BI,Computer Science
+3,7,Nimra Rehman,X-GII,Pak Studies
+3,7,Qurat Ul Ain,IX-GI,Maths
+3,7,Rabia Javed,IX-GII,English
+3,7,Rabiya Ghaffar,O-III,English
+3,7,Raja Bahadar,X-BII,Maths
+3,7,Rubina Kausar,Pre-IX GII,Urdu
+3,7,Saba Babar,VII-GII,English
+3,7,Saima Ali,IX-BI,Islamiyat
+3,7,Samiya Shafeeq,VII-BI,Geography
+3,7,Sehar Abbas,Pre-O,History
+3,7,Shahid Saeed,Pre-IX BI,English
+3,7,Shumaila Quoom,VII-GI,T. H. Q
+3,7,Umm E Zainab,VII-GIII,Maths
+3,8,Anees Anjum,VII-BII,Science
+3,8,Arooj Fatima,IX-GIII,Physics
+3,8,Ayesha Manzoor,VII-BIII,Library
+3,8,Ayesha Nazish,IX-BI,English
+3,8,Ayesha Rashid,OI-BII,Chemistry
+3,8,Fatima Akram,O-II,Urdu
+3,8,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp
+3,8,Kiran Adnan,VII-BI,Computer
+3,8,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp
+3,8,Mamoona Adnan,VII-GII,History
+3,8,Mehwish Ishaq,IX-GII,Islamiyat
+3,8,Raja Bahadar,Pre-IX BI,Maths
+3,8,Nimra Rehman,X-GII,Pak Studies
+3,8,Nimra Saghir,X-GI,English
+3,8,Rabia Javed,Pre-IX BII,English
+3,8,Rabiya Ghaffar,OI-BI,Islamiyat
+3,8,Rubina Kausar,VII-GIII,Urdu
+3,8,Saba Babar,Pre-IX GI,English
+3,8,Sadia Masood,IX-GI,Urdu
+3,8,Sajida Parveen,IX-BII,Urdu
+3,8,Sehar Abbas,Pre-O,Islamiyat
+3,8,Shumaila Quoom,Pre-IX GII,T.H.Q
+3,8,Umair Murtaza,X-BI,T.H.Q
+3,8,Umm E Zainab,VII-GI,Maths
+4,1,Aiman Javed,VII-BIII,Science
+4,1,Anees Anjum,IX-BII,Physics
+4,1,Arooj Fatima,IX-GIII,Physics
+4,1,Ayesha Arshad,VII-BI,Islamiyat
+4,1,Fatima Akram,Pre-IX BII,Urdu
+4,1,Humaira Ahamd,X-GII,Biology
+4,1,Iqra Tariq,O-II,Maths
+4,1,Kiran Adnan,Pre-IX GI,Computer
+4,1,M. Haroon,Pre-IX BI,Computer
+4,1,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp
+4,1,Mamoona Adnan,VII-GIII,History
+4,1,Mehwish Ishaq,X-GI,T.H.Q
+4,1,Meh Un Nissa,OI-BII,Biology
+4,1,Muhammad Junaid Saifi,X-BII,Physical Education
+4,1,Nimra Saghir,Pre-O,English
+4,1,Qurat Ul Ain,IX-GII,Maths
+4,1,Rabiya Ghaffar,OI-BI,Islamiyat
+4,1,Raja Bahadar,IX-BI,Maths
+4,1,Rubina Kausar,Pre-IX GII,Urdu
+4,1,Saba Babar,VII-GI,English
+4,1,Sadia Masood,IX-GI,Urdu
+4,1,Sana Qasim,X-BI,Pak Studies
+4,1,Shahid Saeed,VII-BII,English
+4,1,Umm E Zainab,VII-GII,Maths
+4,2,Abdula Hanan,X-BII,Chemistry
+4,2,Anees Anjum,IX-BII,Physics
+4,2,Arooj Fatima,Pre-IX GII,Physics
+4,2,Ayesha Arshad,VII-BII,Islamiyat
+4,2,Ayesha Nazish,IX-BI,English
+4,2,Ayesha Rashid,O-III,Chemistry
+4,2,Fatima Akram,OI-BII,Urdu
+4,2,Iqra Tariq,X-GII,Physics
+4,2,Kiran Adnan,X-GI,Computer
+4,2,Mamoona Adnan,VII-GI,History
+4,2,Mehwish Ishaq,IX-GIII,Islamiyat
+4,2,Muhammad Junaid Saifi/Muhammad Nawaz,VII-BI,Physical Education
+4,2,Nimra Saghir,OI-BI,English
+4,2,Qurat Ul Ain,IX-GI,Maths
+4,2,Rabia Saeed,IX-GII,T.H.Q
+4,2,Rabiya Ghaffar,O-II,Islamiyat
+4,2,Raja Bahadar,X-BI,Maths
+4,2,Rubina Kausar,VII-GII,Urdu
+4,2,Saba Babar,Pre-IX GI,English
+4,2,Saima Ali,Pre-IX BI,Islamiyat
+4,2,Samiya Shafeeq,Pre-IX BII,Pak Studies
+4,2,Sehar Abbas,Pre-O,Islamiyat
+4,2,Shahid Saeed,VII-BIII,English
+4,2,Shumaila Quoom,VII-GIII,T. H. Q
+4,3,Abdula Hanan,IX-BI,Chemistry
+4,3,Aiman Javed,Pre-IX BII,Chemistry
+4,3,Arooj Fatima,IX-GI,Physics
+4,3,Ayesha Manzoor,Pre-IX BI,Library
+4,3,Ayesha Rashid,O-III,Chemistry
+4,3,Faiqa Shahzad,VII-BI,Maths
+4,3,Fatima Akram,OI-BI,Urdu
+4,3,Fatima Tu Zahra,Pre-O,Maths
+4,3,Iqra Tariq,O-II,Maths
+4,3,Kiran Adnan,X-GI,Computer
+4,3,M. Haroon,VII-BII,Computer
+4,3,Mamoona Adnan,VII-BIII,History
+4,3,Mehwish Ishaq,IX-GII,Islamiyat
+4,3,Meh Un Nissa,OI-BII,Biology
+4,3,Nimra Rehman,X-GII,Pak Studies
+4,3,Nousheen Ansar,VII-GI,Physical Education
+4,3,Raja Bahadar,IX-BII,Maths
+4,3,Rana Bilal Masood,X-BI,Computer
+4,3,Rubina Kausar,VII-GIII,Urdu
+4,3,Saba Babar,VII-GII,English
+4,3,Sadia Masood,IX-GIII,Urdu
+4,3,Saima Ali,Pre-IX GI,Islamiyat
+4,3,Sana Qasim,Pre-IX GII,Pak Studies
+4,3,Umair Murtaza,X-BII,T.H.Q
+4,4,Abdula Hanan,Pre-IX BI,Chemistry
+4,4,Aiman Javed,Pre-IX GII,Chemistry
+4,4,Anees Anjum,X-BII,Physics
+4,4,Arooj Fatima,Pre-IX GI,Physics
+4,4,Ayesha Arshad,VII-BI,Urdu
+4,4,Fatima Tu Zahra,Pre-O,Maths
+4,4,Hina Kanwal,X-GII,Chemistry
+4,4,Hina Masood,VII-GII,Art
+4,4,Iqra Tariq,O-III,Physics
+4,4,Kashif Butt,O-II,Pak Studies
+4,4,M. Haroon,X-BI,Physics
+4,4,Mehwish Ishaq,IX-GII,Islamiyat
+4,4,Muhammad Junaid Saifi/Nousheen Ansar,OI-BII,Physical Education
+4,4,Qurat Ul Ain,IX-GIII,Maths
+4,4,Rabia Javed,Pre-IX BII,English
+4,4,Rabiya Ghaffar,OI-BI,Islamiyat
+4,4,Saba Babar,VII-GIII,English
+4,4,Sadia Masood,IX-GI,Urdu
+4,4,Saima Ali,IX-BII,Islamiyat
+4,4,Sajida Parveen,IX-BI,Urdu
+4,4,Sana Qasim,X-GI,Pak Studies
+4,4,Shahid Saeed,VII-BII,English
+4,4,Shumaila Quoom,VII-BIII,Islamiyat
+4,4,Umm E Zainab,VII-GI,Maths
+4,5,Abdula Hanan,X-BII,Chemistry
+4,5,Aiman Javed,VII-GI,Science
+4,5,Anees Anjum,Pre-IX BI,Physics
+4,5,Arooj Fatima,IX-GI,Physics
+4,5,Ayesha Nazish,IX-BII,English
+4,5,Ayesha Rashid,OI-BII,Chemistry
+4,5,Faiqa Shahzad,Pre-IX BII,Maths
+4,5,Fatima Akram,Pre-O,Urdu
+4,5,Hina Kanwal,IX-GII,Chemistry
+4,5,Kashif Butt,OI-BI,Pak Studies
+4,5,Mamoona Adnan,VII-BIII,History
+4,5,Meh Un Nissa,Pre-IX GII,Biology
+4,5,Muhammad Junaid Saifi,X-BI,Physical Education
+4,5,Naeem Amjad,O-III,Maths
+4,5,Nimra Saghir,O-II,English
+4,5,Nousheen Ansar,VII-GIII,Physical Education
+4,5,Rabia Javed,X-GII,English
+4,5,Sadia Masood,IX-GIII,Urdu
+4,5,Sajida Parveen,IX-BI,Urdu
+4,5,Samiya Shafeeq,VII-BII,Geography
+4,5,Sana Qasim,X-GI,Pak Studies
+4,5,Sehar Abbas,Pre-IX GI,Pak Studies
+4,5,Shahid Saeed,VII-BI,English
+4,5,Umm E Zainab,VII-GII,Maths
+4,6,Abdula Hanan,IX-BI,Chemistry
+4,6,Aiman Javed,VII-GIII,Science
+4,6,Anees Anjum,VII-BI,Science
+4,6,Arooj Fatima,Pre-IX GII,Physics
+4,6,Ayesha Nazish,IX-GI,English
+4,6,Ayesha Rashid,Pre-O,Science
+4,6,Hina Kanwal,X-GI,Chemistry
+4,6,Kashif Butt,O-II,Pak Studies
+4,6,M. Haroon,OI-BI,Physics
+4,6,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp
+4,6,Mamoona Adnan,VII-BIII,Geography
+4,6,Meh Un Nissa,IX-GII,Biology
+4,6,Qurat Ul Ain,X-GII,Maths
+4,6,Rabia Javed,IX-GIII,English
+4,6,Raja Bahadar,IX-BII,Maths
+4,6,Rana Bilal Masood,X-BI,Computer
+4,6,Rubina Kausar,VII-GII,Urdu
+4,6,Saba Babar,VII-GI,English
+4,6,Saima Ali,Pre-IX BII,Islamiyat
+4,6,Samiya Shafeeq,VII-BII,History
+4,6,Sana Qasim,X-BII,Pak Studies
+4,6,Sehar Abbas,OI-BII,Pak Studies
+4,6,Shumaila Quoom,Pre-IX GI,T.H.Q
+4,6,Umair Murtaza,Pre-IX BI,T.H.Q
+4,7,Ayesha Manzoor,VII-GII,Library
+4,7,Ayesha Nazish,X-BII,English
+4,7,Ayesha Rashid,O-II,Chemistry
+4,7,Faiqa Shahzad,VII-BII,Maths
+4,7,Fatima Akram,OI-BI,Urdu
+4,7,Hina Kanwal,IX-GI,Chemistry
+4,7,Humaira Ahamd,X-GII,Biology
+4,7,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp
+4,7,M. Haroon,VII-BIII,Computer
+4,7,Maimoona Asghar,Pre-O,Computer Science
+4,7,Mamoona Adnan,VII-GI,History
+4,7,Mehwish Ishaq,X-GI,T.H.Q
+4,7,Raja Bahadar,Pre-IX BI,Maths
+4,7,Qurat Ul Ain,IX-GIII,Maths
+4,7,Rabiya Ghaffar,O-III,English
+4,7,Sadia Masood,IX-GII,Urdu
+4,7,Saima Ali,IX-BI,Islamiyat
+4,7,Sajida Parveen,X-BI,Urdu
+4,7,Samiya Shafeeq,VII-GIII,Islamiyat
+4,7,Sana Qasim,Pre-IX GII,Pak Studies
+4,7,Sehar Abbas,OI-BII,Pak Studies
+4,7,Shahid Saeed,VII-BI,English
+4,7,Umair Murtaza,Pre-IX BII,T.H.Q
+4,7,Umm E Zainab,Pre-IX GI,Maths
+4,8,Abdula Hanan,IX-BII,Chemistry
+4,8,Aiman Javed,Pre-IX GII,Chemistry
+4,8,Anees Anjum,Pre-IX BII,Physics
+4,8,Arooj Fatima,IX-GIII,Physics
+4,8,Ayesha Rashid,OI-BI,Chemistry
+4,8,Faiqa Shahzad,VII-BII,Maths
+4,8,Fatima Akram,O-II,Urdu
+4,8,Fatima Tu Zahra,OI-BII,Maths
+4,8,Hina Kanwal,X-GI,Chemistry
+4,8,Iqra Tariq,X-GII,Physics
+4,8,Kiran Adnan,IX-GI,Computer
+4,8,M. Haroon,X-BI,Physics
+4,8,Mamoona Adnan,VII-GI,Geography
+4,8,Nimra Saghir,Pre-O,English
+4,8,Rabiya Ghaffar,O-III,English
+4,8,Raja Bahadar,IX-BI,Maths
+4,8,Rubina Kausar,VII-GIII,Urdu
+4,8,Saba Babar,VII-GII,English
+4,8,Sadia Masood,IX-GII,Urdu
+4,8,Saima Ali,Pre-IX BI,Islamiyat
+4,8,Sana Qasim,X-BII,Pak Studies
+4,8,Sehar Abbas,Pre-IX GI,Pak Studies
+4,8,Shumaila Quoom,VII-BIII,T. H. Q
+4,8,Umair Murtaza,VII-BI,T. H. Q
+5,1,Ayesha Nazish,X-BII,English
+5,1,Faiqa Shahzad,Pre-IX BII,Maths
+5,1,Fatima Akram,O-II,Urdu
+5,1,Fatima Tu Zahra,OI-BI,Maths
+5,1,Hina Kanwal,IX-GIII,Chemistry
+5,1,Humaira Ahamd,Pre-IX GI,Chemistry
+5,1,Iqra Tariq,X-GII,Physics
+5,1,M. Haroon,OI-BII,Physics
+5,1,Mamoona Adnan,VII-GII,Geography
+5,1,Mehwish Ishaq,IX-GI,Islamiyat
+5,1,Nimra Saghir,X-GI,English
+5,1,Rabia Javed,IX-GII,English
+5,1,Rabiya Ghaffar,O-III,English
+5,1,Raja Bahadar,IX-BI,Maths
+5,1,Rana Bilal Masood,X-BI,Computer
+5,1,Rubina Kausar,VII-GI,Urdu
+5,1,Saima Ali,IX-BII,Islamiyat
+5,1,Sajida Parveen,Pre-IX BI,Urdu
+5,1,Samiya Shafeeq,VII-GIII,Geography
+5,1,Sana Qasim,Pre-IX GII,Pak Studies
+5,1,Sehar Abbas,Pre-O,History
+5,1,Shahid Saeed,VII-BI,English
+5,1,Shumaila Quoom,VII-BIII,Islamiyat
+5,1,Umair Murtaza,VII-BII,T. H. Q
+5,2,Aiman Javed,VII-GII,Science
+5,2,Anees Anjum,IX-BI,Physics
+5,2,Ayesha Arshad,VII-BII,Urdu
+5,2,Ayesha Rashid,OI-BI,Chemistry
+5,2,Faiqa Shahzad,Pre-IX BII,Maths
+5,2,Fatima Akram,Pre-O,Urdu
+5,2,Hina Kanwal,X-GI,Chemistry
+5,2,Iqra Tariq,X-GII,Physics
+5,2,Kashif Butt,O-II,Pak Studies
+5,2,Kiran Adnan,VII-GI,Computer
+5,2,M. Haroon,X-BI,Physics
+5,2,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp
+5,2,Mehwish Ishaq,IX-GI,Islamiyat
+5,2,Nousheen Ansar,Pre-IX GII,Physical Education
+5,2,Rabia Javed,IX-GIII,English
+5,2,Rabiya Ghaffar,OI-BII,Islamiyat
+5,2,Rubina Kausar,Pre-IX GI,Urdu
+5,2,Sadia Masood,IX-GII,Urdu
+5,2,Saima Ali,IX-BII,Islamiyat
+5,2,Sajida Parveen,X-BII,Urdu
+5,2,Samiya Shafeeq,Pre-IX BI,Pak Studies
+5,2,Shahid Saeed,VII-BIII,English
+5,2,Umair Murtaza,VII-BI,T. H. Q
+5,2,Umm E Zainab,VII-GIII,Maths
+5,3,Aiman Javed,VII-GI,Science
+5,3,Anees Anjum,VII-BI,Science
+5,3,Arooj Fatima,Pre-IX GI,Physics
+5,3,Ayesha Arshad,VII-BII,Islamiyat
+5,3,Ayesha Nazish,X-BI,English
+5,3,Fatima Akram,OI-BI,Urdu
+5,3,Fatima Tu Zahra,Pre-O,Maths
+5,3,Hina Kanwal,IX-GII,Chemistry
+5,3,HumairaAhmad/M. Haseeb,Pre-IX BII,Bio/Comp
+5,3,Kiran Adnan,X-GI,Computer
+5,3,M. Haroon,VII-BIII,Computer
+5,3,Mehwish Ishaq,X-GII,T.H.Q
+5,3,Mehr Un Nissa/Maimoona Asghar,O-II,Bio/Comp
+5,3,Nousheen Ansar,IX-GI,Physical Education
+5,3,Qurat Ul Ain,IX-GIII,Maths
+5,3,Rabia Javed,Pre-IX GII,English
+5,3,Rabiya Ghaffar,O-III,English
+5,3,Saima Ali,IX-BI,Islamiyat
+5,3,Sajida Parveen,IX-BII,Urdu
+5,3,Samiya Shafeeq,VII-GIII,Islamiyat
+5,3,Sehar Abbas,OI-BII,Pak Studies
+5,3,Shahid Saeed,Pre-IX BI,English
+5,3,Umair Murtaza,X-BII,T.H.Q
+5,3,Umm E Zainab,VII-GII,Maths
+5,4,Abdula Hanan,Pre-IX BI,Chemistry
+5,4,Anees Anjum,IX-BI,Physics
+5,4,Arooj Fatima,IX-GI,Physics
+5,4,Ayesha Arshad,VII-BI,Urdu
+5,4,Ayesha Rashid,O-II,Chemistry
+5,4,Fatima Akram,Pre-O,Urdu
+5,4,Fatima Tu Zahra,Pre-IX GII,Maths
+5,4,Hina Kanwal,X-GI,Chemistry
+5,4,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp
+5,4,Iqra Tariq,O-III,Physics
+5,4,Mamoona Adnan,VII-BIII,Geography
+5,4,Mehwish Ishaq,IX-GIII,Islamiyat
+5,4,Nimra Saghir,OI-BII,English
+5,4,Qurat Ul Ain,IX-GII,Maths
+5,4,Rabia Javed,Pre-IX BII,English
+5,4,Rabiya Ghaffar,OI-BI,Islamiyat
+5,4,Raja Bahadar,X-BI,Maths
+5,4,Rubina Kausar,VII-GII,Islamiyat
+5,4,Saba Babar,Pre-IX GI,English
+5,4,Sadia Masood,X-GII,Urdu
+5,4,Sajida Parveen,IX-BII,Urdu
+5,4,Shahid Saeed,VII-BII,English
+5,4,Shumaila Quoom,VII-GI,Islamiyat
+5,4,Umm E Zainab,VII-GIII,Maths
+5,5,Anees Anjum,X-BII,Physics
+5,5,Ayesha Arshad,VII-BIII,Urdu
+5,5,Ayesha Nazish,X-BI,English
+5,5,Ayesha Rashid,O-III,Chemistry
+5,5,Fatima Tu Zahra,VII-GIII,Computer
+5,5,Hina Kanwal,IX-GIII,Chemistry
+5,5,HumairaAhmad/M. Haseeb,Pre-IX BII,Bio/Comp
+5,5,M. Haroon,VII-BII,Computer
+5,5,Mamoona Adnan,VII-GII,Geography
+5,5,Meh Un Nissa,OI-BII,Biology
+5,5,Mehr Un Nissa/Maimoona Asghar,O-II,Bio/Comp
+5,5,Nimra Saghir,Pre-O,English
+5,5,Nousheen Ansar,Pre-IX GI,Physical Education
+5,5,Qurat Ul Ain,IX-GI,Maths
+5,5,Rabia Javed,IX-GII,English
+5,5,Rabiya Ghaffar,OI-BI,Islamiyat
+5,5,Raja Bahadar,IX-BII,Maths
+5,5,Rubina Kausar,Pre-IX GII,Urdu
+5,5,Sadia Masood,X-GII,Urdu
+5,5,Sajida Parveen,IX-BI,Urdu
+5,5,Samiya Shafeeq,Pre-IX BI,Pak Studies
+5,5,Sana Qasim,X-GI,Pak Studies
+5,5,Shahid Saeed,VII-BI,English
+5,5,Shumaila Quoom,VII-GI,Islamiyat
+5,6,Abdula Hanan,IX-BII,Chemistry
+5,6,Aiman Javed,VII-GI,Science
+5,6,Anees Anjum,VII-BII,Science
+5,6,Arooj Fatima,IX-GII,Physics
+5,6,Ayesha Arshad,VII-BIII,Urdu
+5,6,Ayesha Manzoor,Pre-IX GII,Library
+5,6,Ayesha Rashid,Pre-O,Science
+5,6,Faiqa Shahzad,VII-BI,Maths
+5,6,Fatima Tu Zahra,OI-BII,Maths
+5,6,Kiran Adnan,IX-GI,Computer
+5,6,M. Haroon,IX-BI,Computer
+5,6,Maimoona Asghar,OI-BI,Computer Science
+5,6,Mehwish Ishaq,IX-GIII,Islamiyat
+5,6,Naeem Amjad,O-III,Maths
+5,6,Nimra Saghir,X-GI,English
+5,6,Qurat Ul Ain,X-GII,Maths
+5,6,Rabiya Ghaffar,O-II,Islamiyat
+5,6,Raja Bahadar,X-BII,Maths
+5,6,Rana Bilal Masood,X-BI,Computer
+5,6,Rubina Kausar,VII-GIII,Urdu
+5,6,Saba Babar,VII-GII,English
+5,6,Sajida Parveen,Pre-IX BI,Urdu
+5,6,Samiya Shafeeq,Pre-IX BII,Pak Studies
+5,6,Sehar Abbas,Pre-IX GI,Pak Studies
+5,7,Abdula Hanan,X-BI,Chemistry
+5,7,Anees Anjum,Pre-IX BII,Physics
+5,7,Arooj Fatima,IX-GIII,Physics
+5,7,Ayesha Arshad,VII-BI,Urdu
+5,7,Ayesha Rashid,O-III,Chemistry
+5,7,Faiqa Shahzad,VII-BIII,Maths
+5,7,Fatima Tu Zahra,VII-GIII,Computer
+5,7,Hina Masood,VII-GI,Art
+5,7,Humaira Ahamd,Pre-IX GI,Chemistry
+5,7,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp
+5,7,Iqra Tariq,O-II,Maths
+5,7,Kashif Butt,OI-BI,Pak Studies
+5,7,Kiran Adnan,IX-GI,Computer
+5,7,M. Haroon,Pre-IX BI,Computer
+5,7,Mehwish Ishaq,IX-GII,Islamiyat
+5,7,Rabia Javed,X-GII,English
+5,7,Rabiya Ghaffar,OI-BII,Islamiyat
+5,7,Rubina Kausar,Pre-IX GII,Urdu
+5,7,Sadia Masood,X-GI,Urdu
+5,7,Sajida Parveen,IX-BI,Urdu
+5,7,Samiya Shafeeq,VII-BII,History
+5,7,Sehar Abbas,Pre-O,Islamiyat
+5,7,Umair Murtaza,IX-BII,T.H.Q
+5,7,Umm E Zainab,VII-GII,Maths
+5,8,Abdula Hanan,IX-BI,Chemistry
+5,8,Arooj Fatima,IX-GII,Physics
+5,8,Ayesha Arshad,VII-BII,Urdu
+5,8,Ayesha Nazish,X-BII,English
+5,8,Ayesha Rashid,Pre-O,Science
+5,8,Fatima Akram,OI-BII,Urdu
+5,8,Fatima Tu Zahra,Pre-IX GII,Maths
+5,8,Hina Kanwal,X-GII,Chemistry
+5,8,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp
+5,8,Kashif Butt,OI-BI,Pak Studies
+5,8,M. Haroon,O-II,Physics
+5,8,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp
+5,8,Mamoona Adnan,VII-BI,History
+5,8,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp
+5,8,Raja Bahadar,Pre-IX BI,Maths
+5,8,Qurat Ul Ain,IX-GI,Maths
+5,8,Rubina Kausar,VII-GII,Urdu
+5,8,Sadia Masood,X-GI,Urdu
+5,8,Saima Ali,Pre-IX GI,Islamiyat
+5,8,Samiya Shafeeq,Pre-IX BII,Pak Studies
+5,8,Sana Qasim,X-BI,Pak Studies
+5,8,Shahid Saeed,VII-BIII,English
+5,8,Shumaila Quoom,VII-GIII,T. H. Q
+5,8,Umm E Zainab,VII-GI,Maths
