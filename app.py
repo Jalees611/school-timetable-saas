@@ -11,12 +11,12 @@ st.title("🏫 AI School Timetable Dashboard")
 st.sidebar.header("1. Data Setup")
 st.sidebar.info("Upload your school's data to generate a custom timetable.")
 
-# Generate a safe, dummy template on the fly (NO PRIVATE DATA)
+# Generate a safe, dummy template on the fly using YOUR engine's required column names
 template_df = pd.DataFrame({
-    "Class": ["IX-A", "IX-A", "IX-B"],
-    "Teacher": ["Mr. Smith", "Ms. Davis", "Mr. Smith"],
-    "Subject": ["Math", "Physics", "Math"],
-    "Periods_Per_Week": [5, 4, 5]
+    "teacher_name": ["Mr. Smith", "Ms. Davis", "Mr. Smith"],
+    "subject_name": ["Math", "Physics", "Math"],
+    "class_name": ["IX-A", "IX-A", "IX-B"],
+    "weekly_period": [5, 4, 5]
 })
 csv_template = template_df.to_csv(index=False).encode('utf-8')
 
@@ -60,18 +60,21 @@ else:
         if os.path.exists("final_timetable_result.csv"):
             result_df = pd.read_csv("final_timetable_result.csv")
             
+            # Find the correct class column name (handles 'Class' or 'class_name')
+            class_col = 'Class' if 'Class' in result_df.columns else 'class_name'
+            
             # --- FILTERS & DISPLAY ---
             st.sidebar.header("3. Filters")
             view_by = st.sidebar.selectbox("View Timetable By:", ["Class"])
             
             if view_by == "Class":
-                class_list = result_df['Class'].unique()
+                class_list = result_df[class_col].unique()
                 selected_class = st.sidebar.selectbox("Select Class:", class_list)
                 
                 st.subheader(f"Viewing Schedule for: {selected_class}")
                 
                 # Filter data for the selected class
-                display_df = result_df[result_df['Class'] == selected_class]
+                display_df = result_df[result_df[class_col] == selected_class]
                 
                 # Format the table for the dashboard
                 if 'Subject_Teacher' in display_df.columns:
