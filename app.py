@@ -11,15 +11,21 @@ st.title("🏫 AI School Timetable Dashboard")
 st.sidebar.header("1. Data Setup")
 st.sidebar.info("Upload your school's data to generate a custom timetable.")
 
-# Provide a sample template for new schools to download
-if os.path.exists("school_data.csv"):
-    with open("school_data.csv", "rb") as file:
-        st.sidebar.download_button(
-            label="📄 Download Blank Template",
-            data=file,
-            file_name="school_data_template.csv",
-            mime="text/csv"
-        )
+# Generate a safe, dummy template on the fly (NO PRIVATE DATA)
+template_df = pd.DataFrame({
+    "Class": ["IX-A", "IX-A", "IX-B"],
+    "Teacher": ["Mr. Smith", "Ms. Davis", "Mr. Smith"],
+    "Subject": ["Math", "Physics", "Math"],
+    "Periods_Per_Week": [5, 4, 5]
+})
+csv_template = template_df.to_csv(index=False).encode('utf-8')
+
+st.sidebar.download_button(
+    label="📄 Download Blank Template",
+    data=csv_template,
+    file_name="timetable_format_template.csv",
+    mime="text/csv"
+)
 
 # The File Uploader
 uploaded_file = st.sidebar.file_uploader("2. Upload your CSV", type=["csv"])
@@ -54,7 +60,7 @@ else:
         if os.path.exists("final_timetable_result.csv"):
             result_df = pd.read_csv("final_timetable_result.csv")
             
-            # --- FILTERS & DISPLAY (Just like your screenshot) ---
+            # --- FILTERS & DISPLAY ---
             st.sidebar.header("3. Filters")
             view_by = st.sidebar.selectbox("View Timetable By:", ["Class"])
             
@@ -68,11 +74,9 @@ else:
                 display_df = result_df[result_df['Class'] == selected_class]
                 
                 # Format the table for the dashboard
-                # Note: Adjust 'Subject_Teacher' below if your column is named differently!
                 if 'Subject_Teacher' in display_df.columns:
                     value_col = 'Subject_Teacher'
                 else:
-                    # Fallback if you combined columns differently
                     value_col = display_df.columns[-1] 
                     
                 pivot_df = display_df.pivot(index='Period', columns='Day', values=value_col)
