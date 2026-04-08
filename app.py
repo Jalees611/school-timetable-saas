@@ -51,14 +51,14 @@ else:
     input_df = pd.read_csv(uploaded_file)
     input_df.to_csv("school_data.csv", index=False)
     
-    # Save the optional restrictions data (or delete old ones)
+    # Save the optional restrictions data
     if uploaded_rest_file is not None:
         rest_df = pd.read_csv(uploaded_rest_file)
         rest_df.to_csv("restrictions_data.csv", index=False)
     elif os.path.exists("restrictions_data.csv"):
         os.remove("restrictions_data.csv")
     
-    with st.spinner("🧠 AI is calculating the perfect timetable... Please wait..."):
+    with st.spinner("🧠 AI is calculating the perfect timetable..."):
         process = subprocess.run([sys.executable, "main_engine.py"], capture_output=True, text=True)
         
         if process.returncode != 0:
@@ -71,14 +71,18 @@ else:
         if os.path.exists("final_timetable_result.csv"):
             result_df = pd.read_csv("final_timetable_result.csv")
             
-            # --- THE TRANSLATOR ---
-            day_mapping = {0: 'Mon', 1: 'Tue', 2: 'Wed', 3: 'Thu', 4: 'Fri'}
-            if pd.api.types.is_numeric_dtype(result_df['Day']) or result_df['Day'].astype(str).str.isnumeric().all():
-                result_df['Day'] = result_df['Day'].astype(int).map(day_mapping)
-            
-            if pd.api.types.is_numeric_dtype(result_df['Period']) or result_df['Period'].astype(str).str.isnumeric().all():
-                result_df['Period'] = result_df['Period'].astype(int).apply(lambda x: f"Period {x+1}")
-            
+            # --- DOWNLOAD BUTTON SECTION ---
+            st.markdown("### 📥 Export Data")
+            csv_export = result_df.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="💾 Download Full Timetable (CSV)",
+                data=csv_export,
+                file_name="generated_school_timetable.csv",
+                mime="text/csv",
+            )
+            st.markdown("---")
+
+            # --- FILTERS & DISPLAY ---
             if st.sidebar.checkbox("🔍 Show Raw Engine Data"):
                 st.write("### Raw Output")
                 st.dataframe(result_df)
@@ -91,37 +95,29 @@ else:
             
             try:
                 if view_by == "Class":
-                    class_list = result_df[class_col].unique()
+                    class_list = sorted(result_df[class_col].unique())
                     selected_class = st.sidebar.selectbox("Select Class:", class_list)
                     st.subheader(f"Viewing Schedule for Class: {selected_class}")
-                    
                     display_df = result_df[result_df[class_col] == selected_class]
-                    
-                    if 'Subject' in result_df.columns and 'Teacher' in result_df.columns:
-                        display_df['Display_Val'] = display_df['Subject'] + " (" + display_df['Teacher'] + ")"
-                    elif 'subject_name' in result_df.columns and 'teacher_name' in result_df.columns:
-                        display_df['Display_Val'] = display_df['subject_name'] + " (" + display_df['teacher_name'] + ")"
-                    else:
-                        display_df['Display_Val'] = display_df.iloc[:, -1]
-                        
-                    pivot_df = display_df.pivot(index='Period', columns='Day', values='Display_Val')
-                    
+                    val_col = 'Subject_Teacher' if 'Subject_Teacher' in display_df.columns else 'Subject'
+                
                 elif view_by == "Teacher":
-                    teacher_list = result_df[teacher_col].unique()
+                    teacher_list = sorted(result_df[teacher_col].unique())
                     selected_teacher = st.sidebar.selectbox("Select Teacher:", teacher_list)
                     st.subheader(f"Viewing Schedule for Teacher: {selected_teacher}")
-                    
                     display_df = result_df[result_df[teacher_col] == selected_teacher]
-                    
-                    if 'Subject' in result_df.columns and 'Class' in result_df.columns:
-                        display_df['Display_Val'] = display_df['Subject'] + " (" + display_df['Class'] + ")"
-                    elif 'subject_name' in result_df.columns and 'class_name' in result_df.columns:
-                        display_df['Display_Val'] = display_df['subject_name'] + " (" + display_df['class_name'] + ")"
-                    else:
-                        display_df['Display_Val'] = display_df.iloc[:, -1]
-                        
-                    pivot_df = display_df.pivot(index='Period', columns='Day', values='Display_Val')
+                    val_col = 'Subject_Class' if 'Subject_Class' in display_df.columns else 'Subject'
 
+                # Create Display Value if it doesn't exist
+                if 'Subject' in display_df.columns and teacher_col in display_df.columns and view_by == "Class":
+                    display_df['Display'] = display_df['Subject'] + " (" + display_df[teacher_col] + ")"
+                elif 'Subject' in display_df.columns and class_col in display_df.columns and view_by == "Teacher":
+                    display_df['Display'] = display_df['Subject'] + " (" + display_df[class_col] + ")"
+                else:
+                    display_df['Display'] = display_df['Subject']
+
+                pivot_df = display_df.pivot(index='Period', columns='Day', values='Display')
+                
                 days_order = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
                 days_present = [day for day in days_order if day in pivot_df.columns]
                 pivot_df = pivot_df[days_present]
@@ -130,7 +126,7 @@ else:
                 st.table(pivot_df)
                 
             except Exception as e:
-                st.error("⚠️ The table couldn't be drawn.")
-                st.write(f"Display Error: {e}")
+                st.error("⚠️ Formatting error in table display.")
+                st.write(f"Details: {e}")
         else:
             st.error("⚠️ final_timetable_result.csv is missing.")
