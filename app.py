@@ -36,23 +36,31 @@ else:
     input_df = pd.read_csv(uploaded_file)
     input_df.to_csv("school_data.csv", index=False)
     
-    with st.spinner("🧠 AI is calculating... (Catching any background errors)..."):
+    with st.spinner("🧠 AI is calculating the perfect timetable... Please wait..."):
         
-        # 🚨 X-RAY VISION: Catch the hidden engine crash!
         process = subprocess.run([sys.executable, "main_engine.py"], capture_output=True, text=True)
         
         if process.returncode != 0:
             st.error("🚨 CRASH DETECTED IN main_engine.py!")
-            st.write("Take a screenshot of this error and show it to me:")
             st.code(process.stderr)
-            st.stop() # Stop the app so it doesn't show an empty grid
+            st.stop()
             
-        st.success("🎉 Engine finished successfully with no errors!")
+        st.success("🎉 Your conflict-free schedule is ready!")
         
         if os.path.exists("final_timetable_result.csv"):
             result_df = pd.read_csv("final_timetable_result.csv")
             
-            # --- DEBUG TOGGLE ---
+            # --- 🚀 THE TRANSLATOR FIX 🚀 ---
+            # Convert computer numbers (0, 1, 2) back into human days (Mon, Tue, Wed)
+            day_mapping = {0: 'Mon', 1: 'Tue', 2: 'Wed', 3: 'Thu', 4: 'Fri'}
+            if pd.api.types.is_numeric_dtype(result_df['Day']) or result_df['Day'].astype(str).str.isnumeric().all():
+                result_df['Day'] = result_df['Day'].astype(int).map(day_mapping)
+            
+            # Convert computer periods (0, 1) into (Period 1, Period 2)
+            if pd.api.types.is_numeric_dtype(result_df['Period']) or result_df['Period'].astype(str).str.isnumeric().all():
+                result_df['Period'] = result_df['Period'].astype(int).apply(lambda x: f"Period {x+1}")
+            # --------------------------------
+            
             if st.sidebar.checkbox("🔍 Show Raw Engine Data"):
                 st.write("### Raw Output from Engine")
                 st.dataframe(result_df)
@@ -96,15 +104,17 @@ else:
                         
                     pivot_df = display_df.pivot(index='Period', columns='Day', values='Display_Val')
 
+                # Force the correct order for the grid
                 days_order = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
                 days_present = [day for day in days_order if day in pivot_df.columns]
                 pivot_df = pivot_df[days_present]
                 pivot_df = pivot_df.fillna("-")
                 
+                # Display the beautiful grid
                 st.table(pivot_df)
                 
             except Exception as e:
-                st.error("⚠️ The table couldn't be drawn. Click 'Show Raw Engine Data' in the sidebar to see why.")
+                st.error("⚠️ The table couldn't be drawn.")
                 st.write(f"Display Error: {e}")
         else:
             st.error("⚠️ The engine ran, but final_timetable_result.csv is missing.")
