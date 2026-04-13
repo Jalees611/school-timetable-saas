@@ -1,127 +1,147 @@
 import pandas as pd
 from ortools.sat.python import cp_model
-import time
 import os
-import sys
 
-def run_parallel_engine(csv_path):
-    if not os.path.exists(csv_path):
-        print(f"Error: {csv_path} not found.")
+def solve_timetable():
+    # 1. Load Data
+    if not os.path.exists('school_data.csv'):
+        print("❌ Error: school_data.csv not found")
         return
-
-    df = pd.read_csv(csv_path)
-    df = df.rename(columns={'subject_name': 'subject', 'weekly_period': 'periods_per_week'})
     
+    df = pd.read_csv('school_data.csv')
+    df.columns = [c.strip().lower() for c in df.columns]
+
+    # Handle Optional Columns (Institution Type and Resource Type)
+    if 'institution_type' not in df.columns:
+        # Default to School if column is missing
+        df['institution_type'] = 'school'
+    else:
+        df['institution_type'] = df['institution_type'].astype(str).str.strip().str.lower()
+
+    if 'required_resource_type' not in df.columns:
+        df['required_resource_type'] = 'none'
+    else:
+        df['required_resource_type'] = df['required_resource_type'].astype(str).str.strip().str.lower()
+
+    # 2. Load Resource Registry (Mandatory for Colleges, Optional for Schools)
+    resources = []
+    has_resource_file = os.path.exists('resource_data.csv')
+    
+    if has_resource_file:
+        res_df = pd.read_csv('resource_data.csv')
+        res_df.columns = [c.strip().lower() for c in res_df.columns]
+        res_df['resource_type'] = res_df['resource_type'].astype(str).str.strip().str.lower()
+        res_df['resource_name'] = res_df['resource_name'].astype(str).str.strip()
+        resources = res_df.to_dict('records')
+        print("📂 Resource file detected.")
+
+    # 3. Setup Constants
+    days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+    periods = [f'Period {i}' for i in range(1, 9)]
     model = cp_model.CpModel()
-    days, periods_per_day = 5, 8
-    day_list, period_list = range(1, days + 1), range(1, periods_per_day + 1)
     
-    # 1. Identify all unique individual teachers (handles shared rows like Humaira/Haseeb)
-    all_teachers = set()
-    for t_string in df['teacher_name'].unique():
-        for name in str(t_string).split('/'):
-            all_teachers.add(name.strip())
-    
-    assignments = df.to_dict('records')
-    schedule = {}
-    for i in range(len(assignments)):
-        for d in day_list:
-            for p in period_list:
-                schedule[(i, d, p)] = model.NewBoolVar(f'idx{i}_d{d}_p{p}')
+    # 4. Create Variables
+    lessons = {}
+    for i, row in df.iterrows():
+        req_type = row['required_resource_type']
+        inst_type = row['institution_type']
+        
+        # Logic: Only find specific rooms if it's a College AND a resource type is specified
+        if inst_type == 'college' and has_resource_file and req_type != 'none' and req_type != 'classroom':
+            compatible_rooms = [r['resource_name'] for r in resources if r['resource_type'] == req_type]
+            if not compatible_rooms:
+                print(f"⚠️ Warning: No rooms of type '{req_type}' found for {row['subject_name']}")
+                compatible_rooms = ["Unassigned Room"]
+        else:
+            # Schools or general College lectures get a virtual "Standard" room
+            compatible_rooms = ["Standard Room"]
 
-    # 2. WEEKLY LOAD RULE
-    for i, row in enumerate(assignments):
-        model.Add(sum(schedule[(i, d, p)] for d in day_list for p in period_list) == int(row['periods_per_week']))
+        for d in days:
+            for p in periods:
+                for r in compatible_rooms:
+                    lessons[(i, d, p, r)] = model.NewBoolVar(f'L_{i}_{d}_{p}_{r}')
 
-    # 3. UNIVERSAL CONSTRAINTS
-    for d in day_list:
-        for p in period_list:
-            # --- TEACHER RULE: Individual name cannot be in 2 rows at once ---
-            for teacher in all_teachers:
-                involved_idxs = [i for i, r in enumerate(assignments) if teacher in str(r['teacher_name'])]
-                if involved_idxs:
-                    model.AddAtMostOne(schedule[(i, d, p)] for i in involved_idxs)
+    # 5. Constraints
 
-            # --- CLASS RULE: Every slot must have exactly 1 assignment ---
-            for c in df['class_name'].unique():
-                c_idxs = [i for i, r in enumerate(assignments) if r['class_name'] == c]
-                model.Add(sum(schedule[(i, d, p)] for i in c_idxs) == 1)
-
-    # 4. SPREAD RULE (Max 2 periods of the same assignment per day)
-    for i in range(len(assignments)):
-        for d in day_list:
-            model.Add(sum(schedule[(i, d, p)] for p in period_list) <= 2)
-
-    # ==========================================
-    # 5. NEW: CUSTOM RESTRICTIONS INJECTION
-    # ==========================================
-    if os.path.exists("restrictions_data.csv"):
-        try:
-            res_df = pd.read_csv("restrictions_data.csv")
-            # Map text days to your engine's 1-5 integer system
-            day_map = {'Mon': 1, 'Tue': 2, 'Wed': 3, 'Thu': 4, 'Fri': 5}
+    # Weekly Period Target
+    for i, row in df.iterrows():
+        target = int(row['weekly_period'])
+        req_type = row['required_resource_type']
+        inst_type = row['institution_type']
+        
+        if inst_type == 'college' and has_resource_file and req_type != 'none' and req_type != 'classroom':
+            rooms = [r['resource_name'] for r in resources if r['resource_type'] == req_type] or ["Unassigned Room"]
+        else:
+            rooms = ["Standard Room"]
             
-            for _, r_row in res_df.iterrows():
-                t_rest = str(r_row['teacher_name']).strip()
-                d_rest_text = str(r_row['day']).strip()
-                p_rest_text = str(r_row['period']).strip()
-                r_type = str(r_row['restriction_type']).strip()
-                
-                # Convert day and period text to integers
-                d_val = day_map.get(d_rest_text, -1)
-                try:
-                    p_val = int(p_rest_text.replace('Period ', '').strip())
-                except ValueError:
-                    continue # Skip invalid period formatting
-                
-                if d_val != -1 and 1 <= p_val <= periods_per_day:
-                    # Find all assignment indices where this teacher is involved
-                    involved_idxs = [i for i, row in enumerate(assignments) if t_rest in str(row['teacher_name'])]
-                    
-                    if not involved_idxs:
-                        continue # Teacher not found in main data, skip
-                        
-                    if r_type == "Unavailable":
-                        # Lock all variables for this teacher at this specific day/time to False (0)
-                        for i in involved_idxs:
-                            model.Add(schedule[(i, d_val, p_val)] == 0)
-                            
-                    elif r_type == "Must Teach":
-                        # Force exactly one of this teacher's classes to be True (1) at this specific day/time
-                        model.Add(sum(schedule[(i, d_val, p_val)] for i in involved_idxs) == 1)
-                        
-            print("🔒 Successfully applied custom teacher restrictions.")
-        except Exception as e:
-            sys.stderr.write(f"Warning: Failed to process restrictions: {e}\n")
-    # ==========================================
+        model.Add(sum(lessons[(i, d, p, r)] for d in days for p in periods for r in rooms) == target)
 
-    # 6. SOLVE & OUTPUT
+    # Teacher & Class Overlap Constraints (Always enforced)
+    for d in days:
+        for p in periods:
+            # One lesson per Class
+            for class_name in df['class_name'].unique():
+                relevant_indices = df[df['class_name'] == class_name].index
+                class_vars = []
+                for i in relevant_indices:
+                    # Collect all possible room assignments for this index
+                    # Note: We must check which rooms were actually created for this index
+                    for (idx, day, per, r) in lessons:
+                        if idx == i and day == d and per == p:
+                            class_vars.append(lessons[(idx, day, per, r)])
+                if class_vars:
+                    model.Add(sum(class_vars) <= 1)
+
+            # One lesson per Teacher
+            for teacher in df['teacher_name'].unique():
+                relevant_indices = [idx for idx, row in df.iterrows() if teacher in str(row['teacher_name']).split('/')]
+                teacher_vars = []
+                for i in relevant_indices:
+                    for (idx, day, per, r) in lessons:
+                        if idx == i and day == d and per == p:
+                            teacher_vars.append(lessons[(idx, day, per, r)])
+                if teacher_vars:
+                    model.Add(sum(teacher_vars) <= 1)
+
+    # Room Collision Constraint (Only for Colleges + Labs/Halls)
+    if has_resource_file:
+        for d in days:
+            for p in periods:
+                for res in resources:
+                    if res['resource_type'] == 'classroom': continue # Schools skip this
+                    
+                    r_name = res['resource_name']
+                    r_type = res['resource_type']
+                    room_vars = []
+                    for (idx, day, per, room) in lessons:
+                        if day == d and per == p and room == r_name:
+                            room_vars.append(lessons[(idx, day, per, room)])
+                    if room_vars:
+                        model.Add(sum(room_vars) <= 1)
+
+    # 6. Solve
     solver = cp_model.CpSolver()
-    solver.parameters.max_time_in_seconds = 180.0
-    print(f"🧠 Solving for {len(all_teachers)} teachers and {len(df['class_name'].unique())} classes...")
+    solver.parameters.max_time_in_seconds = 60.0 
     status = solver.Solve(model)
 
-    if status == cp_model.FEASIBLE or status == cp_model.OPTIMAL:
+    if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
         output = []
-        # Mapping for clean output so app.py doesn't have to guess
-        output_day_map = {1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri'}
+        for (i, d, p, r), var in lessons.items():
+            if solver.Value(var):
+                row = df.loc[i]
+                output.append({
+                    "Institution": row['institution_type'].upper(),
+                    "Day": d, "Period": p, 
+                    "Teacher": row['teacher_name'], 
+                    "Class": row['class_name'], 
+                    "Subject": row['subject_name'], 
+                    "Room": r
+                })
         
-        for d in day_list:
-            for p in period_list:
-                for i, row in enumerate(assignments):
-                    if solver.Value(schedule[(i, d, p)]):
-                        output.append({
-                            "Day": output_day_map[d], 
-                            "Period": f"Period {p}", 
-                            "Teacher": row['teacher_name'], 
-                            "Class": row['class_name'], 
-                            "Subject": row['subject']
-                        })
-        pd.DataFrame(output).to_csv("final_timetable_result.csv", index=False)
-        print("✅ SUCCESS! Timetable generated honoring all rules and restrictions.")
+        pd.DataFrame(output).to_csv('final_timetable_result.csv', index=False)
+        print(f"✅ SUCCESS! Timetable generated.")
     else:
-        print("❌ FAILED: The engine could not find a solution. The restrictions might be too tight (infeasible).")
-        sys.exit(1)
+        print("❌ FAILED: Potential causes: Teacher overload or Lab capacity reached.")
 
 if __name__ == "__main__":
-    run_parallel_engine('school_data.csv')
+    solve_timetable()
