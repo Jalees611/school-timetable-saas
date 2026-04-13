@@ -1,240 +1,240 @@
-﻿institution_type,teacher_name,subject_name,class_name,weekly_period,required_resource_type
-school,Abdul Hanan,Chemistry,Pre-IX BI,4,
-school,Abdul Hanan,Chemistry,IX-BI,5,
-school,Abdul Hanan,Chemistry,IX-BII,5,
-school,Abdul Hanan,Chemistry,X-BI,5,
-school,Abdul Hanan,Chemistry,X-BII,5,
-school,Aiman Javed,Science,VII-BIII,4,
-school,Aiman Javed,Science,VII-GI,4,
-school,Aiman Javed,Science,VII-GII,4,
-school,Aiman Javed,Science,VII-GIII,4,
-school,Aiman Javed,Chemistry,Pre-IX BII,4,
-school,Aiman Javed,Chemistry,Pre-IX GII,4,
-school,Anees Anjum,Science,VII-BI,4,
-school,Anees Anjum,Science,VII-BII,4,
-school,Anees Anjum,Physics,Pre-IX BI,4,
-school,Anees Anjum,Physics,Pre-IX BII,4,
-school,Anees Anjum,Physics,IX-BI,5,
-school,Anees Anjum,Physics,IX-BII,5,
-school,Anees Anjum,Physics,X-BII,5,
-school,Arooj Fatima,Physics,Pre-IX GI,4,
-school,Arooj Fatima,Physics,Pre-IX GII,4,
-school,Arooj Fatima,Physics,IX-GI,5,
-school,Arooj Fatima,Physics,IX-GII,5,
-school,Arooj Fatima,Physics,IX-GIII,5,
-school,Arooj Fatima,Physics,X-GI,5,
-school,Arooj Fatima,Computer,VII-GII,3,
-school,Asim Iftikhar,Art,VII-BI,1,
-school,Asim Iftikhar,Art,VII-BII,1,
-school,Asim Iftikhar,Art,VII-BIII,1,
-school,Ayesha Arshad,Urdu,VII-BI,6,
-school,Ayesha Arshad,Islamiyat,VII-BI,3,
-school,Ayesha Arshad,Urdu,VII-BII,6,
-school,Ayesha Arshad,Islamiyat,VII-BII,3,
-school,Ayesha Arshad,Urdu,VII-BIII,6,
-school,Ayesha Manzoor,Library,VII-BI,1,
-school,Ayesha Manzoor,Library,VII-BII,1,
-school,Ayesha Manzoor,Library,VII-BIII,1,
-school,Ayesha Manzoor,Library,VII-GI,1,
-school,Ayesha Manzoor,Library,VII-GII,1,
-school,Ayesha Manzoor,Library,VII-GIII,1,
-school,Ayesha Manzoor,Library,Pre-IX BI,1,
-school,Ayesha Manzoor,Library,Pre-IX BII,1,
-school,Ayesha Manzoor,Library,Pre-IX GI,1,
-school,Ayesha Manzoor,Library,Pre-IX GII,1,
-school,Ayesha Nazish,English,X-BI,5,
-school,Ayesha Nazish,English,X-BII,5,
-school,Ayesha Nazish,English,IX-BI,5,
-school,Ayesha Nazish,English,IX-BII,5,
-school,Ayesha Nazish,English,IX-GI,5,
-school,Ayesha Rashid,Science,Pre-O,5,
-school,Ayesha Rashid,Chemistry,OI-BI,4,
-school,Ayesha Rashid,Chemistry,OI-BII,4,
-school,Ayesha Rashid,Chemistry,O-II,4,
-school,Ayesha Rashid,Chemistry,O-III,8,
-school,Faiqa Shahzad,Maths,VII-BI,6,
-school,Faiqa Shahzad,Maths,VII-BII,6,
-school,Faiqa Shahzad,Maths,VII-BIII,6,
-school,Faiqa Shahzad,Maths,Pre-IX BII,5,
-school,Fatima Akram,Urdu,Pre-IX BII,5,
-school,Fatima Akram,Urdu,Pre-O,5,
-school,Fatima Akram,Urdu,OI-BI,6,
-school,Fatima Akram,Urdu,OI-BII,6,
-school,Fatima Akram,Urdu,O-II,6,
-school,Fatima Tu Zahra,Computer,VII-GIII,3,
-school,Fatima Tu Zahra,Maths,Pre-IX GII,5,
-school,Fatima Tu Zahra,Maths,Pre-O,6,
-school,Fatima Tu Zahra,Maths,OI-BI,5,
-school,Fatima Tu Zahra,Maths,OI-BII,5,
-school,Hina Kanwal,Chemistry,IX-GI,5,
-school,Hina Kanwal,Chemistry,IX-GII,5,
-school,Hina Kanwal,Chemistry,IX-GIII,5,
-school,Hina Kanwal,Chemistry,X-GI,5,
-school,Hina Kanwal,Chemistry,X-GII,5,
-school,Hina Masood,Art,VII-GI,1,
-school,Hina Masood,Art,VII-GII,1,
-school,Hina Masood,Art,VII-GIII,1,
-school,Humaira Ahamd,Chemistry,Pre-IX GI,4,
-school,Humaira Ahamd,Biology,X-GII,5,
-school,HumairaAhmad/M. Haseeb,Bio/Comp,Pre-IX BII,4,
-school,HumairaAhmad/M. Haseeb,Bio/Comp,IX-BII,5,
-school,Humaira Ahmad/Rana Bilal Masood,Bio/Comp,X-BII,5,
-school,Iqra Tariq,Physics,X-GII,5,
-school,Iqra Tariq,Maths,O-II,5,
-school,Iqra Tariq,Physics,O-III,8,
-school,Kashif Butt,Pak Studies,OI-BI,6,
-school,Kashif Butt,Pak Studies,O-II,6,
-school,Kiran Adnan,Computer,VII-BI,3,
-school,Kiran Adnan,Computer,VII-GI,3,
-school,Kiran Adnan,Computer,Pre-IX GI,4,
-school,Kiran Adnan,Computer,IX-GI,5,
-school,Kiran Adnan,Computer,X-GI,5,
-school,M. Haroon,Physics,OI-BI,4,
-school,M. Haroon,Physics,OI-BII,4,
-school,M. Haroon,Physics,O-II,4,
-school,M. Haroon,Physics,X-BI,5,
-school,M. Haroon,Computer,VII-BII,3,
-school,M. Haroon,Computer,VII-BIII,3,
-school,M. Haroon,Computer,IX-BI,5,
-school,M. Haroon,Computer,Pre-IX BI,4,
-school,Maimoona Asghar,Computer Science,Pre-O,5,
-school,Maimoona Asghar,Computer Science,OI-BI,4,
-school,Maiza Qirat/Maimoona Asghar,Bio/Comp,O-III,8,
-school,Mamoona Adnan,History,VII-BI,3,
-school,Mamoona Adnan,History,VII-BIII,3,
-school,Mamoona Adnan,Geography,VII-BIII,3,
-school,Mamoona Adnan,History,VII-GI,3,
-school,Mamoona Adnan,Geography,VII-GI,3,
-school,Mamoona Adnan,History,VII-GII,3,
-school,Mamoona Adnan,Geography,VII-GII,3,
-school,Mamoona Adnan,History,VII-GIII,3,
-school,Mehwish Ishaq,Islamiyat,IX-GI,6,
-school,Mehwish Ishaq,Islamiyat,IX-GII,6,
-school,Mehwish Ishaq,Islamiyat,IX-GIII,6,
-school,Mehwish Ishaq,T.H.Q,X-GI,3,
-school,Mehwish Ishaq,T.H.Q,X-GII,3,
-school,Meh Un Nissa,Biology,Pre-IX GII,4,
-school,Meh Un Nissa,Biology,IX-GII,5,
-school,Meh Un Nissa,Biology,OI-BII,4,
-school,Mehr Un Nissa/Kiran Adnan,Bio/Comp,IX-GIII,5,
-school,Mehr Un Nissa/Maimoona Asghar,Bio/Comp,O-II,4,
-school,Raja Bahadar,Maths,Pre-IX BI,5,
-school,Muhammad Junaid Saifi,Physical Education,Pre-IX BI,1,
-school,Muhammad Junaid Saifi,Physical Education,Pre-IX BII,1,
-school,Muhammad Junaid Saifi,Physical Education,IX-BI,1,
-school,Muhammad Junaid Saifi,Physical Education,IX-BII,1,
-school,Muhammad Junaid Saifi,Physical Education,X-BI,1,
-school,Muhammad Junaid Saifi,Physical Education,X-BII,1,
-school,Muhammad Junaid Saifi/Muhammad Nawaz,Physical Education,VII-BI,1,
-school,Muhammad Junaid Saifi/Muhammad Nawaz,Physical Education,VII-BII,1,
-school,Muhammad Junaid Saifi/Muhammad Nawaz,Physical Education,VII-BIII,1,
-school,Muhammad Junaid Saifi/Muhammad Nawaz/Nousheen Ansar,Physical Education,Pre-O,1,
-school,Muhammad Junaid Saifi/Nousheen Ansar,Physical Education,OI-BI,1,
-school,Muhammad Junaid Saifi/Nousheen Ansar,Physical Education,OI-BII,1,
-school,Muhammad Junaid Saifi/Nousheen Ansar,Physical Education,O-II,1,
-school,Muhammad Junaid Saifi/Nousheen Ansar,Physical Education,O-III,1,
-school,Naeem Amjad,Maths,O-III,8,
-school,Nimra Rehman,Pak Studies,X-GII,6,
-school,Nimra Saghir,English,X-GI,5,
-school,Nimra Saghir,English,Pre-O,5,
-school,Nimra Saghir,English,OI-BI,4,
-school,Nimra Saghir,English,OI-BII,4,
-school,Nimra Saghir,English,O-II,4,
-school,Nousheen Ansar,Physical Education,VII-GI,1,
-school,Nousheen Ansar,Physical Education,VII-GII,1,
-school,Nousheen Ansar,Physical Education,VII-GIII,1,
-school,Nousheen Ansar,Physical Education,Pre-IX GI,1,
-school,Nousheen Ansar,Physical Education,Pre-IX GII,1,
-school,Nousheen Ansar,Physical Education,IX-GI,1,
-school,Nousheen Ansar,Physical Education,IX-GII,1,
-school,Nousheen Ansar,Physical Education,IX-GIII,1,
-school,Nousheen Ansar,Physical Education,X-GI,1,
-school,Nousheen Ansar,Physical Education,X-GII,1,
-school,Qurat Ul Ain,Maths,IX-GI,5,
-school,Qurat Ul Ain,Maths,IX-GII,5,
-school,Qurat Ul Ain,Maths,IX-GIII,5,
-school,Qurat Ul Ain,Maths,X-GI,5,
-school,Qurat Ul Ain,Maths,X-GII,5,
-school,Rabia Javed,English,Pre-IX BII,5,
-school,Rabia Javed,English,Pre-IX GII,5,
-school,Rabia Javed,English,IX-GII,5,
-school,Rabia Javed,English,IX-GIII,5,
-school,Rabia Javed,English,X-GII,5,
-school,Rabia Saeed,T.H.Q,IX-GI,3,
-school,Rabia Saeed,T.H.Q,IX-GII,3,
-school,Rabiya Ghaffar,T.H.Q,IX-GIII,3,
-school,Rabiya Ghaffar,Islamiyat,OI-BI,6,
-school,Rabiya Ghaffar,Islamiyat,OI-BII,6,
-school,Rabiya Ghaffar,Islamiyat,O-II,6,
-school,Rabiya Ghaffar,English,O-III,7,
-school,Raja Bahadar,Maths,IX-BI,5,
-school,Raja Bahadar,Maths,IX-BII,5,
-school,Raja Bahadar,Maths,X-BI,5,
-school,Raja Bahadar,Maths,X-BII,5,
-school,Rana Bilal Masood,Computer,X-BI,5,
-school,Rubina Kausar,Urdu,VII-GI,6,
-school,Rubina Kausar,Urdu,VII-GII,6,
-school,Rubina Kausar,Islamiyat,VII-GII,3,
-school,Rubina Kausar,Urdu,VII-GIII,6,
-school,Rubina Kausar,Urdu,Pre-IX GI,5,
-school,Rubina Kausar,Urdu,Pre-IX GII,5,
-school,Saba Babar,English,VII-GI,6,
-school,Saba Babar,English,VII-GII,6,
-school,Saba Babar,English,VII-GIII,6,
-school,Saba Babar,English,Pre-IX GI,5,
-school,Sadia Masood,Urdu,IX-GI,5,
-school,Sadia Masood,Urdu,IX-GII,5,
-school,Sadia Masood,Urdu,IX-GIII,5,
-school,Sadia Masood,Urdu,X-GI,5,
-school,Sadia Masood,Urdu,X-GII,5,
-school,Saima Ali,Islamiyat,Pre-IX BI,3,
-school,Saima Ali,Islamiyat,Pre-IX BII,3,
-school,Saima Ali,Islamiyat,Pre-IX GI,3,
-school,Saima Ali,Islamiyat,Pre-IX GII,3,
-school,Saima Ali,Islamiyat,IX-BI,6,
-school,Saima Ali,Islamiyat,IX-BII,6,
-school,Sajida Parveen,Urdu,Pre-IX BI,5,
-school,Sajida Parveen,Urdu,IX-BI,5,
-school,Sajida Parveen,Urdu,IX-BII,5,
-school,Sajida Parveen,Urdu,X-BI,5,
-school,Sajida Parveen,Urdu,X-BII,5,
-school,Samiya Shafeeq,Geography,VII-BI,3,
-school,Samiya Shafeeq,History,VII-BII,3,
-school,Samiya Shafeeq,Geography,VII-BII,3,
-school,Samiya Shafeeq,Islamiyat,VII-GIII,3,
-school,Samiya Shafeeq,Geography,VII-GIII,3,
-school,Samiya Shafeeq,Pak Studies,Pre-IX BI,5,
-school,Samiya Shafeeq,Pak Studies,Pre-IX BII,5,
-school,Sana Qasim,Pak Studies,Pre-IX GII,5,
-school,Sana Qasim,Pak Studies,X-BI,6,
-school,Sana Qasim,Pak Studies,X-BII,6,
-school,Sana Qasim,Pak Studies,X-GI,6,
-school,Sehar Abbas,Pak Studies,Pre-IX GI,5,
-school,Sehar Abbas,Islamiyat,Pre-O,6,
-school,Sehar Abbas,Geography,Pre-O,3,
-school,Sehar Abbas,History,Pre-O,4,
-school,Sehar Abbas,Pak Studies,OI-BII,6,
-school,Shahid Saeed,English,VII-BI,6,
-school,Shahid Saeed,English,VII-BII,6,
-school,Shahid Saeed,English,VII-BIII,6,
-school,Shahid Saeed,English,Pre-IX BI,5,
-school,Shumaila Quoom,T. H. Q,VII-BIII,3,
-school,Shumaila Quoom,Islamiyat,VII-BIII,3,
-school,Shumaila Quoom,T. H. Q,VII-GI,3,
-school,Shumaila Quoom,Islamiyat,VII-GI,3,
-school,Shumaila Quoom,T. H. Q,VII-GII,3,
-school,Shumaila Quoom,T. H. Q,VII-GIII,3,
-school,Shumaila Quoom,T.H.Q,Pre-IX GI,3,
-school,Shumaila Quoom,T.H.Q,Pre-IX GII,3,
-school,Umair Murtaza,T. H. Q,VII-BI,3,
-school,Umair Murtaza,T. H. Q,VII-BII,3,
-school,Umair Murtaza,T.H.Q,Pre-IX BI,3,
-school,Umair Murtaza,T.H.Q,Pre-IX BII,3,
-school,Umair Murtaza,T.H.Q,IX-BI,3,
-school,Umair Murtaza,T.H.Q,IX-BII,3,
-school,Umair Murtaza,T.H.Q,X-BI,3,
-school,Umair Murtaza,T.H.Q,X-BII,3,
-school,Umm E Zainab,Maths,VII-GI,6,
-school,Umm E Zainab,Maths,VII-GII,6,
-school,Umm E Zainab,Maths,VII-GIII,6,
-school,Umm E Zainab,Maths,Pre-IX GI,5,
+teacher_name,subject_name,class_name,weekly_period,institution_type
+Abdul Hanan,Chemistry,Pre-IX BI,4,school
+Abdul Hanan,Chemistry,IX-BI,5,school
+Abdul Hanan,Chemistry,IX-BII,5,school
+Abdul Hanan,Chemistry,X-BI,5,school
+Abdul Hanan,Chemistry,X-BII,5,school
+Aiman Javed,Science,VII-BIII,4,school
+Aiman Javed,Science,VII-GI,4,school
+Aiman Javed,Science,VII-GII,4,school
+Aiman Javed,Science,VII-GIII,4,school
+Aiman Javed,Chemistry,Pre-IX BII,4,school
+Aiman Javed,Chemistry,Pre-IX GII,4,school
+Anees Anjum,Science,VII-BI,4,school
+Anees Anjum,Science,VII-BII,4,school
+Anees Anjum,Physics,Pre-IX BI,4,school
+Anees Anjum,Physics,Pre-IX BII,4,school
+Anees Anjum,Physics,IX-BI,5,school
+Anees Anjum,Physics,IX-BII,5,school
+Anees Anjum,Physics,X-BII,5,school
+Arooj Fatima,Physics,Pre-IX GI,4,school
+Arooj Fatima,Physics,Pre-IX GII,4,school
+Arooj Fatima,Physics,IX-GI,5,school
+Arooj Fatima,Physics,IX-GII,5,school
+Arooj Fatima,Physics,IX-GIII,5,school
+Arooj Fatima,Physics,X-GI,5,school
+Arooj Fatima,Computer,VII-GII,3,school
+Asim Iftikhar,Art,VII-BI,1,school
+Asim Iftikhar,Art,VII-BII,1,school
+Asim Iftikhar,Art,VII-BIII,1,school
+Ayesha Arshad,Urdu,VII-BI,6,school
+Ayesha Arshad,Islamiyat,VII-BI,3,school
+Ayesha Arshad,Urdu,VII-BII,6,school
+Ayesha Arshad,Islamiyat,VII-BII,3,school
+Ayesha Arshad,Urdu,VII-BIII,6,school
+Ayesha Manzoor,Library,VII-BI,1,school
+Ayesha Manzoor,Library,VII-BII,1,school
+Ayesha Manzoor,Library,VII-BIII,1,school
+Ayesha Manzoor,Library,VII-GI,1,school
+Ayesha Manzoor,Library,VII-GII,1,school
+Ayesha Manzoor,Library,VII-GIII,1,school
+Ayesha Manzoor,Library,Pre-IX BI,1,school
+Ayesha Manzoor,Library,Pre-IX BII,1,school
+Ayesha Manzoor,Library,Pre-IX GI,1,school
+Ayesha Manzoor,Library,Pre-IX GII,1,school
+Ayesha Nazish,English,X-BI,5,school
+Ayesha Nazish,English,X-BII,5,school
+Ayesha Nazish,English,IX-BI,5,school
+Ayesha Nazish,English,IX-BII,5,school
+Ayesha Nazish,English,IX-GI,5,school
+Ayesha Rashid,Science,Pre-O,5,school
+Ayesha Rashid,Chemistry,OI-BI,4,school
+Ayesha Rashid,Chemistry,OI-BII,4,school
+Ayesha Rashid,Chemistry,O-II,4,school
+Ayesha Rashid,Chemistry,O-III,8,school
+Faiqa Shahzad,Maths,VII-BI,6,school
+Faiqa Shahzad,Maths,VII-BII,6,school
+Faiqa Shahzad,Maths,VII-BIII,6,school
+Faiqa Shahzad,Maths,Pre-IX BII,5,school
+Fatima Akram,Urdu,Pre-IX BII,5,school
+Fatima Akram,Urdu,Pre-O,5,school
+Fatima Akram,Urdu,OI-BI,6,school
+Fatima Akram,Urdu,OI-BII,6,school
+Fatima Akram,Urdu,O-II,6,school
+Fatima Tu Zahra,Computer,VII-GIII,3,school
+Fatima Tu Zahra,Maths,Pre-IX GII,5,school
+Fatima Tu Zahra,Maths,Pre-O,6,school
+Fatima Tu Zahra,Maths,OI-BI,5,school
+Fatima Tu Zahra,Maths,OI-BII,5,school
+Hina Kanwal,Chemistry,IX-GI,5,school
+Hina Kanwal,Chemistry,IX-GII,5,school
+Hina Kanwal,Chemistry,IX-GIII,5,school
+Hina Kanwal,Chemistry,X-GI,5,school
+Hina Kanwal,Chemistry,X-GII,5,school
+Hina Masood,Art,VII-GI,1,school
+Hina Masood,Art,VII-GII,1,school
+Hina Masood,Art,VII-GIII,1,school
+Humaira Ahamd,Chemistry,Pre-IX GI,4,school
+Humaira Ahamd,Biology,X-GII,5,school
+HumairaAhmad/M. Haseeb,Bio/Comp,Pre-IX BII,4,school
+HumairaAhmad/M. Haseeb,Bio/Comp,IX-BII,5,school
+Humaira Ahmad/Rana Bilal Masood,Bio/Comp,X-BII,5,school
+Iqra Tariq,Physics,X-GII,5,school
+Iqra Tariq,Maths,O-II,5,school
+Iqra Tariq,Physics,O-III,8,school
+Kashif Butt,Pak Studies,OI-BI,6,school
+Kashif Butt,Pak Studies,O-II,6,school
+Kiran Adnan,Computer,VII-BI,3,school
+Kiran Adnan,Computer,VII-GI,3,school
+Kiran Adnan,Computer,Pre-IX GI,4,school
+Kiran Adnan,Computer,IX-GI,5,school
+Kiran Adnan,Computer,X-GI,5,school
+M. Haroon,Physics,OI-BI,4,school
+M. Haroon,Physics,OI-BII,4,school
+M. Haroon,Physics,O-II,4,school
+M. Haroon,Physics,X-BI,5,school
+M. Haroon,Computer,VII-BII,3,school
+M. Haroon,Computer,VII-BIII,3,school
+M. Haroon,Computer,IX-BI,5,school
+M. Haroon,Computer,Pre-IX BI,4,school
+Maimoona Asghar,Computer Science,Pre-O,5,school
+Maimoona Asghar,Computer Science,OI-BI,4,school
+Maiza Qirat/Maimoona Asghar,Bio/Comp,O-III,8,school
+Mamoona Adnan,History,VII-BI,3,school
+Mamoona Adnan,History,VII-BIII,3,school
+Mamoona Adnan,Geography,VII-BIII,3,school
+Mamoona Adnan,History,VII-GI,3,school
+Mamoona Adnan,Geography,VII-GI,3,school
+Mamoona Adnan,History,VII-GII,3,school
+Mamoona Adnan,Geography,VII-GII,3,school
+Mamoona Adnan,History,VII-GIII,3,school
+Mehwish Ishaq,Islamiyat,IX-GI,6,school
+Mehwish Ishaq,Islamiyat,IX-GII,6,school
+Mehwish Ishaq,Islamiyat,IX-GIII,6,school
+Mehwish Ishaq,T.H.Q,X-GI,3,school
+Mehwish Ishaq,T.H.Q,X-GII,3,school
+Meh Un Nissa,Biology,Pre-IX GII,4,school
+Meh Un Nissa,Biology,IX-GII,5,school
+Meh Un Nissa,Biology,OI-BII,4,school
+Mehr Un Nissa/Kiran Adnan,Bio/Comp,IX-GIII,5,school
+Mehr Un Nissa/Maimoona Asghar,Bio/Comp,O-II,4,school
+Raja Bahadar,Maths,Pre-IX BI,5,school
+Muhammad Junaid Saifi,Physical Education,Pre-IX BI,1,school
+Muhammad Junaid Saifi,Physical Education,Pre-IX BII,1,school
+Muhammad Junaid Saifi,Physical Education,IX-BI,1,school
+Muhammad Junaid Saifi,Physical Education,IX-BII,1,school
+Muhammad Junaid Saifi,Physical Education,X-BI,1,school
+Muhammad Junaid Saifi,Physical Education,X-BII,1,school
+Muhammad Junaid Saifi/Muhammad Nawaz,Physical Education,VII-BI,1,school
+Muhammad Junaid Saifi/Muhammad Nawaz,Physical Education,VII-BII,1,school
+Muhammad Junaid Saifi/Muhammad Nawaz,Physical Education,VII-BIII,1,school
+Muhammad Junaid Saifi/Muhammad Nawaz/Nousheen Ansar,Physical Education,Pre-O,1,school
+Muhammad Junaid Saifi/Nousheen Ansar,Physical Education,OI-BI,1,school
+Muhammad Junaid Saifi/Nousheen Ansar,Physical Education,OI-BII,1,school
+Muhammad Junaid Saifi/Nousheen Ansar,Physical Education,O-II,1,school
+Muhammad Junaid Saifi/Nousheen Ansar,Physical Education,O-III,1,school
+Naeem Amjad,Maths,O-III,8,school
+Nimra Rehman,Pak Studies,X-GII,6,school
+Nimra Saghir,English,X-GI,5,school
+Nimra Saghir,English,Pre-O,5,school
+Nimra Saghir,English,OI-BI,4,school
+Nimra Saghir,English,OI-BII,4,school
+Nimra Saghir,English,O-II,4,school
+Nousheen Ansar,Physical Education,VII-GI,1,school
+Nousheen Ansar,Physical Education,VII-GII,1,school
+Nousheen Ansar,Physical Education,VII-GIII,1,school
+Nousheen Ansar,Physical Education,Pre-IX GI,1,school
+Nousheen Ansar,Physical Education,Pre-IX GII,1,school
+Nousheen Ansar,Physical Education,IX-GI,1,school
+Nousheen Ansar,Physical Education,IX-GII,1,school
+Nousheen Ansar,Physical Education,IX-GIII,1,school
+Nousheen Ansar,Physical Education,X-GI,1,school
+Nousheen Ansar,Physical Education,X-GII,1,school
+Qurat Ul Ain,Maths,IX-GI,5,school
+Qurat Ul Ain,Maths,IX-GII,5,school
+Qurat Ul Ain,Maths,IX-GIII,5,school
+Qurat Ul Ain,Maths,X-GI,5,school
+Qurat Ul Ain,Maths,X-GII,5,school
+Rabia Javed,English,Pre-IX BII,5,school
+Rabia Javed,English,Pre-IX GII,5,school
+Rabia Javed,English,IX-GII,5,school
+Rabia Javed,English,IX-GIII,5,school
+Rabia Javed,English,X-GII,5,school
+Rabia Saeed,T.H.Q,IX-GI,3,school
+Rabia Saeed,T.H.Q,IX-GII,3,school
+Rabiya Ghaffar,T.H.Q,IX-GIII,3,school
+Rabiya Ghaffar,Islamiyat,OI-BI,6,school
+Rabiya Ghaffar,Islamiyat,OI-BII,6,school
+Rabiya Ghaffar,Islamiyat,O-II,6,school
+Rabiya Ghaffar,English,O-III,7,school
+Raja Bahadar,Maths,IX-BI,5,school
+Raja Bahadar,Maths,IX-BII,5,school
+Raja Bahadar,Maths,X-BI,5,school
+Raja Bahadar,Maths,X-BII,5,school
+Rana Bilal Masood,Computer,X-BI,5,school
+Rubina Kausar,Urdu,VII-GI,6,school
+Rubina Kausar,Urdu,VII-GII,6,school
+Rubina Kausar,Islamiyat,VII-GII,3,school
+Rubina Kausar,Urdu,VII-GIII,6,school
+Rubina Kausar,Urdu,Pre-IX GI,5,school
+Rubina Kausar,Urdu,Pre-IX GII,5,school
+Saba Babar,English,VII-GI,6,school
+Saba Babar,English,VII-GII,6,school
+Saba Babar,English,VII-GIII,6,school
+Saba Babar,English,Pre-IX GI,5,school
+Sadia Masood,Urdu,IX-GI,5,school
+Sadia Masood,Urdu,IX-GII,5,school
+Sadia Masood,Urdu,IX-GIII,5,school
+Sadia Masood,Urdu,X-GI,5,school
+Sadia Masood,Urdu,X-GII,5,school
+Saima Ali,Islamiyat,Pre-IX BI,3,school
+Saima Ali,Islamiyat,Pre-IX BII,3,school
+Saima Ali,Islamiyat,Pre-IX GI,3,school
+Saima Ali,Islamiyat,Pre-IX GII,3,school
+Saima Ali,Islamiyat,IX-BI,6,school
+Saima Ali,Islamiyat,IX-BII,6,school
+Sajida Parveen,Urdu,Pre-IX BI,5,school
+Sajida Parveen,Urdu,IX-BI,5,school
+Sajida Parveen,Urdu,IX-BII,5,school
+Sajida Parveen,Urdu,X-BI,5,school
+Sajida Parveen,Urdu,X-BII,5,school
+Samiya Shafeeq,Geography,VII-BI,3,school
+Samiya Shafeeq,History,VII-BII,3,school
+Samiya Shafeeq,Geography,VII-BII,3,school
+Samiya Shafeeq,Islamiyat,VII-GIII,3,school
+Samiya Shafeeq,Geography,VII-GIII,3,school
+Samiya Shafeeq,Pak Studies,Pre-IX BI,5,school
+Samiya Shafeeq,Pak Studies,Pre-IX BII,5,school
+Sana Qasim,Pak Studies,Pre-IX GII,5,school
+Sana Qasim,Pak Studies,X-BI,6,school
+Sana Qasim,Pak Studies,X-BII,6,school
+Sana Qasim,Pak Studies,X-GI,6,school
+Sehar Abbas,Pak Studies,Pre-IX GI,5,school
+Sehar Abbas,Islamiyat,Pre-O,6,school
+Sehar Abbas,Geography,Pre-O,3,school
+Sehar Abbas,History,Pre-O,4,school
+Sehar Abbas,Pak Studies,OI-BII,6,school
+Shahid Saeed,English,VII-BI,6,school
+Shahid Saeed,English,VII-BII,6,school
+Shahid Saeed,English,VII-BIII,6,school
+Shahid Saeed,English,Pre-IX BI,5,school
+Shumaila Quoom,T. H. Q,VII-BIII,3,school
+Shumaila Quoom,Islamiyat,VII-BIII,3,school
+Shumaila Quoom,T. H. Q,VII-GI,3,school
+Shumaila Quoom,Islamiyat,VII-GI,3,school
+Shumaila Quoom,T. H. Q,VII-GII,3,school
+Shumaila Quoom,T. H. Q,VII-GIII,3,school
+Shumaila Quoom,T.H.Q,Pre-IX GI,3,school
+Shumaila Quoom,T.H.Q,Pre-IX GII,3,school
+Umair Murtaza,T. H. Q,VII-BI,3,school
+Umair Murtaza,T. H. Q,VII-BII,3,school
+Umair Murtaza,T.H.Q,Pre-IX BI,3,school
+Umair Murtaza,T.H.Q,Pre-IX BII,3,school
+Umair Murtaza,T.H.Q,IX-BI,3,school
+Umair Murtaza,T.H.Q,IX-BII,3,school
+Umair Murtaza,T.H.Q,X-BI,3,school
+Umair Murtaza,T.H.Q,X-BII,3,school
+Umm E Zainab,Maths,VII-GI,6,school
+Umm E Zainab,Maths,VII-GII,6,school
+Umm E Zainab,Maths,VII-GIII,6,school
+Umm E Zainab,Maths,Pre-IX GI,5,school
