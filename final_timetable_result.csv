@@ -1,961 +1,961 @@
 Institution,Day,Period,Teacher,Class,Subject,Room
-SCHOOL,Mon,Period 6,Abdul Hanan,Pre-IX BI,Chemistry,Standard Room
-SCHOOL,Mon,Period 8,Abdul Hanan,Pre-IX BI,Chemistry,Standard Room
-SCHOOL,Thu,Period 4,Abdul Hanan,Pre-IX BI,Chemistry,Standard Room
-SCHOOL,Thu,Period 5,Abdul Hanan,Pre-IX BI,Chemistry,Standard Room
-SCHOOL,Mon,Period 2,Abdul Hanan,IX-BI,Chemistry,Standard Room
-SCHOOL,Wed,Period 5,Abdul Hanan,IX-BI,Chemistry,Standard Room
-SCHOOL,Wed,Period 6,Abdul Hanan,IX-BI,Chemistry,Standard Room
+SCHOOL,Mon,Period 5,Abdul Hanan,Pre-IX BI,Chemistry,Standard Room
+SCHOOL,Mon,Period 10,Abdul Hanan,Pre-IX BI,Chemistry,Standard Room
+SCHOOL,Tue,Period 3,Abdul Hanan,Pre-IX BI,Chemistry,Standard Room
+SCHOOL,Fri,Period 8,Abdul Hanan,Pre-IX BI,Chemistry,Standard Room
+SCHOOL,Mon,Period 8,Abdul Hanan,IX-BI,Chemistry,Standard Room
+SCHOOL,Tue,Period 9,Abdul Hanan,IX-BI,Chemistry,Standard Room
+SCHOOL,Wed,Period 3,Abdul Hanan,IX-BI,Chemistry,Standard Room
 SCHOOL,Thu,Period 1,Abdul Hanan,IX-BI,Chemistry,Standard Room
-SCHOOL,Fri,Period 2,Abdul Hanan,IX-BI,Chemistry,Standard Room
-SCHOOL,Tue,Period 4,Abdul Hanan,IX-BII,Chemistry,Standard Room
-SCHOOL,Wed,Period 2,Abdul Hanan,IX-BII,Chemistry,Standard Room
-SCHOOL,Thu,Period 7,Abdul Hanan,IX-BII,Chemistry,Standard Room
-SCHOOL,Fri,Period 1,Abdul Hanan,IX-BII,Chemistry,Standard Room
-SCHOOL,Fri,Period 5,Abdul Hanan,IX-BII,Chemistry,Standard Room
-SCHOOL,Mon,Period 5,Abdul Hanan,X-BI,Chemistry,Standard Room
-SCHOOL,Wed,Period 4,Abdul Hanan,X-BI,Chemistry,Standard Room
-SCHOOL,Wed,Period 8,Abdul Hanan,X-BI,Chemistry,Standard Room
-SCHOOL,Thu,Period 2,Abdul Hanan,X-BI,Chemistry,Standard Room
-SCHOOL,Fri,Period 3,Abdul Hanan,X-BI,Chemistry,Standard Room
-SCHOOL,Tue,Period 2,Abdul Hanan,X-BII,Chemistry,Standard Room
-SCHOOL,Tue,Period 7,Abdul Hanan,X-BII,Chemistry,Standard Room
-SCHOOL,Wed,Period 1,Abdul Hanan,X-BII,Chemistry,Standard Room
-SCHOOL,Thu,Period 6,Abdul Hanan,X-BII,Chemistry,Standard Room
-SCHOOL,Fri,Period 7,Abdul Hanan,X-BII,Chemistry,Standard Room
-SCHOOL,Mon,Period 5,Aiman Javed,VII-BIII,Science,Standard Room
-SCHOOL,Wed,Period 3,Aiman Javed,VII-BIII,Science,Standard Room
-SCHOOL,Wed,Period 7,Aiman Javed,VII-BIII,Science,Standard Room
+SCHOOL,Thu,Period 4,Abdul Hanan,IX-BI,Chemistry,Standard Room
+SCHOOL,Tue,Period 7,Abdul Hanan,IX-BII,Chemistry,Standard Room
+SCHOOL,Wed,Period 4,Abdul Hanan,IX-BII,Chemistry,Standard Room
+SCHOOL,Wed,Period 8,Abdul Hanan,IX-BII,Chemistry,Standard Room
+SCHOOL,Thu,Period 10,Abdul Hanan,IX-BII,Chemistry,Standard Room
+SCHOOL,Fri,Period 2,Abdul Hanan,IX-BII,Chemistry,Standard Room
+SCHOOL,Mon,Period 6,Abdul Hanan,X-BI,Chemistry,Standard Room
+SCHOOL,Tue,Period 1,Abdul Hanan,X-BI,Chemistry,Standard Room
+SCHOOL,Tue,Period 2,Abdul Hanan,X-BI,Chemistry,Standard Room
+SCHOOL,Tue,Period 8,Abdul Hanan,X-BI,Chemistry,Standard Room
+SCHOOL,Thu,Period 3,Abdul Hanan,X-BI,Chemistry,Standard Room
+SCHOOL,Mon,Period 3,Abdul Hanan,X-BII,Chemistry,Standard Room
+SCHOOL,Tue,Period 10,Abdul Hanan,X-BII,Chemistry,Standard Room
+SCHOOL,Wed,Period 5,Abdul Hanan,X-BII,Chemistry,Standard Room
+SCHOOL,Thu,Period 5,Abdul Hanan,X-BII,Chemistry,Standard Room
+SCHOOL,Fri,Period 6,Abdul Hanan,X-BII,Chemistry,Standard Room
+SCHOOL,Tue,Period 1,Aiman Javed,VII-BIII,Science,Standard Room
+SCHOOL,Wed,Period 1,Aiman Javed,VII-BIII,Science,Standard Room
+SCHOOL,Wed,Period 2,Aiman Javed,VII-BIII,Science,Standard Room
 SCHOOL,Thu,Period 1,Aiman Javed,VII-BIII,Science,Standard Room
 SCHOOL,Mon,Period 1,Aiman Javed,VII-GI,Science,Standard Room
-SCHOOL,Mon,Period 3,Aiman Javed,VII-GI,Science,Standard Room
-SCHOOL,Tue,Period 4,Aiman Javed,VII-GI,Science,Standard Room
-SCHOOL,Fri,Period 4,Aiman Javed,VII-GI,Science,Standard Room
-SCHOOL,Mon,Period 2,Aiman Javed,VII-GII,Science,Standard Room
-SCHOOL,Tue,Period 6,Aiman Javed,VII-GII,Science,Standard Room
-SCHOOL,Thu,Period 6,Aiman Javed,VII-GII,Science,Standard Room
-SCHOOL,Thu,Period 7,Aiman Javed,VII-GII,Science,Standard Room
-SCHOOL,Tue,Period 3,Aiman Javed,VII-GIII,Science,Standard Room
-SCHOOL,Wed,Period 6,Aiman Javed,VII-GIII,Science,Standard Room
-SCHOOL,Thu,Period 8,Aiman Javed,VII-GIII,Science,Standard Room
+SCHOOL,Wed,Period 4,Aiman Javed,VII-GI,Science,Standard Room
+SCHOOL,Wed,Period 7,Aiman Javed,VII-GI,Science,Standard Room
+SCHOOL,Fri,Period 7,Aiman Javed,VII-GI,Science,Standard Room
+SCHOOL,Tue,Period 5,Aiman Javed,VII-GII,Science,Standard Room
+SCHOOL,Wed,Period 3,Aiman Javed,VII-GII,Science,Standard Room
+SCHOOL,Wed,Period 5,Aiman Javed,VII-GII,Science,Standard Room
+SCHOOL,Fri,Period 3,Aiman Javed,VII-GII,Science,Standard Room
+SCHOOL,Wed,Period 9,Aiman Javed,VII-GIII,Science,Standard Room
 SCHOOL,Fri,Period 2,Aiman Javed,VII-GIII,Science,Standard Room
-SCHOOL,Tue,Period 8,Aiman Javed,Pre-IX BII,Chemistry,Standard Room
-SCHOOL,Thu,Period 2,Aiman Javed,Pre-IX BII,Chemistry,Standard Room
-SCHOOL,Thu,Period 4,Aiman Javed,Pre-IX BII,Chemistry,Standard Room
-SCHOOL,Fri,Period 8,Aiman Javed,Pre-IX BII,Chemistry,Standard Room
-SCHOOL,Mon,Period 6,Aiman Javed,Pre-IX GII,Chemistry,Standard Room
-SCHOOL,Tue,Period 2,Aiman Javed,Pre-IX GII,Chemistry,Standard Room
-SCHOOL,Wed,Period 2,Aiman Javed,Pre-IX GII,Chemistry,Standard Room
-SCHOOL,Thu,Period 3,Aiman Javed,Pre-IX GII,Chemistry,Standard Room
-SCHOOL,Mon,Period 5,Anees Anjum,VII-BI,Science,Standard Room
-SCHOOL,Thu,Period 4,Anees Anjum,VII-BI,Science,Standard Room
-SCHOOL,Thu,Period 5,Anees Anjum,VII-BI,Science,Standard Room
-SCHOOL,Fri,Period 6,Anees Anjum,VII-BI,Science,Standard Room
-SCHOOL,Wed,Period 8,Anees Anjum,VII-BII,Science,Standard Room
-SCHOOL,Thu,Period 8,Anees Anjum,VII-BII,Science,Standard Room
-SCHOOL,Fri,Period 2,Anees Anjum,VII-BII,Science,Standard Room
-SCHOOL,Fri,Period 5,Anees Anjum,VII-BII,Science,Standard Room
-SCHOOL,Wed,Period 2,Anees Anjum,Pre-IX BI,Physics,Standard Room
-SCHOOL,Wed,Period 3,Anees Anjum,Pre-IX BI,Physics,Standard Room
-SCHOOL,Fri,Period 1,Anees Anjum,Pre-IX BI,Physics,Standard Room
-SCHOOL,Fri,Period 7,Anees Anjum,Pre-IX BI,Physics,Standard Room
-SCHOOL,Mon,Period 7,Anees Anjum,Pre-IX BII,Physics,Standard Room
-SCHOOL,Mon,Period 8,Anees Anjum,Pre-IX BII,Physics,Standard Room
+SCHOOL,Fri,Period 8,Aiman Javed,VII-GIII,Science,Standard Room
+SCHOOL,Fri,Period 9,Aiman Javed,VII-GIII,Science,Standard Room
+SCHOOL,Mon,Period 4,Aiman Javed,Pre-IX BII,Chemistry,Standard Room
+SCHOOL,Tue,Period 3,Aiman Javed,Pre-IX BII,Chemistry,Standard Room
+SCHOOL,Tue,Period 9,Aiman Javed,Pre-IX BII,Chemistry,Standard Room
+SCHOOL,Wed,Period 6,Aiman Javed,Pre-IX BII,Chemistry,Standard Room
+SCHOOL,Mon,Period 10,Aiman Javed,Pre-IX GII,Chemistry,Standard Room
+SCHOOL,Thu,Period 2,Aiman Javed,Pre-IX GII,Chemistry,Standard Room
+SCHOOL,Thu,Period 6,Aiman Javed,Pre-IX GII,Chemistry,Standard Room
+SCHOOL,Fri,Period 10,Aiman Javed,Pre-IX GII,Chemistry,Standard Room
+SCHOOL,Mon,Period 8,Anees Anjum,VII-BI,Science,Standard Room
+SCHOOL,Mon,Period 9,Anees Anjum,VII-BI,Science,Standard Room
+SCHOOL,Thu,Period 10,Anees Anjum,VII-BI,Science,Standard Room
+SCHOOL,Fri,Period 10,Anees Anjum,VII-BI,Science,Standard Room
+SCHOOL,Tue,Period 5,Anees Anjum,VII-BII,Science,Standard Room
+SCHOOL,Tue,Period 9,Anees Anjum,VII-BII,Science,Standard Room
+SCHOOL,Wed,Period 10,Anees Anjum,VII-BII,Science,Standard Room
+SCHOOL,Thu,Period 6,Anees Anjum,VII-BII,Science,Standard Room
+SCHOOL,Tue,Period 6,Anees Anjum,Pre-IX BI,Physics,Standard Room
+SCHOOL,Wed,Period 1,Anees Anjum,Pre-IX BI,Physics,Standard Room
+SCHOOL,Wed,Period 8,Anees Anjum,Pre-IX BI,Physics,Standard Room
+SCHOOL,Thu,Period 5,Anees Anjum,Pre-IX BI,Physics,Standard Room
 SCHOOL,Tue,Period 2,Anees Anjum,Pre-IX BII,Physics,Standard Room
-SCHOOL,Fri,Period 3,Anees Anjum,Pre-IX BII,Physics,Standard Room
-SCHOOL,Tue,Period 1,Anees Anjum,IX-BI,Physics,Standard Room
-SCHOOL,Wed,Period 1,Anees Anjum,IX-BI,Physics,Standard Room
-SCHOOL,Wed,Period 4,Anees Anjum,IX-BI,Physics,Standard Room
-SCHOOL,Thu,Period 7,Anees Anjum,IX-BI,Physics,Standard Room
-SCHOOL,Fri,Period 4,Anees Anjum,IX-BI,Physics,Standard Room
-SCHOOL,Tue,Period 3,Anees Anjum,IX-BII,Physics,Standard Room
-SCHOOL,Tue,Period 5,Anees Anjum,IX-BII,Physics,Standard Room
-SCHOOL,Tue,Period 7,Anees Anjum,IX-BII,Physics,Standard Room
+SCHOOL,Tue,Period 4,Anees Anjum,Pre-IX BII,Physics,Standard Room
+SCHOOL,Tue,Period 7,Anees Anjum,Pre-IX BII,Physics,Standard Room
+SCHOOL,Wed,Period 2,Anees Anjum,Pre-IX BII,Physics,Standard Room
+SCHOOL,Mon,Period 3,Anees Anjum,IX-BI,Physics,Standard Room
+SCHOOL,Thu,Period 3,Anees Anjum,IX-BI,Physics,Standard Room
+SCHOOL,Fri,Period 6,Anees Anjum,IX-BI,Physics,Standard Room
+SCHOOL,Fri,Period 7,Anees Anjum,IX-BI,Physics,Standard Room
+SCHOOL,Fri,Period 8,Anees Anjum,IX-BI,Physics,Standard Room
+SCHOOL,Wed,Period 3,Anees Anjum,IX-BII,Physics,Standard Room
 SCHOOL,Wed,Period 7,Anees Anjum,IX-BII,Physics,Standard Room
-SCHOOL,Thu,Period 6,Anees Anjum,IX-BII,Physics,Standard Room
-SCHOOL,Mon,Period 6,Anees Anjum,X-BII,Physics,Standard Room
-SCHOOL,Tue,Period 6,Anees Anjum,X-BII,Physics,Standard Room
-SCHOOL,Wed,Period 5,Anees Anjum,X-BII,Physics,Standard Room
-SCHOOL,Thu,Period 2,Anees Anjum,X-BII,Physics,Standard Room
-SCHOOL,Fri,Period 8,Anees Anjum,X-BII,Physics,Standard Room
-SCHOOL,Tue,Period 8,Arooj Fatima,Pre-IX GI,Physics,Standard Room
-SCHOOL,Wed,Period 4,Arooj Fatima,Pre-IX GI,Physics,Standard Room
+SCHOOL,Thu,Period 2,Anees Anjum,IX-BII,Physics,Standard Room
+SCHOOL,Fri,Period 5,Anees Anjum,IX-BII,Physics,Standard Room
+SCHOOL,Fri,Period 9,Anees Anjum,IX-BII,Physics,Standard Room
+SCHOOL,Mon,Period 1,Anees Anjum,X-BII,Physics,Standard Room
+SCHOOL,Tue,Period 8,Anees Anjum,X-BII,Physics,Standard Room
+SCHOOL,Thu,Period 7,Anees Anjum,X-BII,Physics,Standard Room
+SCHOOL,Thu,Period 9,Anees Anjum,X-BII,Physics,Standard Room
+SCHOOL,Fri,Period 1,Anees Anjum,X-BII,Physics,Standard Room
+SCHOOL,Mon,Period 4,Arooj Fatima,Pre-IX GI,Physics,Standard Room
+SCHOOL,Mon,Period 5,Arooj Fatima,Pre-IX GI,Physics,Standard Room
 SCHOOL,Wed,Period 7,Arooj Fatima,Pre-IX GI,Physics,Standard Room
-SCHOOL,Thu,Period 3,Arooj Fatima,Pre-IX GI,Physics,Standard Room
-SCHOOL,Tue,Period 1,Arooj Fatima,Pre-IX GII,Physics,Standard Room
-SCHOOL,Wed,Period 5,Arooj Fatima,Pre-IX GII,Physics,Standard Room
-SCHOOL,Wed,Period 6,Arooj Fatima,Pre-IX GII,Physics,Standard Room
-SCHOOL,Fri,Period 3,Arooj Fatima,Pre-IX GII,Physics,Standard Room
-SCHOOL,Mon,Period 2,Arooj Fatima,IX-GI,Physics,Standard Room
-SCHOOL,Wed,Period 1,Arooj Fatima,IX-GI,Physics,Standard Room
-SCHOOL,Thu,Period 1,Arooj Fatima,IX-GI,Physics,Standard Room
-SCHOOL,Thu,Period 6,Arooj Fatima,IX-GI,Physics,Standard Room
-SCHOOL,Fri,Period 8,Arooj Fatima,IX-GI,Physics,Standard Room
-SCHOOL,Mon,Period 3,Arooj Fatima,IX-GII,Physics,Standard Room
-SCHOOL,Tue,Period 4,Arooj Fatima,IX-GII,Physics,Standard Room
-SCHOOL,Tue,Period 7,Arooj Fatima,IX-GII,Physics,Standard Room
-SCHOOL,Thu,Period 7,Arooj Fatima,IX-GII,Physics,Standard Room
-SCHOOL,Fri,Period 2,Arooj Fatima,IX-GII,Physics,Standard Room
-SCHOOL,Mon,Period 4,Arooj Fatima,IX-GIII,Physics,Standard Room
-SCHOOL,Tue,Period 3,Arooj Fatima,IX-GIII,Physics,Standard Room
-SCHOOL,Thu,Period 8,Arooj Fatima,IX-GIII,Physics,Standard Room
-SCHOOL,Fri,Period 1,Arooj Fatima,IX-GIII,Physics,Standard Room
+SCHOOL,Fri,Period 7,Arooj Fatima,Pre-IX GI,Physics,Standard Room
+SCHOOL,Mon,Period 3,Arooj Fatima,Pre-IX GII,Physics,Standard Room
+SCHOOL,Mon,Period 8,Arooj Fatima,Pre-IX GII,Physics,Standard Room
+SCHOOL,Wed,Period 9,Arooj Fatima,Pre-IX GII,Physics,Standard Room
+SCHOOL,Thu,Period 5,Arooj Fatima,Pre-IX GII,Physics,Standard Room
+SCHOOL,Mon,Period 9,Arooj Fatima,IX-GI,Physics,Standard Room
+SCHOOL,Tue,Period 7,Arooj Fatima,IX-GI,Physics,Standard Room
+SCHOOL,Tue,Period 9,Arooj Fatima,IX-GI,Physics,Standard Room
+SCHOOL,Fri,Period 1,Arooj Fatima,IX-GI,Physics,Standard Room
+SCHOOL,Fri,Period 10,Arooj Fatima,IX-GI,Physics,Standard Room
+SCHOOL,Tue,Period 1,Arooj Fatima,IX-GII,Physics,Standard Room
+SCHOOL,Wed,Period 2,Arooj Fatima,IX-GII,Physics,Standard Room
+SCHOOL,Wed,Period 10,Arooj Fatima,IX-GII,Physics,Standard Room
+SCHOOL,Thu,Period 4,Arooj Fatima,IX-GII,Physics,Standard Room
+SCHOOL,Fri,Period 5,Arooj Fatima,IX-GII,Physics,Standard Room
+SCHOOL,Tue,Period 4,Arooj Fatima,IX-GIII,Physics,Standard Room
+SCHOOL,Tue,Period 5,Arooj Fatima,IX-GIII,Physics,Standard Room
+SCHOOL,Thu,Period 9,Arooj Fatima,IX-GIII,Physics,Standard Room
+SCHOOL,Fri,Period 3,Arooj Fatima,IX-GIII,Physics,Standard Room
 SCHOOL,Fri,Period 4,Arooj Fatima,IX-GIII,Physics,Standard Room
-SCHOOL,Mon,Period 5,Arooj Fatima,X-GI,Physics,Standard Room
-SCHOOL,Mon,Period 7,Arooj Fatima,X-GI,Physics,Standard Room
-SCHOOL,Tue,Period 5,Arooj Fatima,X-GI,Physics,Standard Room
-SCHOOL,Wed,Period 8,Arooj Fatima,X-GI,Physics,Standard Room
-SCHOOL,Thu,Period 5,Arooj Fatima,X-GI,Physics,Standard Room
-SCHOOL,Mon,Period 8,Arooj Fatima,VII-GII,Computer,Standard Room
-SCHOOL,Wed,Period 2,Arooj Fatima,VII-GII,Computer,Standard Room
-SCHOOL,Wed,Period 3,Arooj Fatima,VII-GII,Computer,Standard Room
+SCHOOL,Mon,Period 2,Arooj Fatima,X-GI,Physics,Standard Room
+SCHOOL,Mon,Period 10,Arooj Fatima,X-GI,Physics,Standard Room
+SCHOOL,Wed,Period 3,Arooj Fatima,X-GI,Physics,Standard Room
+SCHOOL,Thu,Period 6,Arooj Fatima,X-GI,Physics,Standard Room
+SCHOOL,Fri,Period 2,Arooj Fatima,X-GI,Physics,Standard Room
+SCHOOL,Tue,Period 3,Arooj Fatima,VII-GII,Computer,Standard Room
+SCHOOL,Thu,Period 2,Arooj Fatima,VII-GII,Computer,Standard Room
+SCHOOL,Thu,Period 8,Arooj Fatima,VII-GII,Computer,Standard Room
 SCHOOL,Mon,Period 1,Asim Iftikhar,VII-BI,Art,Standard Room
 SCHOOL,Mon,Period 2,Asim Iftikhar,VII-BII,Art,Standard Room
 SCHOOL,Mon,Period 3,Asim Iftikhar,VII-BIII,Art,Standard Room
-SCHOOL,Mon,Period 8,Ayesha Arshad,VII-BI,Urdu,Standard Room
-SCHOOL,Tue,Period 4,Ayesha Arshad,VII-BI,Urdu,Standard Room
-SCHOOL,Tue,Period 6,Ayesha Arshad,VII-BI,Urdu,Standard Room
+SCHOOL,Tue,Period 5,Ayesha Arshad,VII-BI,Urdu,Standard Room
 SCHOOL,Wed,Period 4,Ayesha Arshad,VII-BI,Urdu,Standard Room
-SCHOOL,Wed,Period 7,Ayesha Arshad,VII-BI,Urdu,Standard Room
-SCHOOL,Thu,Period 1,Ayesha Arshad,VII-BI,Urdu,Standard Room
-SCHOOL,Mon,Period 4,Ayesha Arshad,VII-BI,Islamiyat,Standard Room
-SCHOOL,Tue,Period 8,Ayesha Arshad,VII-BI,Islamiyat,Standard Room
-SCHOOL,Fri,Period 2,Ayesha Arshad,VII-BI,Islamiyat,Standard Room
-SCHOOL,Mon,Period 6,Ayesha Arshad,VII-BII,Urdu,Standard Room
-SCHOOL,Tue,Period 7,Ayesha Arshad,VII-BII,Urdu,Standard Room
-SCHOOL,Wed,Period 1,Ayesha Arshad,VII-BII,Urdu,Standard Room
-SCHOOL,Wed,Period 3,Ayesha Arshad,VII-BII,Urdu,Standard Room
-SCHOOL,Wed,Period 5,Ayesha Arshad,VII-BII,Urdu,Standard Room
-SCHOOL,Fri,Period 1,Ayesha Arshad,VII-BII,Urdu,Standard Room
-SCHOOL,Tue,Period 2,Ayesha Arshad,VII-BII,Islamiyat,Standard Room
+SCHOOL,Wed,Period 8,Ayesha Arshad,VII-BI,Urdu,Standard Room
+SCHOOL,Wed,Period 9,Ayesha Arshad,VII-BI,Urdu,Standard Room
+SCHOOL,Wed,Period 10,Ayesha Arshad,VII-BI,Urdu,Standard Room
+SCHOOL,Thu,Period 9,Ayesha Arshad,VII-BI,Urdu,Standard Room
+SCHOOL,Fri,Period 1,Ayesha Arshad,VII-BI,Islamiyat,Standard Room
+SCHOOL,Fri,Period 3,Ayesha Arshad,VII-BI,Islamiyat,Standard Room
+SCHOOL,Fri,Period 4,Ayesha Arshad,VII-BI,Islamiyat,Standard Room
+SCHOOL,Mon,Period 10,Ayesha Arshad,VII-BII,Urdu,Standard Room
+SCHOOL,Tue,Period 10,Ayesha Arshad,VII-BII,Urdu,Standard Room
+SCHOOL,Thu,Period 1,Ayesha Arshad,VII-BII,Urdu,Standard Room
+SCHOOL,Thu,Period 8,Ayesha Arshad,VII-BII,Urdu,Standard Room
+SCHOOL,Fri,Period 7,Ayesha Arshad,VII-BII,Urdu,Standard Room
+SCHOOL,Fri,Period 9,Ayesha Arshad,VII-BII,Urdu,Standard Room
 SCHOOL,Wed,Period 2,Ayesha Arshad,VII-BII,Islamiyat,Standard Room
-SCHOOL,Fri,Period 4,Ayesha Arshad,VII-BII,Islamiyat,Standard Room
-SCHOOL,Mon,Period 1,Ayesha Arshad,VII-BIII,Urdu,Standard Room
-SCHOOL,Thu,Period 5,Ayesha Arshad,VII-BIII,Urdu,Standard Room
-SCHOOL,Fri,Period 3,Ayesha Arshad,VII-BIII,Urdu,Standard Room
-SCHOOL,Fri,Period 6,Ayesha Arshad,VII-BIII,Urdu,Standard Room
-SCHOOL,Fri,Period 7,Ayesha Arshad,VII-BIII,Urdu,Standard Room
-SCHOOL,Fri,Period 8,Ayesha Arshad,VII-BIII,Urdu,Standard Room
-SCHOOL,Tue,Period 2,Ayesha Manzoor,VII-BI,Library,Standard Room
-SCHOOL,Thu,Period 3,Ayesha Manzoor,VII-BII,Library,Standard Room
-SCHOOL,Thu,Period 2,Ayesha Manzoor,VII-BIII,Library,Standard Room
-SCHOOL,Tue,Period 7,Ayesha Manzoor,VII-GI,Library,Standard Room
-SCHOOL,Wed,Period 7,Ayesha Manzoor,VII-GII,Library,Standard Room
-SCHOOL,Tue,Period 8,Ayesha Manzoor,VII-GIII,Library,Standard Room
-SCHOOL,Tue,Period 6,Ayesha Manzoor,Pre-IX BI,Library,Standard Room
-SCHOOL,Thu,Period 6,Ayesha Manzoor,Pre-IX BII,Library,Standard Room
-SCHOOL,Mon,Period 3,Ayesha Manzoor,Pre-IX GI,Library,Standard Room
-SCHOOL,Thu,Period 4,Ayesha Manzoor,Pre-IX GII,Library,Standard Room
-SCHOOL,Mon,Period 2,Ayesha Nazish,X-BI,English,Standard Room
-SCHOOL,Mon,Period 3,Ayesha Nazish,X-BI,English,Standard Room
-SCHOOL,Thu,Period 4,Ayesha Nazish,X-BI,English,Standard Room
-SCHOOL,Fri,Period 2,Ayesha Nazish,X-BI,English,Standard Room
-SCHOOL,Fri,Period 4,Ayesha Nazish,X-BI,English,Standard Room
-SCHOOL,Mon,Period 1,Ayesha Nazish,X-BII,English,Standard Room
-SCHOOL,Tue,Period 1,Ayesha Nazish,X-BII,English,Standard Room
-SCHOOL,Wed,Period 2,Ayesha Nazish,X-BII,English,Standard Room
-SCHOOL,Thu,Period 5,Ayesha Nazish,X-BII,English,Standard Room
-SCHOOL,Fri,Period 1,Ayesha Nazish,X-BII,English,Standard Room
-SCHOOL,Mon,Period 4,Ayesha Nazish,IX-BI,English,Standard Room
+SCHOOL,Fri,Period 2,Ayesha Arshad,VII-BII,Islamiyat,Standard Room
+SCHOOL,Fri,Period 8,Ayesha Arshad,VII-BII,Islamiyat,Standard Room
+SCHOOL,Mon,Period 8,Ayesha Arshad,VII-BIII,Urdu,Standard Room
+SCHOOL,Mon,Period 9,Ayesha Arshad,VII-BIII,Urdu,Standard Room
+SCHOOL,Tue,Period 2,Ayesha Arshad,VII-BIII,Urdu,Standard Room
+SCHOOL,Tue,Period 6,Ayesha Arshad,VII-BIII,Urdu,Standard Room
+SCHOOL,Tue,Period 7,Ayesha Arshad,VII-BIII,Urdu,Standard Room
+SCHOOL,Tue,Period 9,Ayesha Arshad,VII-BIII,Urdu,Standard Room
+SCHOOL,Fri,Period 9,Ayesha Manzoor,VII-BI,Library,Standard Room
+SCHOOL,Mon,Period 7,Ayesha Manzoor,VII-BII,Library,Standard Room
+SCHOOL,Tue,Period 5,Ayesha Manzoor,VII-BIII,Library,Standard Room
+SCHOOL,Thu,Period 3,Ayesha Manzoor,VII-GI,Library,Standard Room
+SCHOOL,Thu,Period 10,Ayesha Manzoor,VII-GII,Library,Standard Room
+SCHOOL,Wed,Period 3,Ayesha Manzoor,VII-GIII,Library,Standard Room
+SCHOOL,Mon,Period 9,Ayesha Manzoor,Pre-IX BI,Library,Standard Room
+SCHOOL,Mon,Period 10,Ayesha Manzoor,Pre-IX BII,Library,Standard Room
+SCHOOL,Wed,Period 8,Ayesha Manzoor,Pre-IX GI,Library,Standard Room
+SCHOOL,Tue,Period 7,Ayesha Manzoor,Pre-IX GII,Library,Standard Room
+SCHOOL,Tue,Period 10,Ayesha Nazish,X-BI,English,Standard Room
+SCHOOL,Wed,Period 3,Ayesha Nazish,X-BI,English,Standard Room
+SCHOOL,Wed,Period 4,Ayesha Nazish,X-BI,English,Standard Room
+SCHOOL,Fri,Period 5,Ayesha Nazish,X-BI,English,Standard Room
+SCHOOL,Fri,Period 9,Ayesha Nazish,X-BI,English,Standard Room
+SCHOOL,Mon,Period 6,Ayesha Nazish,X-BII,English,Standard Room
+SCHOOL,Tue,Period 4,Ayesha Nazish,X-BII,English,Standard Room
+SCHOOL,Tue,Period 7,Ayesha Nazish,X-BII,English,Standard Room
+SCHOOL,Fri,Period 2,Ayesha Nazish,X-BII,English,Standard Room
+SCHOOL,Fri,Period 3,Ayesha Nazish,X-BII,English,Standard Room
 SCHOOL,Mon,Period 5,Ayesha Nazish,IX-BI,English,Standard Room
-SCHOOL,Wed,Period 3,Ayesha Nazish,IX-BI,English,Standard Room
-SCHOOL,Wed,Period 7,Ayesha Nazish,IX-BI,English,Standard Room
-SCHOOL,Fri,Period 6,Ayesha Nazish,IX-BI,English,Standard Room
-SCHOOL,Mon,Period 6,Ayesha Nazish,IX-BII,English,Standard Room
-SCHOOL,Thu,Period 1,Ayesha Nazish,IX-BII,English,Standard Room
-SCHOOL,Thu,Period 8,Ayesha Nazish,IX-BII,English,Standard Room
-SCHOOL,Fri,Period 3,Ayesha Nazish,IX-BII,English,Standard Room
-SCHOOL,Fri,Period 8,Ayesha Nazish,IX-BII,English,Standard Room
-SCHOOL,Tue,Period 2,Ayesha Nazish,IX-GI,English,Standard Room
-SCHOOL,Tue,Period 7,Ayesha Nazish,IX-GI,English,Standard Room
-SCHOOL,Wed,Period 6,Ayesha Nazish,IX-GI,English,Standard Room
+SCHOOL,Tue,Period 2,Ayesha Nazish,IX-BI,English,Standard Room
+SCHOOL,Tue,Period 6,Ayesha Nazish,IX-BI,English,Standard Room
+SCHOOL,Thu,Period 5,Ayesha Nazish,IX-BI,English,Standard Room
+SCHOOL,Fri,Period 1,Ayesha Nazish,IX-BI,English,Standard Room
+SCHOOL,Mon,Period 7,Ayesha Nazish,IX-BII,English,Standard Room
+SCHOOL,Mon,Period 9,Ayesha Nazish,IX-BII,English,Standard Room
+SCHOOL,Tue,Period 9,Ayesha Nazish,IX-BII,English,Standard Room
+SCHOOL,Thu,Period 3,Ayesha Nazish,IX-BII,English,Standard Room
+SCHOOL,Thu,Period 4,Ayesha Nazish,IX-BII,English,Standard Room
+SCHOOL,Wed,Period 7,Ayesha Nazish,IX-GI,English,Standard Room
 SCHOOL,Wed,Period 8,Ayesha Nazish,IX-GI,English,Standard Room
-SCHOOL,Fri,Period 5,Ayesha Nazish,IX-GI,English,Standard Room
-SCHOOL,Mon,Period 2,Ayesha Rashid,Pre-O,Science,Standard Room
-SCHOOL,Tue,Period 3,Ayesha Rashid,Pre-O,Science,Standard Room
-SCHOOL,Fri,Period 2,Ayesha Rashid,Pre-O,Science,Standard Room
-SCHOOL,Fri,Period 3,Ayesha Rashid,Pre-O,Science,Standard Room
-SCHOOL,Fri,Period 4,Ayesha Rashid,Pre-O,Science,Standard Room
-SCHOOL,Mon,Period 1,Ayesha Rashid,OI-BI,Chemistry,Standard Room
-SCHOOL,Mon,Period 7,Ayesha Rashid,OI-BI,Chemistry,Standard Room
-SCHOOL,Mon,Period 8,Ayesha Rashid,OI-BI,Chemistry,Standard Room
-SCHOOL,Thu,Period 7,Ayesha Rashid,OI-BI,Chemistry,Standard Room
-SCHOOL,Tue,Period 1,Ayesha Rashid,OI-BII,Chemistry,Standard Room
-SCHOOL,Tue,Period 6,Ayesha Rashid,OI-BII,Chemistry,Standard Room
-SCHOOL,Wed,Period 3,Ayesha Rashid,OI-BII,Chemistry,Standard Room
-SCHOOL,Thu,Period 2,Ayesha Rashid,OI-BII,Chemistry,Standard Room
-SCHOOL,Mon,Period 5,Ayesha Rashid,O-II,Chemistry,Standard Room
+SCHOOL,Wed,Period 9,Ayesha Nazish,IX-GI,English,Standard Room
+SCHOOL,Thu,Period 9,Ayesha Nazish,IX-GI,English,Standard Room
+SCHOOL,Fri,Period 8,Ayesha Nazish,IX-GI,English,Standard Room
+SCHOOL,Mon,Period 6,Ayesha Rashid,Pre-O,Science,Standard Room
+SCHOOL,Mon,Period 9,Ayesha Rashid,Pre-O,Science,Standard Room
+SCHOOL,Wed,Period 4,Ayesha Rashid,Pre-O,Science,Standard Room
+SCHOOL,Thu,Period 7,Ayesha Rashid,Pre-O,Science,Standard Room
+SCHOOL,Fri,Period 5,Ayesha Rashid,Pre-O,Science,Standard Room
+SCHOOL,Mon,Period 4,Ayesha Rashid,OI-BI,Chemistry,Standard Room
+SCHOOL,Tue,Period 9,Ayesha Rashid,OI-BI,Chemistry,Standard Room
+SCHOOL,Wed,Period 10,Ayesha Rashid,OI-BI,Chemistry,Standard Room
+SCHOOL,Thu,Period 4,Ayesha Rashid,OI-BI,Chemistry,Standard Room
+SCHOOL,Mon,Period 1,Ayesha Rashid,OI-BII,Chemistry,Standard Room
+SCHOOL,Thu,Period 8,Ayesha Rashid,OI-BII,Chemistry,Standard Room
+SCHOOL,Thu,Period 10,Ayesha Rashid,OI-BII,Chemistry,Standard Room
+SCHOOL,Fri,Period 9,Ayesha Rashid,OI-BII,Chemistry,Standard Room
 SCHOOL,Tue,Period 5,Ayesha Rashid,O-II,Chemistry,Standard Room
-SCHOOL,Tue,Period 7,Ayesha Rashid,O-II,Chemistry,Standard Room
-SCHOOL,Tue,Period 8,Ayesha Rashid,O-II,Chemistry,Standard Room
-SCHOOL,Mon,Period 3,Ayesha Rashid,O-III,Chemistry,Standard Room
-SCHOOL,Mon,Period 4,Ayesha Rashid,O-III,Chemistry,Standard Room
-SCHOOL,Mon,Period 6,Ayesha Rashid,O-III,Chemistry,Standard Room
-SCHOOL,Wed,Period 2,Ayesha Rashid,O-III,Chemistry,Standard Room
-SCHOOL,Wed,Period 8,Ayesha Rashid,O-III,Chemistry,Standard Room
+SCHOOL,Wed,Period 6,Ayesha Rashid,O-II,Chemistry,Standard Room
+SCHOOL,Thu,Period 6,Ayesha Rashid,O-II,Chemistry,Standard Room
+SCHOOL,Fri,Period 4,Ayesha Rashid,O-II,Chemistry,Standard Room
+SCHOOL,Mon,Period 2,Ayesha Rashid,O-III,Chemistry,Standard Room
+SCHOOL,Mon,Period 7,Ayesha Rashid,O-III,Chemistry,Standard Room
+SCHOOL,Wed,Period 1,Ayesha Rashid,O-III,Chemistry,Standard Room
 SCHOOL,Thu,Period 1,Ayesha Rashid,O-III,Chemistry,Standard Room
-SCHOOL,Fri,Period 5,Ayesha Rashid,O-III,Chemistry,Standard Room
-SCHOOL,Fri,Period 7,Ayesha Rashid,O-III,Chemistry,Standard Room
-SCHOOL,Mon,Period 2,Faiqa Shahzad,VII-BI,Maths,Standard Room
-SCHOOL,Wed,Period 2,Faiqa Shahzad,VII-BI,Maths,Standard Room
-SCHOOL,Thu,Period 2,Faiqa Shahzad,VII-BI,Maths,Standard Room
+SCHOOL,Thu,Period 2,Ayesha Rashid,O-III,Chemistry,Standard Room
+SCHOOL,Thu,Period 9,Ayesha Rashid,O-III,Chemistry,Standard Room
+SCHOOL,Fri,Period 1,Ayesha Rashid,O-III,Chemistry,Standard Room
+SCHOOL,Fri,Period 8,Ayesha Rashid,O-III,Chemistry,Standard Room
+SCHOOL,Mon,Period 3,Faiqa Shahzad,VII-BI,Maths,Standard Room
+SCHOOL,Mon,Period 10,Faiqa Shahzad,VII-BI,Maths,Standard Room
+SCHOOL,Tue,Period 1,Faiqa Shahzad,VII-BI,Maths,Standard Room
+SCHOOL,Wed,Period 1,Faiqa Shahzad,VII-BI,Maths,Standard Room
+SCHOOL,Thu,Period 4,Faiqa Shahzad,VII-BI,Maths,Standard Room
 SCHOOL,Thu,Period 6,Faiqa Shahzad,VII-BI,Maths,Standard Room
-SCHOOL,Fri,Period 7,Faiqa Shahzad,VII-BI,Maths,Standard Room
-SCHOOL,Fri,Period 8,Faiqa Shahzad,VII-BI,Maths,Standard Room
-SCHOOL,Mon,Period 4,Faiqa Shahzad,VII-BII,Maths,Standard Room
 SCHOOL,Mon,Period 5,Faiqa Shahzad,VII-BII,Maths,Standard Room
-SCHOOL,Wed,Period 6,Faiqa Shahzad,VII-BII,Maths,Standard Room
-SCHOOL,Thu,Period 5,Faiqa Shahzad,VII-BII,Maths,Standard Room
-SCHOOL,Fri,Period 3,Faiqa Shahzad,VII-BII,Maths,Standard Room
+SCHOOL,Mon,Period 6,Faiqa Shahzad,VII-BII,Maths,Standard Room
+SCHOOL,Tue,Period 8,Faiqa Shahzad,VII-BII,Maths,Standard Room
+SCHOOL,Wed,Period 7,Faiqa Shahzad,VII-BII,Maths,Standard Room
+SCHOOL,Thu,Period 2,Faiqa Shahzad,VII-BII,Maths,Standard Room
 SCHOOL,Fri,Period 6,Faiqa Shahzad,VII-BII,Maths,Standard Room
-SCHOOL,Tue,Period 1,Faiqa Shahzad,VII-BIII,Maths,Standard Room
-SCHOOL,Tue,Period 2,Faiqa Shahzad,VII-BIII,Maths,Standard Room
+SCHOOL,Mon,Period 4,Faiqa Shahzad,VII-BIII,Maths,Standard Room
 SCHOOL,Tue,Period 3,Faiqa Shahzad,VII-BIII,Maths,Standard Room
-SCHOOL,Tue,Period 5,Faiqa Shahzad,VII-BIII,Maths,Standard Room
-SCHOOL,Tue,Period 8,Faiqa Shahzad,VII-BIII,Maths,Standard Room
-SCHOOL,Wed,Period 8,Faiqa Shahzad,VII-BIII,Maths,Standard Room
-SCHOOL,Wed,Period 1,Faiqa Shahzad,Pre-IX BII,Maths,Standard Room
-SCHOOL,Wed,Period 3,Faiqa Shahzad,Pre-IX BII,Maths,Standard Room
-SCHOOL,Wed,Period 4,Faiqa Shahzad,Pre-IX BII,Maths,Standard Room
-SCHOOL,Wed,Period 5,Faiqa Shahzad,Pre-IX BII,Maths,Standard Room
-SCHOOL,Thu,Period 1,Faiqa Shahzad,Pre-IX BII,Maths,Standard Room
-SCHOOL,Mon,Period 2,Fatima Akram,Pre-IX BII,Urdu,Standard Room
-SCHOOL,Mon,Period 6,Fatima Akram,Pre-IX BII,Urdu,Standard Room
-SCHOOL,Wed,Period 7,Fatima Akram,Pre-IX BII,Urdu,Standard Room
+SCHOOL,Wed,Period 3,Faiqa Shahzad,VII-BIII,Maths,Standard Room
+SCHOOL,Wed,Period 10,Faiqa Shahzad,VII-BIII,Maths,Standard Room
+SCHOOL,Thu,Period 3,Faiqa Shahzad,VII-BIII,Maths,Standard Room
+SCHOOL,Fri,Period 2,Faiqa Shahzad,VII-BIII,Maths,Standard Room
+SCHOOL,Tue,Period 6,Faiqa Shahzad,Pre-IX BII,Maths,Standard Room
+SCHOOL,Thu,Period 9,Faiqa Shahzad,Pre-IX BII,Maths,Standard Room
+SCHOOL,Fri,Period 1,Faiqa Shahzad,Pre-IX BII,Maths,Standard Room
+SCHOOL,Fri,Period 9,Faiqa Shahzad,Pre-IX BII,Maths,Standard Room
+SCHOOL,Fri,Period 10,Faiqa Shahzad,Pre-IX BII,Maths,Standard Room
+SCHOOL,Mon,Period 1,Fatima Akram,Pre-IX BII,Urdu,Standard Room
+SCHOOL,Tue,Period 5,Fatima Akram,Pre-IX BII,Urdu,Standard Room
+SCHOOL,Wed,Period 3,Fatima Akram,Pre-IX BII,Urdu,Standard Room
+SCHOOL,Thu,Period 10,Fatima Akram,Pre-IX BII,Urdu,Standard Room
 SCHOOL,Fri,Period 4,Fatima Akram,Pre-IX BII,Urdu,Standard Room
-SCHOOL,Fri,Period 7,Fatima Akram,Pre-IX BII,Urdu,Standard Room
-SCHOOL,Mon,Period 5,Fatima Akram,Pre-O,Urdu,Standard Room
-SCHOOL,Wed,Period 2,Fatima Akram,Pre-O,Urdu,Standard Room
-SCHOOL,Wed,Period 6,Fatima Akram,Pre-O,Urdu,Standard Room
+SCHOOL,Mon,Period 8,Fatima Akram,Pre-O,Urdu,Standard Room
+SCHOOL,Wed,Period 1,Fatima Akram,Pre-O,Urdu,Standard Room
+SCHOOL,Wed,Period 5,Fatima Akram,Pre-O,Urdu,Standard Room
+SCHOOL,Thu,Period 1,Fatima Akram,Pre-O,Urdu,Standard Room
 SCHOOL,Thu,Period 5,Fatima Akram,Pre-O,Urdu,Standard Room
-SCHOOL,Fri,Period 8,Fatima Akram,Pre-O,Urdu,Standard Room
-SCHOOL,Mon,Period 4,Fatima Akram,OI-BI,Urdu,Standard Room
+SCHOOL,Mon,Period 2,Fatima Akram,OI-BI,Urdu,Standard Room
 SCHOOL,Tue,Period 3,Fatima Akram,OI-BI,Urdu,Standard Room
-SCHOOL,Wed,Period 8,Fatima Akram,OI-BI,Urdu,Standard Room
-SCHOOL,Thu,Period 3,Fatima Akram,OI-BI,Urdu,Standard Room
-SCHOOL,Thu,Period 4,Fatima Akram,OI-BI,Urdu,Standard Room
-SCHOOL,Fri,Period 5,Fatima Akram,OI-BI,Urdu,Standard Room
+SCHOOL,Wed,Period 6,Fatima Akram,OI-BI,Urdu,Standard Room
+SCHOOL,Thu,Period 7,Fatima Akram,OI-BI,Urdu,Standard Room
+SCHOOL,Fri,Period 6,Fatima Akram,OI-BI,Urdu,Standard Room
+SCHOOL,Fri,Period 8,Fatima Akram,OI-BI,Urdu,Standard Room
 SCHOOL,Mon,Period 3,Fatima Akram,OI-BII,Urdu,Standard Room
-SCHOOL,Tue,Period 4,Fatima Akram,OI-BII,Urdu,Standard Room
-SCHOOL,Tue,Period 7,Fatima Akram,OI-BII,Urdu,Standard Room
-SCHOOL,Tue,Period 8,Fatima Akram,OI-BII,Urdu,Standard Room
-SCHOOL,Thu,Period 1,Fatima Akram,OI-BII,Urdu,Standard Room
-SCHOOL,Thu,Period 6,Fatima Akram,OI-BII,Urdu,Standard Room
-SCHOOL,Wed,Period 3,Fatima Akram,O-II,Urdu,Standard Room
-SCHOOL,Wed,Period 5,Fatima Akram,O-II,Urdu,Standard Room
-SCHOOL,Thu,Period 2,Fatima Akram,O-II,Urdu,Standard Room
-SCHOOL,Thu,Period 7,Fatima Akram,O-II,Urdu,Standard Room
-SCHOOL,Fri,Period 1,Fatima Akram,O-II,Urdu,Standard Room
-SCHOOL,Fri,Period 6,Fatima Akram,O-II,Urdu,Standard Room
-SCHOOL,Wed,Period 1,Fatima Tu Zahra,VII-GIII,Computer,Standard Room
-SCHOOL,Wed,Period 4,Fatima Tu Zahra,VII-GIII,Computer,Standard Room
-SCHOOL,Fri,Period 5,Fatima Tu Zahra,VII-GIII,Computer,Standard Room
-SCHOOL,Mon,Period 5,Fatima Tu Zahra,Pre-IX GII,Maths,Standard Room
+SCHOOL,Tue,Period 10,Fatima Akram,OI-BII,Urdu,Standard Room
+SCHOOL,Wed,Period 10,Fatima Akram,OI-BII,Urdu,Standard Room
+SCHOOL,Thu,Period 2,Fatima Akram,OI-BII,Urdu,Standard Room
+SCHOOL,Fri,Period 1,Fatima Akram,OI-BII,Urdu,Standard Room
+SCHOOL,Fri,Period 2,Fatima Akram,OI-BII,Urdu,Standard Room
+SCHOOL,Mon,Period 4,Fatima Akram,O-II,Urdu,Standard Room
+SCHOOL,Mon,Period 10,Fatima Akram,O-II,Urdu,Standard Room
+SCHOOL,Tue,Period 2,Fatima Akram,O-II,Urdu,Standard Room
+SCHOOL,Tue,Period 4,Fatima Akram,O-II,Urdu,Standard Room
+SCHOOL,Tue,Period 7,Fatima Akram,O-II,Urdu,Standard Room
+SCHOOL,Wed,Period 8,Fatima Akram,O-II,Urdu,Standard Room
+SCHOOL,Mon,Period 5,Fatima Tu Zahra,VII-GIII,Computer,Standard Room
+SCHOOL,Mon,Period 7,Fatima Tu Zahra,VII-GIII,Computer,Standard Room
+SCHOOL,Wed,Period 8,Fatima Tu Zahra,VII-GIII,Computer,Standard Room
+SCHOOL,Tue,Period 2,Fatima Tu Zahra,Pre-IX GII,Maths,Standard Room
 SCHOOL,Tue,Period 6,Fatima Tu Zahra,Pre-IX GII,Maths,Standard Room
-SCHOOL,Wed,Period 3,Fatima Tu Zahra,Pre-IX GII,Maths,Standard Room
-SCHOOL,Thu,Period 7,Fatima Tu Zahra,Pre-IX GII,Maths,Standard Room
-SCHOOL,Fri,Period 1,Fatima Tu Zahra,Pre-IX GII,Maths,Standard Room
-SCHOOL,Mon,Period 1,Fatima Tu Zahra,Pre-O,Maths,Standard Room
-SCHOOL,Mon,Period 4,Fatima Tu Zahra,Pre-O,Maths,Standard Room
-SCHOOL,Tue,Period 2,Fatima Tu Zahra,Pre-O,Maths,Standard Room
-SCHOOL,Wed,Period 7,Fatima Tu Zahra,Pre-O,Maths,Standard Room
-SCHOOL,Thu,Period 1,Fatima Tu Zahra,Pre-O,Maths,Standard Room
-SCHOOL,Thu,Period 6,Fatima Tu Zahra,Pre-O,Maths,Standard Room
-SCHOOL,Tue,Period 8,Fatima Tu Zahra,OI-BI,Maths,Standard Room
-SCHOOL,Wed,Period 6,Fatima Tu Zahra,OI-BI,Maths,Standard Room
-SCHOOL,Thu,Period 2,Fatima Tu Zahra,OI-BI,Maths,Standard Room
-SCHOOL,Fri,Period 3,Fatima Tu Zahra,OI-BI,Maths,Standard Room
-SCHOOL,Fri,Period 8,Fatima Tu Zahra,OI-BI,Maths,Standard Room
-SCHOOL,Tue,Period 3,Fatima Tu Zahra,OI-BII,Maths,Standard Room
-SCHOOL,Tue,Period 5,Fatima Tu Zahra,OI-BII,Maths,Standard Room
-SCHOOL,Thu,Period 5,Fatima Tu Zahra,OI-BII,Maths,Standard Room
-SCHOOL,Fri,Period 2,Fatima Tu Zahra,OI-BII,Maths,Standard Room
-SCHOOL,Fri,Period 7,Fatima Tu Zahra,OI-BII,Maths,Standard Room
+SCHOOL,Wed,Period 2,Fatima Tu Zahra,Pre-IX GII,Maths,Standard Room
+SCHOOL,Wed,Period 6,Fatima Tu Zahra,Pre-IX GII,Maths,Standard Room
+SCHOOL,Thu,Period 10,Fatima Tu Zahra,Pre-IX GII,Maths,Standard Room
+SCHOOL,Tue,Period 4,Fatima Tu Zahra,Pre-O,Maths,Standard Room
+SCHOOL,Tue,Period 5,Fatima Tu Zahra,Pre-O,Maths,Standard Room
+SCHOOL,Wed,Period 9,Fatima Tu Zahra,Pre-O,Maths,Standard Room
+SCHOOL,Thu,Period 3,Fatima Tu Zahra,Pre-O,Maths,Standard Room
+SCHOOL,Thu,Period 8,Fatima Tu Zahra,Pre-O,Maths,Standard Room
+SCHOOL,Fri,Period 8,Fatima Tu Zahra,Pre-O,Maths,Standard Room
+SCHOOL,Mon,Period 1,Fatima Tu Zahra,OI-BI,Maths,Standard Room
+SCHOOL,Wed,Period 1,Fatima Tu Zahra,OI-BI,Maths,Standard Room
+SCHOOL,Wed,Period 3,Fatima Tu Zahra,OI-BI,Maths,Standard Room
+SCHOOL,Thu,Period 6,Fatima Tu Zahra,OI-BI,Maths,Standard Room
+SCHOOL,Fri,Period 2,Fatima Tu Zahra,OI-BI,Maths,Standard Room
+SCHOOL,Mon,Period 9,Fatima Tu Zahra,OI-BII,Maths,Standard Room
+SCHOOL,Mon,Period 10,Fatima Tu Zahra,OI-BII,Maths,Standard Room
+SCHOOL,Thu,Period 7,Fatima Tu Zahra,OI-BII,Maths,Standard Room
+SCHOOL,Fri,Period 3,Fatima Tu Zahra,OI-BII,Maths,Standard Room
+SCHOOL,Fri,Period 6,Fatima Tu Zahra,OI-BII,Maths,Standard Room
 SCHOOL,Mon,Period 3,Hina Kanwal,IX-GI,Chemistry,Standard Room
-SCHOOL,Tue,Period 6,Hina Kanwal,IX-GI,Chemistry,Standard Room
 SCHOOL,Wed,Period 2,Hina Kanwal,IX-GI,Chemistry,Standard Room
 SCHOOL,Wed,Period 5,Hina Kanwal,IX-GI,Chemistry,Standard Room
-SCHOOL,Fri,Period 2,Hina Kanwal,IX-GI,Chemistry,Standard Room
-SCHOOL,Mon,Period 2,Hina Kanwal,IX-GII,Chemistry,Standard Room
-SCHOOL,Wed,Period 1,Hina Kanwal,IX-GII,Chemistry,Standard Room
-SCHOOL,Wed,Period 6,Hina Kanwal,IX-GII,Chemistry,Standard Room
+SCHOOL,Fri,Period 4,Hina Kanwal,IX-GI,Chemistry,Standard Room
+SCHOOL,Fri,Period 7,Hina Kanwal,IX-GI,Chemistry,Standard Room
+SCHOOL,Mon,Period 6,Hina Kanwal,IX-GII,Chemistry,Standard Room
+SCHOOL,Mon,Period 8,Hina Kanwal,IX-GII,Chemistry,Standard Room
+SCHOOL,Tue,Period 8,Hina Kanwal,IX-GII,Chemistry,Standard Room
 SCHOOL,Thu,Period 5,Hina Kanwal,IX-GII,Chemistry,Standard Room
-SCHOOL,Fri,Period 7,Hina Kanwal,IX-GII,Chemistry,Standard Room
-SCHOOL,Tue,Period 2,Hina Kanwal,IX-GIII,Chemistry,Standard Room
-SCHOOL,Tue,Period 5,Hina Kanwal,IX-GIII,Chemistry,Standard Room
-SCHOOL,Tue,Period 7,Hina Kanwal,IX-GIII,Chemistry,Standard Room
+SCHOOL,Fri,Period 10,Hina Kanwal,IX-GII,Chemistry,Standard Room
+SCHOOL,Mon,Period 1,Hina Kanwal,IX-GIII,Chemistry,Standard Room
+SCHOOL,Mon,Period 2,Hina Kanwal,IX-GIII,Chemistry,Standard Room
+SCHOOL,Tue,Period 10,Hina Kanwal,IX-GIII,Chemistry,Standard Room
 SCHOOL,Wed,Period 8,Hina Kanwal,IX-GIII,Chemistry,Standard Room
-SCHOOL,Fri,Period 8,Hina Kanwal,IX-GIII,Chemistry,Standard Room
+SCHOOL,Wed,Period 10,Hina Kanwal,IX-GIII,Chemistry,Standard Room
 SCHOOL,Mon,Period 4,Hina Kanwal,X-GI,Chemistry,Standard Room
-SCHOOL,Wed,Period 7,Hina Kanwal,X-GI,Chemistry,Standard Room
-SCHOOL,Thu,Period 3,Hina Kanwal,X-GI,Chemistry,Standard Room
-SCHOOL,Thu,Period 8,Hina Kanwal,X-GI,Chemistry,Standard Room
+SCHOOL,Mon,Period 5,Hina Kanwal,X-GI,Chemistry,Standard Room
+SCHOOL,Tue,Period 2,Hina Kanwal,X-GI,Chemistry,Standard Room
+SCHOOL,Tue,Period 6,Hina Kanwal,X-GI,Chemistry,Standard Room
 SCHOOL,Fri,Period 1,Hina Kanwal,X-GI,Chemistry,Standard Room
-SCHOOL,Mon,Period 1,Hina Kanwal,X-GII,Chemistry,Standard Room
-SCHOOL,Tue,Period 4,Hina Kanwal,X-GII,Chemistry,Standard Room
-SCHOOL,Thu,Period 2,Hina Kanwal,X-GII,Chemistry,Standard Room
-SCHOOL,Fri,Period 3,Hina Kanwal,X-GII,Chemistry,Standard Room
-SCHOOL,Fri,Period 6,Hina Kanwal,X-GII,Chemistry,Standard Room
-SCHOOL,Thu,Period 4,Hina Masood,VII-GI,Art,Standard Room
-SCHOOL,Mon,Period 4,Hina Masood,VII-GII,Art,Standard Room
-SCHOOL,Tue,Period 5,Hina Masood,VII-GIII,Art,Standard Room
-SCHOOL,Mon,Period 7,Humaira Ahamd,Pre-IX GI,Chemistry,Standard Room
-SCHOOL,Wed,Period 1,Humaira Ahamd,Pre-IX GI,Chemistry,Standard Room
-SCHOOL,Thu,Period 1,Humaira Ahamd,Pre-IX GI,Chemistry,Standard Room
-SCHOOL,Thu,Period 6,Humaira Ahamd,Pre-IX GI,Chemistry,Standard Room
+SCHOOL,Tue,Period 9,Hina Kanwal,X-GII,Chemistry,Standard Room
+SCHOOL,Wed,Period 1,Hina Kanwal,X-GII,Chemistry,Standard Room
+SCHOOL,Thu,Period 7,Hina Kanwal,X-GII,Chemistry,Standard Room
+SCHOOL,Fri,Period 2,Hina Kanwal,X-GII,Chemistry,Standard Room
+SCHOOL,Fri,Period 8,Hina Kanwal,X-GII,Chemistry,Standard Room
+SCHOOL,Mon,Period 5,Hina Masood,VII-GI,Art,Standard Room
+SCHOOL,Wed,Period 1,Hina Masood,VII-GII,Art,Standard Room
+SCHOOL,Mon,Period 8,Hina Masood,VII-GIII,Art,Standard Room
+SCHOOL,Mon,Period 8,Humaira Ahamd,Pre-IX GI,Chemistry,Standard Room
+SCHOOL,Thu,Period 5,Humaira Ahamd,Pre-IX GI,Chemistry,Standard Room
+SCHOOL,Fri,Period 1,Humaira Ahamd,Pre-IX GI,Chemistry,Standard Room
+SCHOOL,Fri,Period 5,Humaira Ahamd,Pre-IX GI,Chemistry,Standard Room
+SCHOOL,Mon,Period 10,Humaira Ahamd,X-GII,Biology,Standard Room
 SCHOOL,Tue,Period 2,Humaira Ahamd,X-GII,Biology,Standard Room
-SCHOOL,Thu,Period 7,Humaira Ahamd,X-GII,Biology,Standard Room
-SCHOOL,Fri,Period 2,Humaira Ahamd,X-GII,Biology,Standard Room
-SCHOOL,Fri,Period 4,Humaira Ahamd,X-GII,Biology,Standard Room
-SCHOOL,Fri,Period 8,Humaira Ahamd,X-GII,Biology,Standard Room
-SCHOOL,Tue,Period 3,HumairaAhmad/M. Haseeb,Pre-IX BII,Bio/Comp,Standard Room
-SCHOOL,Thu,Period 8,HumairaAhmad/M. Haseeb,Pre-IX BII,Bio/Comp,Standard Room
-SCHOOL,Fri,Period 5,HumairaAhmad/M. Haseeb,Pre-IX BII,Bio/Comp,Standard Room
+SCHOOL,Tue,Period 6,Humaira Ahamd,X-GII,Biology,Standard Room
+SCHOOL,Thu,Period 6,Humaira Ahamd,X-GII,Biology,Standard Room
+SCHOOL,Fri,Period 7,Humaira Ahamd,X-GII,Biology,Standard Room
+SCHOOL,Tue,Period 10,HumairaAhmad/M. Haseeb,Pre-IX BII,Bio/Comp,Standard Room
+SCHOOL,Thu,Period 7,HumairaAhmad/M. Haseeb,Pre-IX BII,Bio/Comp,Standard Room
 SCHOOL,Fri,Period 6,HumairaAhmad/M. Haseeb,Pre-IX BII,Bio/Comp,Standard Room
-SCHOOL,Mon,Period 7,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp,Standard Room
-SCHOOL,Wed,Period 4,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp,Standard Room
-SCHOOL,Thu,Period 3,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp,Standard Room
-SCHOOL,Thu,Period 4,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp,Standard Room
-SCHOOL,Fri,Period 2,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp,Standard Room
-SCHOOL,Mon,Period 5,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp,Standard Room
-SCHOOL,Mon,Period 8,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp,Standard Room
-SCHOOL,Tue,Period 5,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp,Standard Room
-SCHOOL,Wed,Period 6,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp,Standard Room
-SCHOOL,Wed,Period 8,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp,Standard Room
+SCHOOL,Fri,Period 8,HumairaAhmad/M. Haseeb,Pre-IX BII,Bio/Comp,Standard Room
+SCHOOL,Tue,Period 6,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp,Standard Room
+SCHOOL,Tue,Period 10,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp,Standard Room
+SCHOOL,Wed,Period 6,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp,Standard Room
+SCHOOL,Thu,Period 9,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp,Standard Room
+SCHOOL,Fri,Period 10,HumairaAhmad/M. Haseeb,IX-BII,Bio/Comp,Standard Room
+SCHOOL,Mon,Period 2,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp,Standard Room
+SCHOOL,Tue,Period 6,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp,Standard Room
+SCHOOL,Wed,Period 2,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp,Standard Room
+SCHOOL,Fri,Period 5,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp,Standard Room
+SCHOOL,Fri,Period 10,Humaira Ahmad/Rana Bilal Masood,X-BII,Bio/Comp,Standard Room
 SCHOOL,Mon,Period 2,Iqra Tariq,X-GII,Physics,Standard Room
-SCHOOL,Mon,Period 5,Iqra Tariq,X-GII,Physics,Standard Room
-SCHOOL,Tue,Period 7,Iqra Tariq,X-GII,Physics,Standard Room
-SCHOOL,Wed,Period 5,Iqra Tariq,X-GII,Physics,Standard Room
-SCHOOL,Fri,Period 7,Iqra Tariq,X-GII,Physics,Standard Room
-SCHOOL,Mon,Period 4,Iqra Tariq,O-II,Maths,Standard Room
-SCHOOL,Tue,Period 2,Iqra Tariq,O-II,Maths,Standard Room
+SCHOOL,Mon,Period 9,Iqra Tariq,X-GII,Physics,Standard Room
+SCHOOL,Wed,Period 7,Iqra Tariq,X-GII,Physics,Standard Room
+SCHOOL,Fri,Period 3,Iqra Tariq,X-GII,Physics,Standard Room
+SCHOOL,Fri,Period 5,Iqra Tariq,X-GII,Physics,Standard Room
+SCHOOL,Mon,Period 3,Iqra Tariq,O-II,Maths,Standard Room
+SCHOOL,Tue,Period 9,Iqra Tariq,O-II,Maths,Standard Room
 SCHOOL,Thu,Period 1,Iqra Tariq,O-II,Maths,Standard Room
-SCHOOL,Thu,Period 6,Iqra Tariq,O-II,Maths,Standard Room
-SCHOOL,Fri,Period 5,Iqra Tariq,O-II,Maths,Standard Room
-SCHOOL,Mon,Period 1,Iqra Tariq,O-III,Physics,Standard Room
-SCHOOL,Wed,Period 4,Iqra Tariq,O-III,Physics,Standard Room
-SCHOOL,Wed,Period 7,Iqra Tariq,O-III,Physics,Standard Room
-SCHOOL,Thu,Period 2,Iqra Tariq,O-III,Physics,Standard Room
-SCHOOL,Thu,Period 5,Iqra Tariq,O-III,Physics,Standard Room
-SCHOOL,Thu,Period 7,Iqra Tariq,O-III,Physics,Standard Room
-SCHOOL,Thu,Period 8,Iqra Tariq,O-III,Physics,Standard Room
-SCHOOL,Fri,Period 1,Iqra Tariq,O-III,Physics,Standard Room
-SCHOOL,Mon,Period 3,Kashif Butt,OI-BI,Pak Studies,Standard Room
-SCHOOL,Tue,Period 1,Kashif Butt,OI-BI,Pak Studies,Standard Room
-SCHOOL,Tue,Period 2,Kashif Butt,OI-BI,Pak Studies,Standard Room
-SCHOOL,Wed,Period 3,Kashif Butt,OI-BI,Pak Studies,Standard Room
-SCHOOL,Thu,Period 5,Kashif Butt,OI-BI,Pak Studies,Standard Room
-SCHOOL,Thu,Period 8,Kashif Butt,OI-BI,Pak Studies,Standard Room
-SCHOOL,Mon,Period 6,Kashif Butt,O-II,Pak Studies,Standard Room
-SCHOOL,Mon,Period 7,Kashif Butt,O-II,Pak Studies,Standard Room
-SCHOOL,Wed,Period 2,Kashif Butt,O-II,Pak Studies,Standard Room
-SCHOOL,Wed,Period 8,Kashif Butt,O-II,Pak Studies,Standard Room
+SCHOOL,Thu,Period 7,Iqra Tariq,O-II,Maths,Standard Room
+SCHOOL,Fri,Period 9,Iqra Tariq,O-II,Maths,Standard Room
+SCHOOL,Mon,Period 6,Iqra Tariq,O-III,Physics,Standard Room
+SCHOOL,Mon,Period 10,Iqra Tariq,O-III,Physics,Standard Room
+SCHOOL,Tue,Period 2,Iqra Tariq,O-III,Physics,Standard Room
+SCHOOL,Wed,Period 6,Iqra Tariq,O-III,Physics,Standard Room
+SCHOOL,Wed,Period 9,Iqra Tariq,O-III,Physics,Standard Room
+SCHOOL,Wed,Period 10,Iqra Tariq,O-III,Physics,Standard Room
+SCHOOL,Thu,Period 4,Iqra Tariq,O-III,Physics,Standard Room
+SCHOOL,Fri,Period 10,Iqra Tariq,O-III,Physics,Standard Room
+SCHOOL,Mon,Period 6,Kashif Butt,OI-BI,Pak Studies,Standard Room
+SCHOOL,Wed,Period 5,Kashif Butt,OI-BI,Pak Studies,Standard Room
+SCHOOL,Wed,Period 7,Kashif Butt,OI-BI,Pak Studies,Standard Room
+SCHOOL,Thu,Period 9,Kashif Butt,OI-BI,Pak Studies,Standard Room
+SCHOOL,Fri,Period 4,Kashif Butt,OI-BI,Pak Studies,Standard Room
+SCHOOL,Fri,Period 5,Kashif Butt,OI-BI,Pak Studies,Standard Room
+SCHOOL,Mon,Period 8,Kashif Butt,O-II,Pak Studies,Standard Room
+SCHOOL,Wed,Period 1,Kashif Butt,O-II,Pak Studies,Standard Room
+SCHOOL,Wed,Period 4,Kashif Butt,O-II,Pak Studies,Standard Room
+SCHOOL,Wed,Period 9,Kashif Butt,O-II,Pak Studies,Standard Room
 SCHOOL,Thu,Period 4,Kashif Butt,O-II,Pak Studies,Standard Room
-SCHOOL,Fri,Period 8,Kashif Butt,O-II,Pak Studies,Standard Room
-SCHOOL,Mon,Period 7,Kiran Adnan,VII-BI,Computer,Standard Room
-SCHOOL,Thu,Period 8,Kiran Adnan,VII-BI,Computer,Standard Room
-SCHOOL,Fri,Period 3,Kiran Adnan,VII-BI,Computer,Standard Room
-SCHOOL,Tue,Period 6,Kiran Adnan,VII-GI,Computer,Standard Room
-SCHOOL,Thu,Period 5,Kiran Adnan,VII-GI,Computer,Standard Room
-SCHOOL,Thu,Period 6,Kiran Adnan,VII-GI,Computer,Standard Room
-SCHOOL,Mon,Period 2,Kiran Adnan,Pre-IX GI,Computer,Standard Room
-SCHOOL,Tue,Period 4,Kiran Adnan,Pre-IX GI,Computer,Standard Room
-SCHOOL,Wed,Period 3,Kiran Adnan,Pre-IX GI,Computer,Standard Room
-SCHOOL,Fri,Period 8,Kiran Adnan,Pre-IX GI,Computer,Standard Room
-SCHOOL,Mon,Period 4,Kiran Adnan,IX-GI,Computer,Standard Room
+SCHOOL,Fri,Period 10,Kashif Butt,O-II,Pak Studies,Standard Room
+SCHOOL,Wed,Period 2,Kiran Adnan,VII-BI,Computer,Standard Room
+SCHOOL,Wed,Period 3,Kiran Adnan,VII-BI,Computer,Standard Room
+SCHOOL,Thu,Period 1,Kiran Adnan,VII-BI,Computer,Standard Room
+SCHOOL,Thu,Period 8,Kiran Adnan,VII-GI,Computer,Standard Room
+SCHOOL,Fri,Period 1,Kiran Adnan,VII-GI,Computer,Standard Room
+SCHOOL,Fri,Period 2,Kiran Adnan,VII-GI,Computer,Standard Room
+SCHOOL,Wed,Period 4,Kiran Adnan,Pre-IX GI,Computer,Standard Room
+SCHOOL,Wed,Period 10,Kiran Adnan,Pre-IX GI,Computer,Standard Room
+SCHOOL,Fri,Period 4,Kiran Adnan,Pre-IX GI,Computer,Standard Room
+SCHOOL,Fri,Period 10,Kiran Adnan,Pre-IX GI,Computer,Standard Room
 SCHOOL,Tue,Period 1,Kiran Adnan,IX-GI,Computer,Standard Room
-SCHOOL,Tue,Period 8,Kiran Adnan,IX-GI,Computer,Standard Room
-SCHOOL,Wed,Period 4,Kiran Adnan,IX-GI,Computer,Standard Room
-SCHOOL,Fri,Period 4,Kiran Adnan,IX-GI,Computer,Standard Room
-SCHOOL,Tue,Period 2,Kiran Adnan,X-GI,Computer,Standard Room
-SCHOOL,Tue,Period 3,Kiran Adnan,X-GI,Computer,Standard Room
-SCHOOL,Tue,Period 7,Kiran Adnan,X-GI,Computer,Standard Room
-SCHOOL,Wed,Period 6,Kiran Adnan,X-GI,Computer,Standard Room
+SCHOOL,Tue,Period 6,Kiran Adnan,IX-GI,Computer,Standard Room
+SCHOOL,Wed,Period 1,Kiran Adnan,IX-GI,Computer,Standard Room
+SCHOOL,Thu,Period 3,Kiran Adnan,IX-GI,Computer,Standard Room
+SCHOOL,Fri,Period 3,Kiran Adnan,IX-GI,Computer,Standard Room
+SCHOOL,Mon,Period 6,Kiran Adnan,X-GI,Computer,Standard Room
+SCHOOL,Mon,Period 7,Kiran Adnan,X-GI,Computer,Standard Room
+SCHOOL,Wed,Period 5,Kiran Adnan,X-GI,Computer,Standard Room
+SCHOOL,Thu,Period 4,Kiran Adnan,X-GI,Computer,Standard Room
 SCHOOL,Fri,Period 6,Kiran Adnan,X-GI,Computer,Standard Room
-SCHOOL,Tue,Period 5,M. Haroon,OI-BI,Physics,Standard Room
-SCHOOL,Tue,Period 6,M. Haroon,OI-BI,Physics,Standard Room
-SCHOOL,Wed,Period 5,M. Haroon,OI-BI,Physics,Standard Room
-SCHOOL,Fri,Period 7,M. Haroon,OI-BI,Physics,Standard Room
-SCHOOL,Wed,Period 1,M. Haroon,OI-BII,Physics,Standard Room
-SCHOOL,Wed,Period 2,M. Haroon,OI-BII,Physics,Standard Room
-SCHOOL,Fri,Period 3,M. Haroon,OI-BII,Physics,Standard Room
-SCHOOL,Fri,Period 8,M. Haroon,OI-BII,Physics,Standard Room
-SCHOOL,Mon,Period 3,M. Haroon,O-II,Physics,Standard Room
-SCHOOL,Tue,Period 1,M. Haroon,O-II,Physics,Standard Room
-SCHOOL,Tue,Period 4,M. Haroon,O-II,Physics,Standard Room
-SCHOOL,Fri,Period 4,M. Haroon,O-II,Physics,Standard Room
-SCHOOL,Mon,Period 4,M. Haroon,X-BI,Physics,Standard Room
-SCHOOL,Wed,Period 3,M. Haroon,X-BI,Physics,Standard Room
+SCHOOL,Tue,Period 1,M. Haroon,OI-BI,Physics,Standard Room
+SCHOOL,Tue,Period 2,M. Haroon,OI-BI,Physics,Standard Room
+SCHOOL,Wed,Period 9,M. Haroon,OI-BI,Physics,Standard Room
+SCHOOL,Fri,Period 10,M. Haroon,OI-BI,Physics,Standard Room
+SCHOOL,Tue,Period 9,M. Haroon,OI-BII,Physics,Standard Room
+SCHOOL,Wed,Period 3,M. Haroon,OI-BII,Physics,Standard Room
+SCHOOL,Wed,Period 8,M. Haroon,OI-BII,Physics,Standard Room
+SCHOOL,Thu,Period 6,M. Haroon,OI-BII,Physics,Standard Room
+SCHOOL,Mon,Period 9,M. Haroon,O-II,Physics,Standard Room
+SCHOOL,Tue,Period 10,M. Haroon,O-II,Physics,Standard Room
+SCHOOL,Fri,Period 3,M. Haroon,O-II,Physics,Standard Room
+SCHOOL,Fri,Period 7,M. Haroon,O-II,Physics,Standard Room
+SCHOOL,Mon,Period 7,M. Haroon,X-BI,Physics,Standard Room
+SCHOOL,Tue,Period 3,M. Haroon,X-BI,Physics,Standard Room
 SCHOOL,Wed,Period 6,M. Haroon,X-BI,Physics,Standard Room
-SCHOOL,Thu,Period 7,M. Haroon,X-BI,Physics,Standard Room
+SCHOOL,Thu,Period 5,M. Haroon,X-BI,Physics,Standard Room
 SCHOOL,Thu,Period 8,M. Haroon,X-BI,Physics,Standard Room
-SCHOOL,Mon,Period 8,M. Haroon,VII-BII,Computer,Standard Room
-SCHOOL,Wed,Period 7,M. Haroon,VII-BII,Computer,Standard Room
-SCHOOL,Thu,Period 4,M. Haroon,VII-BII,Computer,Standard Room
+SCHOOL,Wed,Period 5,M. Haroon,VII-BII,Computer,Standard Room
+SCHOOL,Thu,Period 7,M. Haroon,VII-BII,Computer,Standard Room
+SCHOOL,Fri,Period 5,M. Haroon,VII-BII,Computer,Standard Room
+SCHOOL,Mon,Period 5,M. Haroon,VII-BIII,Computer,Standard Room
 SCHOOL,Mon,Period 6,M. Haroon,VII-BIII,Computer,Standard Room
-SCHOOL,Thu,Period 6,M. Haroon,VII-BIII,Computer,Standard Room
-SCHOOL,Fri,Period 5,M. Haroon,VII-BIII,Computer,Standard Room
-SCHOOL,Mon,Period 7,M. Haroon,IX-BI,Computer,Standard Room
-SCHOOL,Tue,Period 2,M. Haroon,IX-BI,Computer,Standard Room
+SCHOOL,Fri,Period 6,M. Haroon,VII-BIII,Computer,Standard Room
+SCHOOL,Mon,Period 2,M. Haroon,IX-BI,Computer,Standard Room
+SCHOOL,Mon,Period 4,M. Haroon,IX-BI,Computer,Standard Room
 SCHOOL,Tue,Period 7,M. Haroon,IX-BI,Computer,Standard Room
-SCHOOL,Tue,Period 8,M. Haroon,IX-BI,Computer,Standard Room
-SCHOOL,Fri,Period 1,M. Haroon,IX-BI,Computer,Standard Room
+SCHOOL,Thu,Period 9,M. Haroon,IX-BI,Computer,Standard Room
+SCHOOL,Fri,Period 4,M. Haroon,IX-BI,Computer,Standard Room
+SCHOOL,Tue,Period 4,M. Haroon,Pre-IX BI,Computer,Standard Room
+SCHOOL,Wed,Period 2,M. Haroon,Pre-IX BI,Computer,Standard Room
 SCHOOL,Wed,Period 4,M. Haroon,Pre-IX BI,Computer,Standard Room
-SCHOOL,Thu,Period 2,M. Haroon,Pre-IX BI,Computer,Standard Room
-SCHOOL,Thu,Period 3,M. Haroon,Pre-IX BI,Computer,Standard Room
-SCHOOL,Fri,Period 6,M. Haroon,Pre-IX BI,Computer,Standard Room
-SCHOOL,Wed,Period 4,Maimoona Asghar,Pre-O,Computer Science,Standard Room
-SCHOOL,Wed,Period 5,Maimoona Asghar,Pre-O,Computer Science,Standard Room
-SCHOOL,Thu,Period 4,Maimoona Asghar,Pre-O,Computer Science,Standard Room
-SCHOOL,Thu,Period 8,Maimoona Asghar,Pre-O,Computer Science,Standard Room
-SCHOOL,Fri,Period 1,Maimoona Asghar,Pre-O,Computer Science,Standard Room
-SCHOOL,Mon,Period 2,Maimoona Asghar,OI-BI,Computer Science,Standard Room
-SCHOOL,Tue,Period 7,Maimoona Asghar,OI-BI,Computer Science,Standard Room
-SCHOOL,Thu,Period 6,Maimoona Asghar,OI-BI,Computer Science,Standard Room
-SCHOOL,Fri,Period 6,Maimoona Asghar,OI-BI,Computer Science,Standard Room
+SCHOOL,Wed,Period 7,M. Haroon,Pre-IX BI,Computer,Standard Room
+SCHOOL,Mon,Period 2,Maimoona Asghar,Pre-O,Computer Science,Standard Room
+SCHOOL,Mon,Period 3,Maimoona Asghar,Pre-O,Computer Science,Standard Room
+SCHOOL,Tue,Period 8,Maimoona Asghar,Pre-O,Computer Science,Standard Room
+SCHOOL,Tue,Period 9,Maimoona Asghar,Pre-O,Computer Science,Standard Room
+SCHOOL,Wed,Period 6,Maimoona Asghar,Pre-O,Computer Science,Standard Room
+SCHOOL,Mon,Period 9,Maimoona Asghar,OI-BI,Computer Science,Standard Room
+SCHOOL,Tue,Period 4,Maimoona Asghar,OI-BI,Computer Science,Standard Room
+SCHOOL,Thu,Period 3,Maimoona Asghar,OI-BI,Computer Science,Standard Room
+SCHOOL,Fri,Period 1,Maimoona Asghar,OI-BI,Computer Science,Standard Room
 SCHOOL,Mon,Period 5,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp,Standard Room
 SCHOOL,Mon,Period 8,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp,Standard Room
-SCHOOL,Tue,Period 1,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp,Standard Room
-SCHOOL,Tue,Period 4,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp,Standard Room
-SCHOOL,Tue,Period 6,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp,Standard Room
-SCHOOL,Wed,Period 3,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp,Standard Room
-SCHOOL,Wed,Period 6,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp,Standard Room
+SCHOOL,Tue,Period 5,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp,Standard Room
+SCHOOL,Tue,Period 7,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp,Standard Room
+SCHOOL,Tue,Period 10,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp,Standard Room
+SCHOOL,Wed,Period 5,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp,Standard Room
+SCHOOL,Wed,Period 8,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp,Standard Room
 SCHOOL,Fri,Period 4,Maiza Qirat/Maimoona Asghar,O-III,Bio/Comp,Standard Room
-SCHOOL,Mon,Period 3,Mamoona Adnan,VII-BI,History,Standard Room
-SCHOOL,Tue,Period 1,Mamoona Adnan,VII-BI,History,Standard Room
-SCHOOL,Fri,Period 5,Mamoona Adnan,VII-BI,History,Standard Room
-SCHOOL,Tue,Period 4,Mamoona Adnan,VII-BIII,History,Standard Room
-SCHOOL,Wed,Period 6,Mamoona Adnan,VII-BIII,History,Standard Room
-SCHOOL,Fri,Period 4,Mamoona Adnan,VII-BIII,History,Standard Room
-SCHOOL,Mon,Period 4,Mamoona Adnan,VII-BIII,Geography,Standard Room
-SCHOOL,Thu,Period 7,Mamoona Adnan,VII-BIII,Geography,Standard Room
-SCHOOL,Fri,Period 1,Mamoona Adnan,VII-BIII,Geography,Standard Room
-SCHOOL,Wed,Period 1,Mamoona Adnan,VII-GI,History,Standard Room
-SCHOOL,Wed,Period 8,Mamoona Adnan,VII-GI,History,Standard Room
-SCHOOL,Thu,Period 8,Mamoona Adnan,VII-GI,History,Standard Room
-SCHOOL,Wed,Period 2,Mamoona Adnan,VII-GI,Geography,Standard Room
-SCHOOL,Thu,Period 2,Mamoona Adnan,VII-GI,Geography,Standard Room
-SCHOOL,Fri,Period 6,Mamoona Adnan,VII-GI,Geography,Standard Room
-SCHOOL,Tue,Period 7,Mamoona Adnan,VII-GII,History,Standard Room
-SCHOOL,Wed,Period 4,Mamoona Adnan,VII-GII,History,Standard Room
-SCHOOL,Fri,Period 8,Mamoona Adnan,VII-GII,History,Standard Room
-SCHOOL,Tue,Period 3,Mamoona Adnan,VII-GII,Geography,Standard Room
-SCHOOL,Wed,Period 5,Mamoona Adnan,VII-GII,Geography,Standard Room
-SCHOOL,Thu,Period 5,Mamoona Adnan,VII-GII,Geography,Standard Room
-SCHOOL,Mon,Period 2,Mamoona Adnan,VII-GIII,History,Standard Room
-SCHOOL,Thu,Period 6,Mamoona Adnan,VII-GIII,History,Standard Room
-SCHOOL,Fri,Period 7,Mamoona Adnan,VII-GIII,History,Standard Room
-SCHOOL,Mon,Period 5,Mehwish Ishaq,IX-GI,Islamiyat,Standard Room
-SCHOOL,Mon,Period 6,Mehwish Ishaq,IX-GI,Islamiyat,Standard Room
-SCHOOL,Tue,Period 4,Mehwish Ishaq,IX-GI,Islamiyat,Standard Room
-SCHOOL,Thu,Period 7,Mehwish Ishaq,IX-GI,Islamiyat,Standard Room
-SCHOOL,Thu,Period 8,Mehwish Ishaq,IX-GI,Islamiyat,Standard Room
-SCHOOL,Fri,Period 6,Mehwish Ishaq,IX-GI,Islamiyat,Standard Room
-SCHOOL,Mon,Period 7,Mehwish Ishaq,IX-GII,Islamiyat,Standard Room
-SCHOOL,Wed,Period 7,Mehwish Ishaq,IX-GII,Islamiyat,Standard Room
-SCHOOL,Thu,Period 4,Mehwish Ishaq,IX-GII,Islamiyat,Standard Room
+SCHOOL,Tue,Period 6,Mamoona Adnan,VII-BI,History,Standard Room
+SCHOOL,Wed,Period 7,Mamoona Adnan,VII-BI,History,Standard Room
+SCHOOL,Fri,Period 8,Mamoona Adnan,VII-BI,History,Standard Room
+SCHOOL,Fri,Period 7,Mamoona Adnan,VII-BIII,History,Standard Room
+SCHOOL,Fri,Period 9,Mamoona Adnan,VII-BIII,History,Standard Room
+SCHOOL,Fri,Period 10,Mamoona Adnan,VII-BIII,History,Standard Room
+SCHOOL,Mon,Period 2,Mamoona Adnan,VII-BIII,Geography,Standard Room
+SCHOOL,Tue,Period 4,Mamoona Adnan,VII-BIII,Geography,Standard Room
+SCHOOL,Thu,Period 2,Mamoona Adnan,VII-BIII,Geography,Standard Room
+SCHOOL,Wed,Period 3,Mamoona Adnan,VII-GI,History,Standard Room
+SCHOOL,Fri,Period 5,Mamoona Adnan,VII-GI,History,Standard Room
+SCHOOL,Fri,Period 6,Mamoona Adnan,VII-GI,History,Standard Room
+SCHOOL,Mon,Period 6,Mamoona Adnan,VII-GI,Geography,Standard Room
+SCHOOL,Thu,Period 5,Mamoona Adnan,VII-GI,Geography,Standard Room
+SCHOOL,Fri,Period 3,Mamoona Adnan,VII-GI,Geography,Standard Room
+SCHOOL,Tue,Period 2,Mamoona Adnan,VII-GII,History,Standard Room
+SCHOOL,Wed,Period 10,Mamoona Adnan,VII-GII,History,Standard Room
+SCHOOL,Thu,Period 3,Mamoona Adnan,VII-GII,History,Standard Room
+SCHOOL,Mon,Period 10,Mamoona Adnan,VII-GII,Geography,Standard Room
+SCHOOL,Tue,Period 9,Mamoona Adnan,VII-GII,Geography,Standard Room
+SCHOOL,Wed,Period 9,Mamoona Adnan,VII-GII,Geography,Standard Room
+SCHOOL,Mon,Period 3,Mamoona Adnan,VII-GIII,History,Standard Room
+SCHOOL,Tue,Period 10,Mamoona Adnan,VII-GIII,History,Standard Room
+SCHOOL,Thu,Period 9,Mamoona Adnan,VII-GIII,History,Standard Room
+SCHOOL,Mon,Period 7,Mehwish Ishaq,IX-GI,Islamiyat,Standard Room
+SCHOOL,Tue,Period 10,Mehwish Ishaq,IX-GI,Islamiyat,Standard Room
+SCHOOL,Wed,Period 10,Mehwish Ishaq,IX-GI,Islamiyat,Standard Room
+SCHOOL,Thu,Period 10,Mehwish Ishaq,IX-GI,Islamiyat,Standard Room
+SCHOOL,Fri,Period 2,Mehwish Ishaq,IX-GI,Islamiyat,Standard Room
+SCHOOL,Fri,Period 9,Mehwish Ishaq,IX-GI,Islamiyat,Standard Room
+SCHOOL,Mon,Period 3,Mehwish Ishaq,IX-GII,Islamiyat,Standard Room
+SCHOOL,Tue,Period 5,Mehwish Ishaq,IX-GII,Islamiyat,Standard Room
+SCHOOL,Tue,Period 6,Mehwish Ishaq,IX-GII,Islamiyat,Standard Room
+SCHOOL,Tue,Period 9,Mehwish Ishaq,IX-GII,Islamiyat,Standard Room
+SCHOOL,Wed,Period 4,Mehwish Ishaq,IX-GII,Islamiyat,Standard Room
 SCHOOL,Thu,Period 6,Mehwish Ishaq,IX-GII,Islamiyat,Standard Room
-SCHOOL,Fri,Period 5,Mehwish Ishaq,IX-GII,Islamiyat,Standard Room
-SCHOOL,Fri,Period 8,Mehwish Ishaq,IX-GII,Islamiyat,Standard Room
-SCHOOL,Tue,Period 6,Mehwish Ishaq,IX-GIII,Islamiyat,Standard Room
-SCHOOL,Wed,Period 1,Mehwish Ishaq,IX-GIII,Islamiyat,Standard Room
-SCHOOL,Wed,Period 4,Mehwish Ishaq,IX-GIII,Islamiyat,Standard Room
-SCHOOL,Thu,Period 2,Mehwish Ishaq,IX-GIII,Islamiyat,Standard Room
-SCHOOL,Thu,Period 3,Mehwish Ishaq,IX-GIII,Islamiyat,Standard Room
-SCHOOL,Fri,Period 3,Mehwish Ishaq,IX-GIII,Islamiyat,Standard Room
-SCHOOL,Wed,Period 5,Mehwish Ishaq,X-GI,T.H.Q,Standard Room
-SCHOOL,Fri,Period 2,Mehwish Ishaq,X-GI,T.H.Q,Standard Room
-SCHOOL,Fri,Period 7,Mehwish Ishaq,X-GI,T.H.Q,Standard Room
-SCHOOL,Mon,Period 4,Mehwish Ishaq,X-GII,T.H.Q,Standard Room
-SCHOOL,Tue,Period 5,Mehwish Ishaq,X-GII,T.H.Q,Standard Room
-SCHOOL,Fri,Period 1,Mehwish Ishaq,X-GII,T.H.Q,Standard Room
+SCHOOL,Mon,Period 5,Mehwish Ishaq,IX-GIII,Islamiyat,Standard Room
+SCHOOL,Tue,Period 2,Mehwish Ishaq,IX-GIII,Islamiyat,Standard Room
+SCHOOL,Wed,Period 5,Mehwish Ishaq,IX-GIII,Islamiyat,Standard Room
+SCHOOL,Thu,Period 1,Mehwish Ishaq,IX-GIII,Islamiyat,Standard Room
+SCHOOL,Thu,Period 4,Mehwish Ishaq,IX-GIII,Islamiyat,Standard Room
+SCHOOL,Fri,Period 8,Mehwish Ishaq,IX-GIII,Islamiyat,Standard Room
+SCHOOL,Tue,Period 8,Mehwish Ishaq,X-GI,T.H.Q,Standard Room
+SCHOOL,Wed,Period 2,Mehwish Ishaq,X-GI,T.H.Q,Standard Room
+SCHOOL,Wed,Period 9,Mehwish Ishaq,X-GI,T.H.Q,Standard Room
+SCHOOL,Mon,Period 1,Mehwish Ishaq,X-GII,T.H.Q,Standard Room
+SCHOOL,Tue,Period 7,Mehwish Ishaq,X-GII,T.H.Q,Standard Room
+SCHOOL,Fri,Period 6,Mehwish Ishaq,X-GII,T.H.Q,Standard Room
 SCHOOL,Mon,Period 1,Meh Un Nissa,Pre-IX GII,Biology,Standard Room
-SCHOOL,Mon,Period 3,Meh Un Nissa,Pre-IX GII,Biology,Standard Room
-SCHOOL,Tue,Period 4,Meh Un Nissa,Pre-IX GII,Biology,Standard Room
+SCHOOL,Tue,Period 1,Meh Un Nissa,Pre-IX GII,Biology,Standard Room
 SCHOOL,Wed,Period 8,Meh Un Nissa,Pre-IX GII,Biology,Standard Room
-SCHOOL,Tue,Period 3,Meh Un Nissa,IX-GII,Biology,Standard Room
-SCHOOL,Tue,Period 8,Meh Un Nissa,IX-GII,Biology,Standard Room
-SCHOOL,Thu,Period 1,Meh Un Nissa,IX-GII,Biology,Standard Room
+SCHOOL,Fri,Period 6,Meh Un Nissa,Pre-IX GII,Biology,Standard Room
+SCHOOL,Tue,Period 2,Meh Un Nissa,IX-GII,Biology,Standard Room
+SCHOOL,Wed,Period 7,Meh Un Nissa,IX-GII,Biology,Standard Room
 SCHOOL,Thu,Period 3,Meh Un Nissa,IX-GII,Biology,Standard Room
-SCHOOL,Thu,Period 8,Meh Un Nissa,IX-GII,Biology,Standard Room
-SCHOOL,Mon,Period 6,Meh Un Nissa,OI-BII,Biology,Standard Room
-SCHOOL,Mon,Period 7,Meh Un Nissa,OI-BII,Biology,Standard Room
-SCHOOL,Mon,Period 8,Meh Un Nissa,OI-BII,Biology,Standard Room
-SCHOOL,Wed,Period 4,Meh Un Nissa,OI-BII,Biology,Standard Room
-SCHOOL,Mon,Period 1,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp,Standard Room
-SCHOOL,Mon,Period 5,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp,Standard Room
-SCHOOL,Mon,Period 8,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp,Standard Room
-SCHOOL,Wed,Period 7,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp,Standard Room
-SCHOOL,Fri,Period 2,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp,Standard Room
-SCHOOL,Tue,Period 3,Mehr Un Nissa/Maimoona Asghar,O-II,Bio/Comp,Standard Room
-SCHOOL,Thu,Period 3,Mehr Un Nissa/Maimoona Asghar,O-II,Bio/Comp,Standard Room
+SCHOOL,Thu,Period 7,Meh Un Nissa,IX-GII,Biology,Standard Room
+SCHOOL,Fri,Period 1,Meh Un Nissa,IX-GII,Biology,Standard Room
+SCHOOL,Tue,Period 4,Meh Un Nissa,OI-BII,Biology,Standard Room
+SCHOOL,Tue,Period 6,Meh Un Nissa,OI-BII,Biology,Standard Room
+SCHOOL,Wed,Period 2,Meh Un Nissa,OI-BII,Biology,Standard Room
+SCHOOL,Thu,Period 9,Meh Un Nissa,OI-BII,Biology,Standard Room
+SCHOOL,Mon,Period 3,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp,Standard Room
+SCHOOL,Mon,Period 10,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp,Standard Room
+SCHOOL,Tue,Period 3,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp,Standard Room
+SCHOOL,Tue,Period 7,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp,Standard Room
+SCHOOL,Thu,Period 6,Mehr Un Nissa/Kiran Adnan,IX-GIII,Bio/Comp,Standard Room
+SCHOOL,Thu,Period 8,Mehr Un Nissa/Maimoona Asghar,O-II,Bio/Comp,Standard Room
 SCHOOL,Fri,Period 2,Mehr Un Nissa/Maimoona Asghar,O-II,Bio/Comp,Standard Room
-SCHOOL,Fri,Period 3,Mehr Un Nissa/Maimoona Asghar,O-II,Bio/Comp,Standard Room
-SCHOOL,Tue,Period 5,Raja Bahadar,Pre-IX BI,Maths,Standard Room
-SCHOOL,Wed,Period 8,Raja Bahadar,Pre-IX BI,Maths,Standard Room
-SCHOOL,Thu,Period 6,Raja Bahadar,Pre-IX BI,Maths,Standard Room
-SCHOOL,Fri,Period 2,Raja Bahadar,Pre-IX BI,Maths,Standard Room
-SCHOOL,Fri,Period 8,Raja Bahadar,Pre-IX BI,Maths,Standard Room
-SCHOOL,Wed,Period 7,Muhammad Junaid Saifi,Pre-IX BI,Physical Education,Standard Room
-SCHOOL,Tue,Period 7,Muhammad Junaid Saifi,Pre-IX BII,Physical Education,Standard Room
-SCHOOL,Fri,Period 8,Muhammad Junaid Saifi,IX-BI,Physical Education,Standard Room
-SCHOOL,Tue,Period 8,Muhammad Junaid Saifi,IX-BII,Physical Education,Standard Room
-SCHOOL,Tue,Period 6,Muhammad Junaid Saifi,X-BI,Physical Education,Standard Room
-SCHOOL,Thu,Period 1,Muhammad Junaid Saifi,X-BII,Physical Education,Standard Room
-SCHOOL,Wed,Period 6,Muhammad Junaid Saifi/Muhammad Nawaz,VII-BI,Physical Education,Standard Room
-SCHOOL,Thu,Period 7,Muhammad Junaid Saifi/Muhammad Nawaz,VII-BII,Physical Education,Standard Room
-SCHOOL,Mon,Period 8,Muhammad Junaid Saifi/Muhammad Nawaz,VII-BIII,Physical Education,Standard Room
-SCHOOL,Mon,Period 6,Muhammad Junaid Saifi/Muhammad Nawaz/Nousheen Ansar,Pre-O,Physical Education,Standard Room
-SCHOOL,Wed,Period 1,Muhammad Junaid Saifi/Nousheen Ansar,OI-BI,Physical Education,Standard Room
-SCHOOL,Tue,Period 2,Muhammad Junaid Saifi/Nousheen Ansar,OI-BII,Physical Education,Standard Room
-SCHOOL,Mon,Period 1,Muhammad Junaid Saifi/Nousheen Ansar,O-II,Physical Education,Standard Room
-SCHOOL,Mon,Period 2,Muhammad Junaid Saifi/Nousheen Ansar,O-III,Physical Education,Standard Room
-SCHOOL,Tue,Period 2,Naeem Amjad,O-III,Maths,Standard Room
-SCHOOL,Tue,Period 7,Naeem Amjad,O-III,Maths,Standard Room
-SCHOOL,Tue,Period 8,Naeem Amjad,O-III,Maths,Standard Room
-SCHOOL,Wed,Period 1,Naeem Amjad,O-III,Maths,Standard Room
-SCHOOL,Wed,Period 5,Naeem Amjad,O-III,Maths,Standard Room
-SCHOOL,Thu,Period 3,Naeem Amjad,O-III,Maths,Standard Room
-SCHOOL,Thu,Period 4,Naeem Amjad,O-III,Maths,Standard Room
-SCHOOL,Thu,Period 6,Naeem Amjad,O-III,Maths,Standard Room
+SCHOOL,Fri,Period 5,Mehr Un Nissa/Maimoona Asghar,O-II,Bio/Comp,Standard Room
+SCHOOL,Fri,Period 8,Mehr Un Nissa/Maimoona Asghar,O-II,Bio/Comp,Standard Room
+SCHOOL,Mon,Period 1,Raja Bahadar,Pre-IX BI,Maths,Standard Room
+SCHOOL,Mon,Period 8,Raja Bahadar,Pre-IX BI,Maths,Standard Room
+SCHOOL,Tue,Period 1,Raja Bahadar,Pre-IX BI,Maths,Standard Room
+SCHOOL,Tue,Period 8,Raja Bahadar,Pre-IX BI,Maths,Standard Room
+SCHOOL,Fri,Period 5,Raja Bahadar,Pre-IX BI,Maths,Standard Room
+SCHOOL,Fri,Period 1,Muhammad Junaid Saifi,Pre-IX BI,Physical Education,Standard Room
+SCHOOL,Wed,Period 8,Muhammad Junaid Saifi,Pre-IX BII,Physical Education,Standard Room
+SCHOOL,Fri,Period 3,Muhammad Junaid Saifi,IX-BI,Physical Education,Standard Room
+SCHOOL,Fri,Period 4,Muhammad Junaid Saifi,IX-BII,Physical Education,Standard Room
+SCHOOL,Mon,Period 3,Muhammad Junaid Saifi,X-BI,Physical Education,Standard Room
+SCHOOL,Mon,Period 7,Muhammad Junaid Saifi,X-BII,Physical Education,Standard Room
+SCHOOL,Thu,Period 3,Muhammad Junaid Saifi/Muhammad Nawaz,VII-BI,Physical Education,Standard Room
+SCHOOL,Fri,Period 10,Muhammad Junaid Saifi/Muhammad Nawaz,VII-BII,Physical Education,Standard Room
+SCHOOL,Wed,Period 9,Muhammad Junaid Saifi/Muhammad Nawaz,VII-BIII,Physical Education,Standard Room
+SCHOOL,Thu,Period 4,Muhammad Junaid Saifi/Muhammad Nawaz/Nousheen Ansar,Pre-O,Physical Education,Standard Room
+SCHOOL,Mon,Period 5,Muhammad Junaid Saifi/Nousheen Ansar,OI-BI,Physical Education,Standard Room
+SCHOOL,Wed,Period 4,Muhammad Junaid Saifi/Nousheen Ansar,OI-BII,Physical Education,Standard Room
+SCHOOL,Wed,Period 2,Muhammad Junaid Saifi/Nousheen Ansar,O-II,Physical Education,Standard Room
+SCHOOL,Wed,Period 3,Muhammad Junaid Saifi/Nousheen Ansar,O-III,Physical Education,Standard Room
+SCHOOL,Mon,Period 4,Naeem Amjad,O-III,Maths,Standard Room
+SCHOOL,Tue,Period 3,Naeem Amjad,O-III,Maths,Standard Room
+SCHOOL,Tue,Period 4,Naeem Amjad,O-III,Maths,Standard Room
+SCHOOL,Tue,Period 6,Naeem Amjad,O-III,Maths,Standard Room
+SCHOOL,Tue,Period 9,Naeem Amjad,O-III,Maths,Standard Room
+SCHOOL,Wed,Period 2,Naeem Amjad,O-III,Maths,Standard Room
+SCHOOL,Thu,Period 5,Naeem Amjad,O-III,Maths,Standard Room
+SCHOOL,Thu,Period 8,Naeem Amjad,O-III,Maths,Standard Room
+SCHOOL,Mon,Period 7,Nimra Rehman,X-GII,Pak Studies,Standard Room
 SCHOOL,Mon,Period 8,Nimra Rehman,X-GII,Pak Studies,Standard Room
-SCHOOL,Tue,Period 1,Nimra Rehman,X-GII,Pak Studies,Standard Room
-SCHOOL,Tue,Period 8,Nimra Rehman,X-GII,Pak Studies,Standard Room
-SCHOOL,Wed,Period 2,Nimra Rehman,X-GII,Pak Studies,Standard Room
-SCHOOL,Wed,Period 3,Nimra Rehman,X-GII,Pak Studies,Standard Room
-SCHOOL,Thu,Period 4,Nimra Rehman,X-GII,Pak Studies,Standard Room
-SCHOOL,Mon,Period 1,Nimra Saghir,X-GI,English,Standard Room
-SCHOOL,Tue,Period 1,Nimra Saghir,X-GI,English,Standard Room
-SCHOOL,Wed,Period 2,Nimra Saghir,X-GI,English,Standard Room
-SCHOOL,Thu,Period 7,Nimra Saghir,X-GI,English,Standard Room
+SCHOOL,Tue,Period 4,Nimra Rehman,X-GII,Pak Studies,Standard Room
+SCHOOL,Wed,Period 8,Nimra Rehman,X-GII,Pak Studies,Standard Room
+SCHOOL,Thu,Period 3,Nimra Rehman,X-GII,Pak Studies,Standard Room
+SCHOOL,Thu,Period 5,Nimra Rehman,X-GII,Pak Studies,Standard Room
+SCHOOL,Mon,Period 3,Nimra Saghir,X-GI,English,Standard Room
+SCHOOL,Wed,Period 1,Nimra Saghir,X-GI,English,Standard Room
+SCHOOL,Wed,Period 8,Nimra Saghir,X-GI,English,Standard Room
+SCHOOL,Thu,Period 5,Nimra Saghir,X-GI,English,Standard Room
 SCHOOL,Fri,Period 3,Nimra Saghir,X-GI,English,Standard Room
-SCHOOL,Mon,Period 7,Nimra Saghir,Pre-O,English,Standard Room
+SCHOOL,Mon,Period 1,Nimra Saghir,Pre-O,English,Standard Room
+SCHOOL,Tue,Period 2,Nimra Saghir,Pre-O,English,Standard Room
+SCHOOL,Tue,Period 7,Nimra Saghir,Pre-O,English,Standard Room
 SCHOOL,Wed,Period 3,Nimra Saghir,Pre-O,English,Standard Room
-SCHOOL,Thu,Period 2,Nimra Saghir,Pre-O,English,Standard Room
-SCHOOL,Thu,Period 3,Nimra Saghir,Pre-O,English,Standard Room
-SCHOOL,Fri,Period 5,Nimra Saghir,Pre-O,English,Standard Room
-SCHOOL,Tue,Period 4,Nimra Saghir,OI-BI,English,Standard Room
+SCHOOL,Fri,Period 2,Nimra Saghir,Pre-O,English,Standard Room
+SCHOOL,Tue,Period 8,Nimra Saghir,OI-BI,English,Standard Room
+SCHOOL,Tue,Period 10,Nimra Saghir,OI-BI,English,Standard Room
 SCHOOL,Wed,Period 4,Nimra Saghir,OI-BI,English,Standard Room
-SCHOOL,Thu,Period 1,Nimra Saghir,OI-BI,English,Standard Room
-SCHOOL,Fri,Period 2,Nimra Saghir,OI-BI,English,Standard Room
+SCHOOL,Fri,Period 7,Nimra Saghir,OI-BI,English,Standard Room
 SCHOOL,Mon,Period 4,Nimra Saghir,OI-BII,English,Standard Room
-SCHOOL,Fri,Period 1,Nimra Saghir,OI-BII,English,Standard Room
-SCHOOL,Fri,Period 4,Nimra Saghir,OI-BII,English,Standard Room
-SCHOOL,Fri,Period 6,Nimra Saghir,OI-BII,English,Standard Room
+SCHOOL,Mon,Period 8,Nimra Saghir,OI-BII,English,Standard Room
+SCHOOL,Wed,Period 7,Nimra Saghir,OI-BII,English,Standard Room
+SCHOOL,Thu,Period 1,Nimra Saghir,OI-BII,English,Standard Room
+SCHOOL,Mon,Period 7,Nimra Saghir,O-II,English,Standard Room
 SCHOOL,Tue,Period 6,Nimra Saghir,O-II,English,Standard Room
-SCHOOL,Wed,Period 7,Nimra Saghir,O-II,English,Standard Room
-SCHOOL,Thu,Period 5,Nimra Saghir,O-II,English,Standard Room
-SCHOOL,Thu,Period 8,Nimra Saghir,O-II,English,Standard Room
-SCHOOL,Fri,Period 1,Nousheen Ansar,VII-GI,Physical Education,Standard Room
-SCHOOL,Thu,Period 3,Nousheen Ansar,VII-GII,Physical Education,Standard Room
-SCHOOL,Mon,Period 5,Nousheen Ansar,VII-GIII,Physical Education,Standard Room
-SCHOOL,Tue,Period 1,Nousheen Ansar,Pre-IX GI,Physical Education,Standard Room
-SCHOOL,Tue,Period 8,Nousheen Ansar,Pre-IX GII,Physical Education,Standard Room
-SCHOOL,Thu,Period 5,Nousheen Ansar,IX-GI,Physical Education,Standard Room
-SCHOOL,Fri,Period 4,Nousheen Ansar,IX-GII,Physical Education,Standard Room
-SCHOOL,Wed,Period 6,Nousheen Ansar,IX-GIII,Physical Education,Standard Room
-SCHOOL,Thu,Period 2,Nousheen Ansar,X-GI,Physical Education,Standard Room
-SCHOOL,Wed,Period 4,Nousheen Ansar,X-GII,Physical Education,Standard Room
-SCHOOL,Tue,Period 3,Qurat Ul Ain,IX-GI,Maths,Standard Room
+SCHOOL,Thu,Period 3,Nimra Saghir,O-II,English,Standard Room
+SCHOOL,Fri,Period 1,Nimra Saghir,O-II,English,Standard Room
+SCHOOL,Wed,Period 10,Nousheen Ansar,VII-GI,Physical Education,Standard Room
+SCHOOL,Fri,Period 9,Nousheen Ansar,VII-GII,Physical Education,Standard Room
+SCHOOL,Fri,Period 6,Nousheen Ansar,VII-GIII,Physical Education,Standard Room
+SCHOOL,Thu,Period 10,Nousheen Ansar,Pre-IX GI,Physical Education,Standard Room
+SCHOOL,Mon,Period 4,Nousheen Ansar,Pre-IX GII,Physical Education,Standard Room
+SCHOOL,Mon,Period 1,Nousheen Ansar,IX-GI,Physical Education,Standard Room
+SCHOOL,Tue,Period 7,Nousheen Ansar,IX-GII,Physical Education,Standard Room
+SCHOOL,Thu,Period 5,Nousheen Ansar,IX-GIII,Physical Education,Standard Room
+SCHOOL,Tue,Period 4,Nousheen Ansar,X-GI,Physical Education,Standard Room
+SCHOOL,Thu,Period 9,Nousheen Ansar,X-GII,Physical Education,Standard Room
+SCHOOL,Mon,Period 8,Qurat Ul Ain,IX-GI,Maths,Standard Room
+SCHOOL,Mon,Period 10,Qurat Ul Ain,IX-GI,Maths,Standard Room
 SCHOOL,Wed,Period 3,Qurat Ul Ain,IX-GI,Maths,Standard Room
-SCHOOL,Wed,Period 7,Qurat Ul Ain,IX-GI,Maths,Standard Room
-SCHOOL,Fri,Period 1,Qurat Ul Ain,IX-GI,Maths,Standard Room
-SCHOOL,Fri,Period 3,Qurat Ul Ain,IX-GI,Maths,Standard Room
+SCHOOL,Thu,Period 2,Qurat Ul Ain,IX-GI,Maths,Standard Room
+SCHOOL,Thu,Period 8,Qurat Ul Ain,IX-GI,Maths,Standard Room
 SCHOOL,Mon,Period 1,Qurat Ul Ain,IX-GII,Maths,Standard Room
-SCHOOL,Mon,Period 4,Qurat Ul Ain,IX-GII,Maths,Standard Room
-SCHOOL,Tue,Period 2,Qurat Ul Ain,IX-GII,Maths,Standard Room
-SCHOOL,Wed,Period 5,Qurat Ul Ain,IX-GII,Maths,Standard Room
-SCHOOL,Fri,Period 6,Qurat Ul Ain,IX-GII,Maths,Standard Room
-SCHOOL,Mon,Period 2,Qurat Ul Ain,IX-GIII,Maths,Standard Room
-SCHOOL,Mon,Period 7,Qurat Ul Ain,IX-GIII,Maths,Standard Room
-SCHOOL,Wed,Period 2,Qurat Ul Ain,IX-GIII,Maths,Standard Room
-SCHOOL,Thu,Period 1,Qurat Ul Ain,IX-GIII,Maths,Standard Room
-SCHOOL,Thu,Period 5,Qurat Ul Ain,IX-GIII,Maths,Standard Room
-SCHOOL,Mon,Period 6,Qurat Ul Ain,X-GI,Maths,Standard Room
-SCHOOL,Mon,Period 8,Qurat Ul Ain,X-GI,Maths,Standard Room
-SCHOOL,Tue,Period 8,Qurat Ul Ain,X-GI,Maths,Standard Room
-SCHOOL,Thu,Period 6,Qurat Ul Ain,X-GI,Maths,Standard Room
+SCHOOL,Tue,Period 10,Qurat Ul Ain,IX-GII,Maths,Standard Room
+SCHOOL,Wed,Period 1,Qurat Ul Ain,IX-GII,Maths,Standard Room
+SCHOOL,Thu,Period 9,Qurat Ul Ain,IX-GII,Maths,Standard Room
+SCHOOL,Fri,Period 3,Qurat Ul Ain,IX-GII,Maths,Standard Room
+SCHOOL,Mon,Period 6,Qurat Ul Ain,IX-GIII,Maths,Standard Room
+SCHOOL,Tue,Period 6,Qurat Ul Ain,IX-GIII,Maths,Standard Room
+SCHOOL,Wed,Period 7,Qurat Ul Ain,IX-GIII,Maths,Standard Room
+SCHOOL,Thu,Period 10,Qurat Ul Ain,IX-GIII,Maths,Standard Room
+SCHOOL,Fri,Period 6,Qurat Ul Ain,IX-GIII,Maths,Standard Room
+SCHOOL,Wed,Period 4,Qurat Ul Ain,X-GI,Maths,Standard Room
+SCHOOL,Wed,Period 10,Qurat Ul Ain,X-GI,Maths,Standard Room
+SCHOOL,Fri,Period 5,Qurat Ul Ain,X-GI,Maths,Standard Room
 SCHOOL,Fri,Period 8,Qurat Ul Ain,X-GI,Maths,Standard Room
-SCHOOL,Mon,Period 3,Qurat Ul Ain,X-GII,Maths,Standard Room
-SCHOOL,Wed,Period 1,Qurat Ul Ain,X-GII,Maths,Standard Room
-SCHOOL,Wed,Period 8,Qurat Ul Ain,X-GII,Maths,Standard Room
-SCHOOL,Thu,Period 3,Qurat Ul Ain,X-GII,Maths,Standard Room
-SCHOOL,Thu,Period 8,Qurat Ul Ain,X-GII,Maths,Standard Room
-SCHOOL,Mon,Period 1,Rabia Javed,Pre-IX BII,English,Standard Room
+SCHOOL,Fri,Period 9,Qurat Ul Ain,X-GI,Maths,Standard Room
+SCHOOL,Tue,Period 5,Qurat Ul Ain,X-GII,Maths,Standard Room
+SCHOOL,Tue,Period 8,Qurat Ul Ain,X-GII,Maths,Standard Room
+SCHOOL,Wed,Period 2,Qurat Ul Ain,X-GII,Maths,Standard Room
+SCHOOL,Wed,Period 6,Qurat Ul Ain,X-GII,Maths,Standard Room
+SCHOOL,Wed,Period 9,Qurat Ul Ain,X-GII,Maths,Standard Room
 SCHOOL,Mon,Period 3,Rabia Javed,Pre-IX BII,English,Standard Room
-SCHOOL,Mon,Period 4,Rabia Javed,Pre-IX BII,English,Standard Room
-SCHOOL,Tue,Period 4,Rabia Javed,Pre-IX BII,English,Standard Room
-SCHOOL,Wed,Period 2,Rabia Javed,Pre-IX BII,English,Standard Room
-SCHOOL,Mon,Period 2,Rabia Javed,Pre-IX GII,English,Standard Room
-SCHOOL,Tue,Period 5,Rabia Javed,Pre-IX GII,English,Standard Room
+SCHOOL,Mon,Period 8,Rabia Javed,Pre-IX BII,English,Standard Room
+SCHOOL,Thu,Period 3,Rabia Javed,Pre-IX BII,English,Standard Room
+SCHOOL,Thu,Period 6,Rabia Javed,Pre-IX BII,English,Standard Room
+SCHOOL,Fri,Period 5,Rabia Javed,Pre-IX BII,English,Standard Room
+SCHOOL,Tue,Period 9,Rabia Javed,Pre-IX GII,English,Standard Room
+SCHOOL,Wed,Period 1,Rabia Javed,Pre-IX GII,English,Standard Room
+SCHOOL,Wed,Period 3,Rabia Javed,Pre-IX GII,English,Standard Room
 SCHOOL,Thu,Period 1,Rabia Javed,Pre-IX GII,English,Standard Room
-SCHOOL,Fri,Period 2,Rabia Javed,Pre-IX GII,English,Standard Room
 SCHOOL,Fri,Period 4,Rabia Javed,Pre-IX GII,English,Standard Room
-SCHOOL,Mon,Period 8,Rabia Javed,IX-GII,English,Standard Room
-SCHOOL,Wed,Period 4,Rabia Javed,IX-GII,English,Standard Room
-SCHOOL,Wed,Period 8,Rabia Javed,IX-GII,English,Standard Room
-SCHOOL,Thu,Period 2,Rabia Javed,IX-GII,English,Standard Room
-SCHOOL,Fri,Period 1,Rabia Javed,IX-GII,English,Standard Room
-SCHOOL,Wed,Period 3,Rabia Javed,IX-GIII,English,Standard Room
-SCHOOL,Wed,Period 5,Rabia Javed,IX-GIII,English,Standard Room
-SCHOOL,Thu,Period 4,Rabia Javed,IX-GIII,English,Standard Room
-SCHOOL,Fri,Period 6,Rabia Javed,IX-GIII,English,Standard Room
-SCHOOL,Fri,Period 7,Rabia Javed,IX-GIII,English,Standard Room
-SCHOOL,Mon,Period 6,Rabia Javed,X-GII,English,Standard Room
-SCHOOL,Tue,Period 6,Rabia Javed,X-GII,English,Standard Room
-SCHOOL,Wed,Period 6,Rabia Javed,X-GII,English,Standard Room
-SCHOOL,Thu,Period 6,Rabia Javed,X-GII,English,Standard Room
-SCHOOL,Fri,Period 5,Rabia Javed,X-GII,English,Standard Room
-SCHOOL,Mon,Period 7,Rabia Saeed,IX-GI,T.H.Q,Standard Room
-SCHOOL,Thu,Period 4,Rabia Saeed,IX-GI,T.H.Q,Standard Room
-SCHOOL,Fri,Period 7,Rabia Saeed,IX-GI,T.H.Q,Standard Room
-SCHOOL,Mon,Period 6,Rabia Saeed,IX-GII,T.H.Q,Standard Room
-SCHOOL,Tue,Period 5,Rabia Saeed,IX-GII,T.H.Q,Standard Room
-SCHOOL,Wed,Period 3,Rabia Saeed,IX-GII,T.H.Q,Standard Room
-SCHOOL,Mon,Period 3,Rabiya Ghaffar,IX-GIII,T.H.Q,Standard Room
-SCHOOL,Tue,Period 1,Rabiya Ghaffar,IX-GIII,T.H.Q,Standard Room
-SCHOOL,Tue,Period 4,Rabiya Ghaffar,IX-GIII,T.H.Q,Standard Room
-SCHOOL,Mon,Period 5,Rabiya Ghaffar,OI-BI,Islamiyat,Standard Room
-SCHOOL,Mon,Period 6,Rabiya Ghaffar,OI-BI,Islamiyat,Standard Room
-SCHOOL,Wed,Period 2,Rabiya Ghaffar,OI-BI,Islamiyat,Standard Room
-SCHOOL,Wed,Period 7,Rabiya Ghaffar,OI-BI,Islamiyat,Standard Room
-SCHOOL,Fri,Period 1,Rabiya Ghaffar,OI-BI,Islamiyat,Standard Room
-SCHOOL,Fri,Period 4,Rabiya Ghaffar,OI-BI,Islamiyat,Standard Room
-SCHOOL,Mon,Period 1,Rabiya Ghaffar,OI-BII,Islamiyat,Standard Room
+SCHOOL,Mon,Period 9,Rabia Javed,IX-GII,English,Standard Room
+SCHOOL,Mon,Period 10,Rabia Javed,IX-GII,English,Standard Room
+SCHOOL,Tue,Period 4,Rabia Javed,IX-GII,English,Standard Room
+SCHOOL,Fri,Period 6,Rabia Javed,IX-GII,English,Standard Room
+SCHOOL,Fri,Period 9,Rabia Javed,IX-GII,English,Standard Room
+SCHOOL,Mon,Period 4,Rabia Javed,IX-GIII,English,Standard Room
+SCHOOL,Tue,Period 1,Rabia Javed,IX-GIII,English,Standard Room
+SCHOOL,Tue,Period 8,Rabia Javed,IX-GIII,English,Standard Room
+SCHOOL,Wed,Period 2,Rabia Javed,IX-GIII,English,Standard Room
+SCHOOL,Thu,Period 7,Rabia Javed,IX-GIII,English,Standard Room
+SCHOOL,Tue,Period 3,Rabia Javed,X-GII,English,Standard Room
+SCHOOL,Tue,Period 10,Rabia Javed,X-GII,English,Standard Room
+SCHOOL,Thu,Period 8,Rabia Javed,X-GII,English,Standard Room
+SCHOOL,Thu,Period 10,Rabia Javed,X-GII,English,Standard Room
+SCHOOL,Fri,Period 10,Rabia Javed,X-GII,English,Standard Room
+SCHOOL,Tue,Period 5,Rabia Saeed,IX-GI,T.H.Q,Standard Room
+SCHOOL,Wed,Period 6,Rabia Saeed,IX-GI,T.H.Q,Standard Room
+SCHOOL,Thu,Period 7,Rabia Saeed,IX-GI,T.H.Q,Standard Room
+SCHOOL,Mon,Period 2,Rabia Saeed,IX-GII,T.H.Q,Standard Room
+SCHOOL,Tue,Period 3,Rabia Saeed,IX-GII,T.H.Q,Standard Room
+SCHOOL,Wed,Period 8,Rabia Saeed,IX-GII,T.H.Q,Standard Room
+SCHOOL,Tue,Period 9,Rabiya Ghaffar,IX-GIII,T.H.Q,Standard Room
+SCHOOL,Wed,Period 6,Rabiya Ghaffar,IX-GIII,T.H.Q,Standard Room
+SCHOOL,Thu,Period 3,Rabiya Ghaffar,IX-GIII,T.H.Q,Standard Room
+SCHOOL,Mon,Period 3,Rabiya Ghaffar,OI-BI,Islamiyat,Standard Room
+SCHOOL,Tue,Period 5,Rabiya Ghaffar,OI-BI,Islamiyat,Standard Room
+SCHOOL,Wed,Period 8,Rabiya Ghaffar,OI-BI,Islamiyat,Standard Room
+SCHOOL,Thu,Period 1,Rabiya Ghaffar,OI-BI,Islamiyat,Standard Room
+SCHOOL,Thu,Period 2,Rabiya Ghaffar,OI-BI,Islamiyat,Standard Room
+SCHOOL,Thu,Period 8,Rabiya Ghaffar,OI-BI,Islamiyat,Standard Room
+SCHOOL,Mon,Period 6,Rabiya Ghaffar,OI-BII,Islamiyat,Standard Room
+SCHOOL,Wed,Period 1,Rabiya Ghaffar,OI-BII,Islamiyat,Standard Room
 SCHOOL,Wed,Period 5,Rabiya Ghaffar,OI-BII,Islamiyat,Standard Room
-SCHOOL,Wed,Period 8,Rabiya Ghaffar,OI-BII,Islamiyat,Standard Room
-SCHOOL,Thu,Period 4,Rabiya Ghaffar,OI-BII,Islamiyat,Standard Room
-SCHOOL,Thu,Period 7,Rabiya Ghaffar,OI-BII,Islamiyat,Standard Room
-SCHOOL,Thu,Period 8,Rabiya Ghaffar,OI-BII,Islamiyat,Standard Room
-SCHOOL,Mon,Period 2,Rabiya Ghaffar,O-II,Islamiyat,Standard Room
-SCHOOL,Mon,Period 8,Rabiya Ghaffar,O-II,Islamiyat,Standard Room
-SCHOOL,Wed,Period 1,Rabiya Ghaffar,O-II,Islamiyat,Standard Room
-SCHOOL,Wed,Period 4,Rabiya Ghaffar,O-II,Islamiyat,Standard Room
-SCHOOL,Wed,Period 6,Rabiya Ghaffar,O-II,Islamiyat,Standard Room
-SCHOOL,Fri,Period 7,Rabiya Ghaffar,O-II,Islamiyat,Standard Room
-SCHOOL,Mon,Period 7,Rabiya Ghaffar,O-III,English,Standard Room
-SCHOOL,Tue,Period 3,Rabiya Ghaffar,O-III,English,Standard Room
-SCHOOL,Tue,Period 5,Rabiya Ghaffar,O-III,English,Standard Room
+SCHOOL,Fri,Period 4,Rabiya Ghaffar,OI-BII,Islamiyat,Standard Room
+SCHOOL,Fri,Period 7,Rabiya Ghaffar,OI-BII,Islamiyat,Standard Room
+SCHOOL,Fri,Period 8,Rabiya Ghaffar,OI-BII,Islamiyat,Standard Room
+SCHOOL,Mon,Period 1,Rabiya Ghaffar,O-II,Islamiyat,Standard Room
+SCHOOL,Mon,Period 5,Rabiya Ghaffar,O-II,Islamiyat,Standard Room
+SCHOOL,Tue,Period 3,Rabiya Ghaffar,O-II,Islamiyat,Standard Room
+SCHOOL,Wed,Period 10,Rabiya Ghaffar,O-II,Islamiyat,Standard Room
+SCHOOL,Thu,Period 9,Rabiya Ghaffar,O-II,Islamiyat,Standard Room
+SCHOOL,Fri,Period 6,Rabiya Ghaffar,O-II,Islamiyat,Standard Room
+SCHOOL,Tue,Period 8,Rabiya Ghaffar,O-III,English,Standard Room
+SCHOOL,Wed,Period 4,Rabiya Ghaffar,O-III,English,Standard Room
+SCHOOL,Thu,Period 6,Rabiya Ghaffar,O-III,English,Standard Room
+SCHOOL,Thu,Period 10,Rabiya Ghaffar,O-III,English,Standard Room
 SCHOOL,Fri,Period 2,Rabiya Ghaffar,O-III,English,Standard Room
-SCHOOL,Fri,Period 3,Rabiya Ghaffar,O-III,English,Standard Room
-SCHOOL,Fri,Period 6,Rabiya Ghaffar,O-III,English,Standard Room
-SCHOOL,Fri,Period 8,Rabiya Ghaffar,O-III,English,Standard Room
-SCHOOL,Mon,Period 3,Raja Bahadar,IX-BI,Maths,Standard Room
+SCHOOL,Fri,Period 5,Rabiya Ghaffar,O-III,English,Standard Room
+SCHOOL,Fri,Period 9,Rabiya Ghaffar,O-III,English,Standard Room
 SCHOOL,Mon,Period 6,Raja Bahadar,IX-BI,Maths,Standard Room
-SCHOOL,Thu,Period 2,Raja Bahadar,IX-BI,Maths,Standard Room
-SCHOOL,Thu,Period 4,Raja Bahadar,IX-BI,Maths,Standard Room
-SCHOOL,Thu,Period 5,Raja Bahadar,IX-BI,Maths,Standard Room
-SCHOOL,Mon,Period 1,Raja Bahadar,IX-BII,Maths,Standard Room
-SCHOOL,Mon,Period 8,Raja Bahadar,IX-BII,Maths,Standard Room
-SCHOOL,Tue,Period 1,Raja Bahadar,IX-BII,Maths,Standard Room
-SCHOOL,Tue,Period 6,Raja Bahadar,IX-BII,Maths,Standard Room
-SCHOOL,Fri,Period 6,Raja Bahadar,IX-BII,Maths,Standard Room
-SCHOOL,Tue,Period 3,Raja Bahadar,X-BI,Maths,Standard Room
-SCHOOL,Wed,Period 2,Raja Bahadar,X-BI,Maths,Standard Room
-SCHOOL,Thu,Period 1,Raja Bahadar,X-BI,Maths,Standard Room
-SCHOOL,Fri,Period 5,Raja Bahadar,X-BI,Maths,Standard Room
-SCHOOL,Fri,Period 7,Raja Bahadar,X-BI,Maths,Standard Room
-SCHOOL,Mon,Period 4,Raja Bahadar,X-BII,Maths,Standard Room
-SCHOOL,Mon,Period 7,Raja Bahadar,X-BII,Maths,Standard Room
-SCHOOL,Wed,Period 7,Raja Bahadar,X-BII,Maths,Standard Room
-SCHOOL,Thu,Period 8,Raja Bahadar,X-BII,Maths,Standard Room
-SCHOOL,Fri,Period 3,Raja Bahadar,X-BII,Maths,Standard Room
-SCHOOL,Tue,Period 4,Rana Bilal Masood,X-BI,Computer,Standard Room
-SCHOOL,Wed,Period 1,Rana Bilal Masood,X-BI,Computer,Standard Room
-SCHOOL,Wed,Period 7,Rana Bilal Masood,X-BI,Computer,Standard Room
-SCHOOL,Thu,Period 6,Rana Bilal Masood,X-BI,Computer,Standard Room
-SCHOOL,Fri,Period 1,Rana Bilal Masood,X-BI,Computer,Standard Room
-SCHOOL,Mon,Period 6,Rubina Kausar,VII-GI,Urdu,Standard Room
-SCHOOL,Tue,Period 3,Rubina Kausar,VII-GI,Urdu,Standard Room
-SCHOOL,Wed,Period 4,Rubina Kausar,VII-GI,Urdu,Standard Room
-SCHOOL,Thu,Period 3,Rubina Kausar,VII-GI,Urdu,Standard Room
-SCHOOL,Fri,Period 2,Rubina Kausar,VII-GI,Urdu,Standard Room
-SCHOOL,Fri,Period 8,Rubina Kausar,VII-GI,Urdu,Standard Room
-SCHOOL,Mon,Period 5,Rubina Kausar,VII-GII,Urdu,Standard Room
-SCHOOL,Wed,Period 6,Rubina Kausar,VII-GII,Urdu,Standard Room
-SCHOOL,Thu,Period 2,Rubina Kausar,VII-GII,Urdu,Standard Room
-SCHOOL,Thu,Period 4,Rubina Kausar,VII-GII,Urdu,Standard Room
-SCHOOL,Fri,Period 4,Rubina Kausar,VII-GII,Urdu,Standard Room
-SCHOOL,Fri,Period 5,Rubina Kausar,VII-GII,Urdu,Standard Room
-SCHOOL,Tue,Period 2,Rubina Kausar,VII-GII,Islamiyat,Standard Room
-SCHOOL,Tue,Period 8,Rubina Kausar,VII-GII,Islamiyat,Standard Room
-SCHOOL,Thu,Period 8,Rubina Kausar,VII-GII,Islamiyat,Standard Room
-SCHOOL,Mon,Period 3,Rubina Kausar,VII-GIII,Urdu,Standard Room
-SCHOOL,Mon,Period 7,Rubina Kausar,VII-GIII,Urdu,Standard Room
-SCHOOL,Tue,Period 1,Rubina Kausar,VII-GIII,Urdu,Standard Room
-SCHOOL,Tue,Period 4,Rubina Kausar,VII-GIII,Urdu,Standard Room
-SCHOOL,Wed,Period 3,Rubina Kausar,VII-GIII,Urdu,Standard Room
-SCHOOL,Fri,Period 6,Rubina Kausar,VII-GIII,Urdu,Standard Room
-SCHOOL,Tue,Period 5,Rubina Kausar,Pre-IX GI,Urdu,Standard Room
+SCHOOL,Tue,Period 10,Raja Bahadar,IX-BI,Maths,Standard Room
+SCHOOL,Wed,Period 6,Raja Bahadar,IX-BI,Maths,Standard Room
+SCHOOL,Fri,Period 2,Raja Bahadar,IX-BI,Maths,Standard Room
+SCHOOL,Fri,Period 9,Raja Bahadar,IX-BI,Maths,Standard Room
+SCHOOL,Mon,Period 5,Raja Bahadar,IX-BII,Maths,Standard Room
+SCHOOL,Tue,Period 3,Raja Bahadar,IX-BII,Maths,Standard Room
+SCHOOL,Wed,Period 5,Raja Bahadar,IX-BII,Maths,Standard Room
+SCHOOL,Thu,Period 6,Raja Bahadar,IX-BII,Maths,Standard Room
+SCHOOL,Thu,Period 7,Raja Bahadar,IX-BII,Maths,Standard Room
+SCHOOL,Mon,Period 2,Raja Bahadar,X-BI,Maths,Standard Room
+SCHOOL,Mon,Period 10,Raja Bahadar,X-BI,Maths,Standard Room
+SCHOOL,Tue,Period 9,Raja Bahadar,X-BI,Maths,Standard Room
+SCHOOL,Wed,Period 10,Raja Bahadar,X-BI,Maths,Standard Room
+SCHOOL,Fri,Period 4,Raja Bahadar,X-BI,Maths,Standard Room
+SCHOOL,Tue,Period 5,Raja Bahadar,X-BII,Maths,Standard Room
+SCHOOL,Wed,Period 4,Raja Bahadar,X-BII,Maths,Standard Room
+SCHOOL,Thu,Period 1,Raja Bahadar,X-BII,Maths,Standard Room
+SCHOOL,Thu,Period 4,Raja Bahadar,X-BII,Maths,Standard Room
+SCHOOL,Fri,Period 7,Raja Bahadar,X-BII,Maths,Standard Room
+SCHOOL,Mon,Period 1,Rana Bilal Masood,X-BI,Computer,Standard Room
+SCHOOL,Mon,Period 9,Rana Bilal Masood,X-BI,Computer,Standard Room
+SCHOOL,Wed,Period 8,Rana Bilal Masood,X-BI,Computer,Standard Room
+SCHOOL,Thu,Period 7,Rana Bilal Masood,X-BI,Computer,Standard Room
+SCHOOL,Fri,Period 6,Rana Bilal Masood,X-BI,Computer,Standard Room
+SCHOOL,Mon,Period 2,Rubina Kausar,VII-GI,Urdu,Standard Room
+SCHOOL,Mon,Period 7,Rubina Kausar,VII-GI,Urdu,Standard Room
+SCHOOL,Tue,Period 8,Rubina Kausar,VII-GI,Urdu,Standard Room
+SCHOOL,Wed,Period 5,Rubina Kausar,VII-GI,Urdu,Standard Room
+SCHOOL,Wed,Period 6,Rubina Kausar,VII-GI,Urdu,Standard Room
+SCHOOL,Wed,Period 8,Rubina Kausar,VII-GI,Urdu,Standard Room
+SCHOOL,Mon,Period 3,Rubina Kausar,VII-GII,Urdu,Standard Room
+SCHOOL,Mon,Period 8,Rubina Kausar,VII-GII,Urdu,Standard Room
+SCHOOL,Tue,Period 7,Rubina Kausar,VII-GII,Urdu,Standard Room
+SCHOOL,Thu,Period 1,Rubina Kausar,VII-GII,Urdu,Standard Room
+SCHOOL,Thu,Period 6,Rubina Kausar,VII-GII,Urdu,Standard Room
+SCHOOL,Fri,Period 6,Rubina Kausar,VII-GII,Urdu,Standard Room
+SCHOOL,Thu,Period 5,Rubina Kausar,VII-GII,Islamiyat,Standard Room
+SCHOOL,Fri,Period 8,Rubina Kausar,VII-GII,Islamiyat,Standard Room
+SCHOOL,Fri,Period 10,Rubina Kausar,VII-GII,Islamiyat,Standard Room
+SCHOOL,Mon,Period 10,Rubina Kausar,VII-GIII,Urdu,Standard Room
+SCHOOL,Tue,Period 5,Rubina Kausar,VII-GIII,Urdu,Standard Room
+SCHOOL,Thu,Period 3,Rubina Kausar,VII-GIII,Urdu,Standard Room
+SCHOOL,Thu,Period 10,Rubina Kausar,VII-GIII,Urdu,Standard Room
+SCHOOL,Fri,Period 1,Rubina Kausar,VII-GIII,Urdu,Standard Room
+SCHOOL,Fri,Period 7,Rubina Kausar,VII-GIII,Urdu,Standard Room
+SCHOOL,Mon,Period 1,Rubina Kausar,Pre-IX GI,Urdu,Standard Room
+SCHOOL,Tue,Period 3,Rubina Kausar,Pre-IX GI,Urdu,Standard Room
 SCHOOL,Tue,Period 6,Rubina Kausar,Pre-IX GI,Urdu,Standard Room
-SCHOOL,Wed,Period 5,Rubina Kausar,Pre-IX GI,Urdu,Standard Room
-SCHOOL,Thu,Period 7,Rubina Kausar,Pre-IX GI,Urdu,Standard Room
-SCHOOL,Fri,Period 3,Rubina Kausar,Pre-IX GI,Urdu,Standard Room
-SCHOOL,Mon,Period 8,Rubina Kausar,Pre-IX GII,Urdu,Standard Room
-SCHOOL,Tue,Period 7,Rubina Kausar,Pre-IX GII,Urdu,Standard Room
+SCHOOL,Tue,Period 10,Rubina Kausar,Pre-IX GI,Urdu,Standard Room
+SCHOOL,Fri,Period 2,Rubina Kausar,Pre-IX GI,Urdu,Standard Room
+SCHOOL,Mon,Period 5,Rubina Kausar,Pre-IX GII,Urdu,Standard Room
 SCHOOL,Wed,Period 7,Rubina Kausar,Pre-IX GII,Urdu,Standard Room
-SCHOOL,Thu,Period 5,Rubina Kausar,Pre-IX GII,Urdu,Standard Room
-SCHOOL,Fri,Period 7,Rubina Kausar,Pre-IX GII,Urdu,Standard Room
+SCHOOL,Thu,Period 9,Rubina Kausar,Pre-IX GII,Urdu,Standard Room
+SCHOOL,Fri,Period 3,Rubina Kausar,Pre-IX GII,Urdu,Standard Room
+SCHOOL,Fri,Period 5,Rubina Kausar,Pre-IX GII,Urdu,Standard Room
 SCHOOL,Mon,Period 4,Saba Babar,VII-GI,English,Standard Room
-SCHOOL,Mon,Period 5,Saba Babar,VII-GI,English,Standard Room
-SCHOOL,Mon,Period 7,Saba Babar,VII-GI,English,Standard Room
-SCHOOL,Mon,Period 8,Saba Babar,VII-GI,English,Standard Room
-SCHOOL,Tue,Period 5,Saba Babar,VII-GI,English,Standard Room
-SCHOOL,Fri,Period 3,Saba Babar,VII-GI,English,Standard Room
-SCHOOL,Mon,Period 1,Saba Babar,VII-GII,English,Standard Room
-SCHOOL,Mon,Period 3,Saba Babar,VII-GII,English,Standard Room
-SCHOOL,Mon,Period 6,Saba Babar,VII-GII,English,Standard Room
+SCHOOL,Mon,Period 10,Saba Babar,VII-GI,English,Standard Room
+SCHOOL,Thu,Period 9,Saba Babar,VII-GI,English,Standard Room
+SCHOOL,Thu,Period 10,Saba Babar,VII-GI,English,Standard Room
+SCHOOL,Fri,Period 8,Saba Babar,VII-GI,English,Standard Room
+SCHOOL,Fri,Period 10,Saba Babar,VII-GI,English,Standard Room
+SCHOOL,Mon,Period 9,Saba Babar,VII-GII,English,Standard Room
 SCHOOL,Tue,Period 1,Saba Babar,VII-GII,English,Standard Room
-SCHOOL,Fri,Period 2,Saba Babar,VII-GII,English,Standard Room
-SCHOOL,Fri,Period 7,Saba Babar,VII-GII,English,Standard Room
+SCHOOL,Tue,Period 4,Saba Babar,VII-GII,English,Standard Room
+SCHOOL,Wed,Period 7,Saba Babar,VII-GII,English,Standard Room
+SCHOOL,Wed,Period 8,Saba Babar,VII-GII,English,Standard Room
+SCHOOL,Thu,Period 7,Saba Babar,VII-GII,English,Standard Room
+SCHOOL,Mon,Period 1,Saba Babar,VII-GIII,English,Standard Room
+SCHOOL,Mon,Period 2,Saba Babar,VII-GIII,English,Standard Room
 SCHOOL,Tue,Period 6,Saba Babar,VII-GIII,English,Standard Room
-SCHOOL,Wed,Period 2,Saba Babar,VII-GIII,English,Standard Room
-SCHOOL,Wed,Period 5,Saba Babar,VII-GIII,English,Standard Room
+SCHOOL,Wed,Period 1,Saba Babar,VII-GIII,English,Standard Room
 SCHOOL,Thu,Period 1,Saba Babar,VII-GIII,English,Standard Room
-SCHOOL,Thu,Period 3,Saba Babar,VII-GIII,English,Standard Room
-SCHOOL,Thu,Period 5,Saba Babar,VII-GIII,English,Standard Room
-SCHOOL,Wed,Period 8,Saba Babar,Pre-IX GI,English,Standard Room
-SCHOOL,Thu,Period 2,Saba Babar,Pre-IX GI,English,Standard Room
+SCHOOL,Fri,Period 4,Saba Babar,VII-GIII,English,Standard Room
+SCHOOL,Tue,Period 5,Saba Babar,Pre-IX GI,English,Standard Room
+SCHOOL,Tue,Period 7,Saba Babar,Pre-IX GI,English,Standard Room
+SCHOOL,Wed,Period 5,Saba Babar,Pre-IX GI,English,Standard Room
 SCHOOL,Thu,Period 4,Saba Babar,Pre-IX GI,English,Standard Room
-SCHOOL,Fri,Period 5,Saba Babar,Pre-IX GI,English,Standard Room
-SCHOOL,Fri,Period 6,Saba Babar,Pre-IX GI,English,Standard Room
-SCHOOL,Mon,Period 1,Sadia Masood,IX-GI,Urdu,Standard Room
-SCHOOL,Mon,Period 8,Sadia Masood,IX-GI,Urdu,Standard Room
-SCHOOL,Tue,Period 5,Sadia Masood,IX-GI,Urdu,Standard Room
-SCHOOL,Thu,Period 2,Sadia Masood,IX-GI,Urdu,Standard Room
-SCHOOL,Thu,Period 3,Sadia Masood,IX-GI,Urdu,Standard Room
+SCHOOL,Fri,Period 9,Saba Babar,Pre-IX GI,English,Standard Room
+SCHOOL,Tue,Period 2,Sadia Masood,IX-GI,Urdu,Standard Room
+SCHOOL,Tue,Period 8,Sadia Masood,IX-GI,Urdu,Standard Room
+SCHOOL,Wed,Period 4,Sadia Masood,IX-GI,Urdu,Standard Room
+SCHOOL,Thu,Period 6,Sadia Masood,IX-GI,Urdu,Standard Room
+SCHOOL,Fri,Period 5,Sadia Masood,IX-GI,Urdu,Standard Room
 SCHOOL,Mon,Period 5,Sadia Masood,IX-GII,Urdu,Standard Room
-SCHOOL,Tue,Period 1,Sadia Masood,IX-GII,Urdu,Standard Room
-SCHOOL,Tue,Period 6,Sadia Masood,IX-GII,Urdu,Standard Room
-SCHOOL,Wed,Period 2,Sadia Masood,IX-GII,Urdu,Standard Room
-SCHOOL,Fri,Period 3,Sadia Masood,IX-GII,Urdu,Standard Room
-SCHOOL,Mon,Period 6,Sadia Masood,IX-GIII,Urdu,Standard Room
-SCHOOL,Tue,Period 8,Sadia Masood,IX-GIII,Urdu,Standard Room
-SCHOOL,Thu,Period 6,Sadia Masood,IX-GIII,Urdu,Standard Room
-SCHOOL,Thu,Period 7,Sadia Masood,IX-GIII,Urdu,Standard Room
-SCHOOL,Fri,Period 5,Sadia Masood,IX-GIII,Urdu,Standard Room
-SCHOOL,Mon,Period 2,Sadia Masood,X-GI,Urdu,Standard Room
-SCHOOL,Wed,Period 3,Sadia Masood,X-GI,Urdu,Standard Room
-SCHOOL,Wed,Period 4,Sadia Masood,X-GI,Urdu,Standard Room
-SCHOOL,Thu,Period 4,Sadia Masood,X-GI,Urdu,Standard Room
-SCHOOL,Fri,Period 4,Sadia Masood,X-GI,Urdu,Standard Room
-SCHOOL,Mon,Period 7,Sadia Masood,X-GII,Urdu,Standard Room
-SCHOOL,Tue,Period 3,Sadia Masood,X-GII,Urdu,Standard Room
-SCHOOL,Wed,Period 7,Sadia Masood,X-GII,Urdu,Standard Room
-SCHOOL,Thu,Period 1,Sadia Masood,X-GII,Urdu,Standard Room
-SCHOOL,Thu,Period 5,Sadia Masood,X-GII,Urdu,Standard Room
-SCHOOL,Mon,Period 5,Saima Ali,Pre-IX BI,Islamiyat,Standard Room
-SCHOOL,Tue,Period 7,Saima Ali,Pre-IX BI,Islamiyat,Standard Room
-SCHOOL,Thu,Period 7,Saima Ali,Pre-IX BI,Islamiyat,Standard Room
-SCHOOL,Tue,Period 5,Saima Ali,Pre-IX BII,Islamiyat,Standard Room
-SCHOOL,Wed,Period 8,Saima Ali,Pre-IX BII,Islamiyat,Standard Room
-SCHOOL,Fri,Period 1,Saima Ali,Pre-IX BII,Islamiyat,Standard Room
-SCHOOL,Mon,Period 6,Saima Ali,Pre-IX GI,Islamiyat,Standard Room
-SCHOOL,Wed,Period 6,Saima Ali,Pre-IX GI,Islamiyat,Standard Room
-SCHOOL,Fri,Period 7,Saima Ali,Pre-IX GI,Islamiyat,Standard Room
-SCHOOL,Wed,Period 1,Saima Ali,Pre-IX GII,Islamiyat,Standard Room
-SCHOOL,Thu,Period 2,Saima Ali,Pre-IX GII,Islamiyat,Standard Room
-SCHOOL,Fri,Period 6,Saima Ali,Pre-IX GII,Islamiyat,Standard Room
-SCHOOL,Mon,Period 1,Saima Ali,IX-BI,Islamiyat,Standard Room
-SCHOOL,Tue,Period 3,Saima Ali,IX-BI,Islamiyat,Standard Room
-SCHOOL,Thu,Period 3,Saima Ali,IX-BI,Islamiyat,Standard Room
-SCHOOL,Thu,Period 6,Saima Ali,IX-BI,Islamiyat,Standard Room
+SCHOOL,Thu,Period 1,Sadia Masood,IX-GII,Urdu,Standard Room
+SCHOOL,Thu,Period 2,Sadia Masood,IX-GII,Urdu,Standard Room
+SCHOOL,Thu,Period 10,Sadia Masood,IX-GII,Urdu,Standard Room
+SCHOOL,Fri,Period 7,Sadia Masood,IX-GII,Urdu,Standard Room
+SCHOOL,Mon,Period 7,Sadia Masood,IX-GIII,Urdu,Standard Room
+SCHOOL,Mon,Period 8,Sadia Masood,IX-GIII,Urdu,Standard Room
+SCHOOL,Mon,Period 9,Sadia Masood,IX-GIII,Urdu,Standard Room
+SCHOOL,Wed,Period 3,Sadia Masood,IX-GIII,Urdu,Standard Room
+SCHOOL,Thu,Period 8,Sadia Masood,IX-GIII,Urdu,Standard Room
+SCHOOL,Mon,Period 1,Sadia Masood,X-GI,Urdu,Standard Room
+SCHOOL,Tue,Period 5,Sadia Masood,X-GI,Urdu,Standard Room
+SCHOOL,Tue,Period 7,Sadia Masood,X-GI,Urdu,Standard Room
+SCHOOL,Wed,Period 6,Sadia Masood,X-GI,Urdu,Standard Room
+SCHOOL,Fri,Period 10,Sadia Masood,X-GI,Urdu,Standard Room
+SCHOOL,Mon,Period 6,Sadia Masood,X-GII,Urdu,Standard Room
+SCHOOL,Wed,Period 5,Sadia Masood,X-GII,Urdu,Standard Room
+SCHOOL,Fri,Period 1,Sadia Masood,X-GII,Urdu,Standard Room
+SCHOOL,Fri,Period 4,Sadia Masood,X-GII,Urdu,Standard Room
+SCHOOL,Fri,Period 9,Sadia Masood,X-GII,Urdu,Standard Room
+SCHOOL,Thu,Period 1,Saima Ali,Pre-IX BI,Islamiyat,Standard Room
+SCHOOL,Thu,Period 3,Saima Ali,Pre-IX BI,Islamiyat,Standard Room
+SCHOOL,Fri,Period 9,Saima Ali,Pre-IX BI,Islamiyat,Standard Room
+SCHOOL,Tue,Period 1,Saima Ali,Pre-IX BII,Islamiyat,Standard Room
+SCHOOL,Wed,Period 5,Saima Ali,Pre-IX BII,Islamiyat,Standard Room
+SCHOOL,Wed,Period 10,Saima Ali,Pre-IX BII,Islamiyat,Standard Room
+SCHOOL,Tue,Period 2,Saima Ali,Pre-IX GI,Islamiyat,Standard Room
+SCHOOL,Thu,Period 2,Saima Ali,Pre-IX GI,Islamiyat,Standard Room
+SCHOOL,Thu,Period 7,Saima Ali,Pre-IX GI,Islamiyat,Standard Room
+SCHOOL,Mon,Period 6,Saima Ali,Pre-IX GII,Islamiyat,Standard Room
+SCHOOL,Tue,Period 5,Saima Ali,Pre-IX GII,Islamiyat,Standard Room
+SCHOOL,Fri,Period 7,Saima Ali,Pre-IX GII,Islamiyat,Standard Room
+SCHOOL,Mon,Period 7,Saima Ali,IX-BI,Islamiyat,Standard Room
+SCHOOL,Mon,Period 10,Saima Ali,IX-BI,Islamiyat,Standard Room
+SCHOOL,Wed,Period 4,Saima Ali,IX-BI,Islamiyat,Standard Room
+SCHOOL,Wed,Period 7,Saima Ali,IX-BI,Islamiyat,Standard Room
 SCHOOL,Thu,Period 8,Saima Ali,IX-BI,Islamiyat,Standard Room
-SCHOOL,Fri,Period 5,Saima Ali,IX-BI,Islamiyat,Standard Room
-SCHOOL,Mon,Period 2,Saima Ali,IX-BII,Islamiyat,Standard Room
+SCHOOL,Fri,Period 10,Saima Ali,IX-BI,Islamiyat,Standard Room
 SCHOOL,Mon,Period 3,Saima Ali,IX-BII,Islamiyat,Standard Room
-SCHOOL,Tue,Period 2,Saima Ali,IX-BII,Islamiyat,Standard Room
-SCHOOL,Wed,Period 3,Saima Ali,IX-BII,Islamiyat,Standard Room
-SCHOOL,Wed,Period 5,Saima Ali,IX-BII,Islamiyat,Standard Room
+SCHOOL,Tue,Period 4,Saima Ali,IX-BII,Islamiyat,Standard Room
+SCHOOL,Wed,Period 2,Saima Ali,IX-BII,Islamiyat,Standard Room
+SCHOOL,Wed,Period 9,Saima Ali,IX-BII,Islamiyat,Standard Room
 SCHOOL,Thu,Period 5,Saima Ali,IX-BII,Islamiyat,Standard Room
-SCHOOL,Mon,Period 2,Sajida Parveen,Pre-IX BI,Urdu,Standard Room
-SCHOOL,Tue,Period 1,Sajida Parveen,Pre-IX BI,Urdu,Standard Room
-SCHOOL,Tue,Period 2,Sajida Parveen,Pre-IX BI,Urdu,Standard Room
-SCHOOL,Wed,Period 5,Sajida Parveen,Pre-IX BI,Urdu,Standard Room
-SCHOOL,Fri,Period 5,Sajida Parveen,Pre-IX BI,Urdu,Standard Room
-SCHOOL,Tue,Period 6,Sajida Parveen,IX-BI,Urdu,Standard Room
+SCHOOL,Fri,Period 8,Saima Ali,IX-BII,Islamiyat,Standard Room
+SCHOOL,Tue,Period 9,Sajida Parveen,Pre-IX BI,Urdu,Standard Room
+SCHOOL,Tue,Period 10,Sajida Parveen,Pre-IX BI,Urdu,Standard Room
+SCHOOL,Thu,Period 7,Sajida Parveen,Pre-IX BI,Urdu,Standard Room
+SCHOOL,Thu,Period 9,Sajida Parveen,Pre-IX BI,Urdu,Standard Room
+SCHOOL,Fri,Period 10,Sajida Parveen,Pre-IX BI,Urdu,Standard Room
+SCHOOL,Tue,Period 3,Sajida Parveen,IX-BI,Urdu,Standard Room
+SCHOOL,Tue,Period 8,Sajida Parveen,IX-BI,Urdu,Standard Room
 SCHOOL,Wed,Period 2,Sajida Parveen,IX-BI,Urdu,Standard Room
-SCHOOL,Wed,Period 8,Sajida Parveen,IX-BI,Urdu,Standard Room
-SCHOOL,Fri,Period 3,Sajida Parveen,IX-BI,Urdu,Standard Room
-SCHOOL,Fri,Period 7,Sajida Parveen,IX-BI,Urdu,Standard Room
+SCHOOL,Wed,Period 9,Sajida Parveen,IX-BI,Urdu,Standard Room
+SCHOOL,Thu,Period 6,Sajida Parveen,IX-BI,Urdu,Standard Room
+SCHOOL,Mon,Period 1,Sajida Parveen,IX-BII,Urdu,Standard Room
 SCHOOL,Mon,Period 4,Sajida Parveen,IX-BII,Urdu,Standard Room
-SCHOOL,Mon,Period 5,Sajida Parveen,IX-BII,Urdu,Standard Room
-SCHOOL,Wed,Period 1,Sajida Parveen,IX-BII,Urdu,Standard Room
-SCHOOL,Wed,Period 6,Sajida Parveen,IX-BII,Urdu,Standard Room
-SCHOOL,Thu,Period 2,Sajida Parveen,IX-BII,Urdu,Standard Room
-SCHOOL,Mon,Period 6,Sajida Parveen,X-BI,Urdu,Standard Room
-SCHOOL,Mon,Period 7,Sajida Parveen,X-BI,Urdu,Standard Room
-SCHOOL,Tue,Period 5,Sajida Parveen,X-BI,Urdu,Standard Room
-SCHOOL,Thu,Period 5,Sajida Parveen,X-BI,Urdu,Standard Room
-SCHOOL,Fri,Period 6,Sajida Parveen,X-BI,Urdu,Standard Room
-SCHOOL,Mon,Period 3,Sajida Parveen,X-BII,Urdu,Standard Room
-SCHOOL,Tue,Period 3,Sajida Parveen,X-BII,Urdu,Standard Room
-SCHOOL,Tue,Period 4,Sajida Parveen,X-BII,Urdu,Standard Room
-SCHOOL,Wed,Period 4,Sajida Parveen,X-BII,Urdu,Standard Room
-SCHOOL,Fri,Period 2,Sajida Parveen,X-BII,Urdu,Standard Room
-SCHOOL,Mon,Period 6,Samiya Shafeeq,VII-BI,Geography,Standard Room
-SCHOOL,Tue,Period 3,Samiya Shafeeq,VII-BI,Geography,Standard Room
-SCHOOL,Tue,Period 5,Samiya Shafeeq,VII-BI,Geography,Standard Room
-SCHOOL,Mon,Period 3,Samiya Shafeeq,VII-BII,History,Standard Room
-SCHOOL,Thu,Period 2,Samiya Shafeeq,VII-BII,History,Standard Room
-SCHOOL,Fri,Period 7,Samiya Shafeeq,VII-BII,History,Standard Room
-SCHOOL,Tue,Period 6,Samiya Shafeeq,VII-BII,Geography,Standard Room
-SCHOOL,Tue,Period 8,Samiya Shafeeq,VII-BII,Geography,Standard Room
-SCHOOL,Wed,Period 4,Samiya Shafeeq,VII-BII,Geography,Standard Room
-SCHOOL,Mon,Period 8,Samiya Shafeeq,VII-GIII,Islamiyat,Standard Room
-SCHOOL,Wed,Period 8,Samiya Shafeeq,VII-GIII,Islamiyat,Standard Room
-SCHOOL,Fri,Period 1,Samiya Shafeeq,VII-GIII,Islamiyat,Standard Room
-SCHOOL,Tue,Period 2,Samiya Shafeeq,VII-GIII,Geography,Standard Room
-SCHOOL,Wed,Period 7,Samiya Shafeeq,VII-GIII,Geography,Standard Room
-SCHOOL,Fri,Period 3,Samiya Shafeeq,VII-GIII,Geography,Standard Room
-SCHOOL,Mon,Period 1,Samiya Shafeeq,Pre-IX BI,Pak Studies,Standard Room
-SCHOOL,Tue,Period 4,Samiya Shafeeq,Pre-IX BI,Pak Studies,Standard Room
-SCHOOL,Thu,Period 1,Samiya Shafeeq,Pre-IX BI,Pak Studies,Standard Room
-SCHOOL,Thu,Period 8,Samiya Shafeeq,Pre-IX BI,Pak Studies,Standard Room
+SCHOOL,Tue,Period 2,Sajida Parveen,IX-BII,Urdu,Standard Room
+SCHOOL,Thu,Period 8,Sajida Parveen,IX-BII,Urdu,Standard Room
+SCHOOL,Fri,Period 6,Sajida Parveen,IX-BII,Urdu,Standard Room
+SCHOOL,Tue,Period 7,Sajida Parveen,X-BI,Urdu,Standard Room
+SCHOOL,Wed,Period 7,Sajida Parveen,X-BI,Urdu,Standard Room
+SCHOOL,Thu,Period 2,Sajida Parveen,X-BI,Urdu,Standard Room
+SCHOOL,Thu,Period 4,Sajida Parveen,X-BI,Urdu,Standard Room
+SCHOOL,Fri,Period 2,Sajida Parveen,X-BI,Urdu,Standard Room
+SCHOOL,Mon,Period 8,Sajida Parveen,X-BII,Urdu,Standard Room
+SCHOOL,Tue,Period 1,Sajida Parveen,X-BII,Urdu,Standard Room
+SCHOOL,Wed,Period 6,Sajida Parveen,X-BII,Urdu,Standard Room
+SCHOOL,Wed,Period 8,Sajida Parveen,X-BII,Urdu,Standard Room
+SCHOOL,Fri,Period 9,Sajida Parveen,X-BII,Urdu,Standard Room
+SCHOOL,Mon,Period 7,Samiya Shafeeq,VII-BI,Geography,Standard Room
+SCHOOL,Wed,Period 6,Samiya Shafeeq,VII-BI,Geography,Standard Room
+SCHOOL,Thu,Period 5,Samiya Shafeeq,VII-BI,Geography,Standard Room
+SCHOOL,Mon,Period 1,Samiya Shafeeq,VII-BII,History,Standard Room
+SCHOOL,Wed,Period 3,Samiya Shafeeq,VII-BII,History,Standard Room
+SCHOOL,Wed,Period 4,Samiya Shafeeq,VII-BII,History,Standard Room
+SCHOOL,Thu,Period 10,Samiya Shafeeq,VII-BII,Geography,Standard Room
+SCHOOL,Fri,Period 1,Samiya Shafeeq,VII-BII,Geography,Standard Room
+SCHOOL,Fri,Period 3,Samiya Shafeeq,VII-BII,Geography,Standard Room
+SCHOOL,Tue,Period 2,Samiya Shafeeq,VII-GIII,Islamiyat,Standard Room
+SCHOOL,Tue,Period 4,Samiya Shafeeq,VII-GIII,Islamiyat,Standard Room
+SCHOOL,Thu,Period 6,Samiya Shafeeq,VII-GIII,Islamiyat,Standard Room
+SCHOOL,Tue,Period 1,Samiya Shafeeq,VII-GIII,Geography,Standard Room
+SCHOOL,Wed,Period 2,Samiya Shafeeq,VII-GIII,Geography,Standard Room
+SCHOOL,Thu,Period 2,Samiya Shafeeq,VII-GIII,Geography,Standard Room
+SCHOOL,Mon,Period 4,Samiya Shafeeq,Pre-IX BI,Pak Studies,Standard Room
+SCHOOL,Tue,Period 5,Samiya Shafeeq,Pre-IX BI,Pak Studies,Standard Room
+SCHOOL,Wed,Period 5,Samiya Shafeeq,Pre-IX BI,Pak Studies,Standard Room
 SCHOOL,Fri,Period 4,Samiya Shafeeq,Pre-IX BI,Pak Studies,Standard Room
-SCHOOL,Tue,Period 1,Samiya Shafeeq,Pre-IX BII,Pak Studies,Standard Room
-SCHOOL,Wed,Period 6,Samiya Shafeeq,Pre-IX BII,Pak Studies,Standard Room
-SCHOOL,Thu,Period 3,Samiya Shafeeq,Pre-IX BII,Pak Studies,Standard Room
-SCHOOL,Thu,Period 5,Samiya Shafeeq,Pre-IX BII,Pak Studies,Standard Room
-SCHOOL,Fri,Period 2,Samiya Shafeeq,Pre-IX BII,Pak Studies,Standard Room
+SCHOOL,Fri,Period 7,Samiya Shafeeq,Pre-IX BI,Pak Studies,Standard Room
+SCHOOL,Mon,Period 2,Samiya Shafeeq,Pre-IX BII,Pak Studies,Standard Room
+SCHOOL,Mon,Period 9,Samiya Shafeeq,Pre-IX BII,Pak Studies,Standard Room
+SCHOOL,Wed,Period 7,Samiya Shafeeq,Pre-IX BII,Pak Studies,Standard Room
+SCHOOL,Wed,Period 9,Samiya Shafeeq,Pre-IX BII,Pak Studies,Standard Room
+SCHOOL,Thu,Period 8,Samiya Shafeeq,Pre-IX BII,Pak Studies,Standard Room
 SCHOOL,Mon,Period 7,Sana Qasim,Pre-IX GII,Pak Studies,Standard Room
 SCHOOL,Tue,Period 3,Sana Qasim,Pre-IX GII,Pak Studies,Standard Room
-SCHOOL,Wed,Period 4,Sana Qasim,Pre-IX GII,Pak Studies,Standard Room
-SCHOOL,Thu,Period 6,Sana Qasim,Pre-IX GII,Pak Studies,Standard Room
+SCHOOL,Wed,Period 5,Sana Qasim,Pre-IX GII,Pak Studies,Standard Room
 SCHOOL,Thu,Period 8,Sana Qasim,Pre-IX GII,Pak Studies,Standard Room
-SCHOOL,Mon,Period 1,Sana Qasim,X-BI,Pak Studies,Standard Room
+SCHOOL,Fri,Period 2,Sana Qasim,Pre-IX GII,Pak Studies,Standard Room
 SCHOOL,Mon,Period 8,Sana Qasim,X-BI,Pak Studies,Standard Room
-SCHOOL,Tue,Period 1,Sana Qasim,X-BI,Pak Studies,Standard Room
-SCHOOL,Tue,Period 7,Sana Qasim,X-BI,Pak Studies,Standard Room
-SCHOOL,Tue,Period 8,Sana Qasim,X-BI,Pak Studies,Standard Room
-SCHOOL,Wed,Period 5,Sana Qasim,X-BI,Pak Studies,Standard Room
-SCHOOL,Mon,Period 2,Sana Qasim,X-BII,Pak Studies,Standard Room
+SCHOOL,Tue,Period 6,Sana Qasim,X-BI,Pak Studies,Standard Room
+SCHOOL,Wed,Period 1,Sana Qasim,X-BI,Pak Studies,Standard Room
+SCHOOL,Wed,Period 2,Sana Qasim,X-BI,Pak Studies,Standard Room
+SCHOOL,Fri,Period 3,Sana Qasim,X-BI,Pak Studies,Standard Room
+SCHOOL,Fri,Period 10,Sana Qasim,X-BI,Pak Studies,Standard Room
+SCHOOL,Mon,Period 5,Sana Qasim,X-BII,Pak Studies,Standard Room
+SCHOOL,Tue,Period 2,Sana Qasim,X-BII,Pak Studies,Standard Room
 SCHOOL,Wed,Period 3,Sana Qasim,X-BII,Pak Studies,Standard Room
+SCHOOL,Wed,Period 7,Sana Qasim,X-BII,Pak Studies,Standard Room
+SCHOOL,Wed,Period 10,Sana Qasim,X-BII,Pak Studies,Standard Room
 SCHOOL,Thu,Period 3,Sana Qasim,X-BII,Pak Studies,Standard Room
-SCHOOL,Thu,Period 7,Sana Qasim,X-BII,Pak Studies,Standard Room
-SCHOOL,Fri,Period 4,Sana Qasim,X-BII,Pak Studies,Standard Room
-SCHOOL,Fri,Period 6,Sana Qasim,X-BII,Pak Studies,Standard Room
-SCHOOL,Mon,Period 3,Sana Qasim,X-GI,Pak Studies,Standard Room
-SCHOOL,Tue,Period 4,Sana Qasim,X-GI,Pak Studies,Standard Room
-SCHOOL,Tue,Period 6,Sana Qasim,X-GI,Pak Studies,Standard Room
-SCHOOL,Wed,Period 1,Sana Qasim,X-GI,Pak Studies,Standard Room
-SCHOOL,Thu,Period 1,Sana Qasim,X-GI,Pak Studies,Standard Room
-SCHOOL,Fri,Period 5,Sana Qasim,X-GI,Pak Studies,Standard Room
-SCHOOL,Mon,Period 4,Sehar Abbas,Pre-IX GI,Pak Studies,Standard Room
-SCHOOL,Tue,Period 2,Sehar Abbas,Pre-IX GI,Pak Studies,Standard Room
-SCHOOL,Thu,Period 8,Sehar Abbas,Pre-IX GI,Pak Studies,Standard Room
-SCHOOL,Fri,Period 1,Sehar Abbas,Pre-IX GI,Pak Studies,Standard Room
-SCHOOL,Fri,Period 4,Sehar Abbas,Pre-IX GI,Pak Studies,Standard Room
+SCHOOL,Mon,Period 9,Sana Qasim,X-GI,Pak Studies,Standard Room
+SCHOOL,Tue,Period 1,Sana Qasim,X-GI,Pak Studies,Standard Room
+SCHOOL,Tue,Period 9,Sana Qasim,X-GI,Pak Studies,Standard Room
+SCHOOL,Thu,Period 9,Sana Qasim,X-GI,Pak Studies,Standard Room
+SCHOOL,Thu,Period 10,Sana Qasim,X-GI,Pak Studies,Standard Room
+SCHOOL,Fri,Period 7,Sana Qasim,X-GI,Pak Studies,Standard Room
+SCHOOL,Mon,Period 7,Sehar Abbas,Pre-IX GI,Pak Studies,Standard Room
+SCHOOL,Mon,Period 9,Sehar Abbas,Pre-IX GI,Pak Studies,Standard Room
+SCHOOL,Wed,Period 2,Sehar Abbas,Pre-IX GI,Pak Studies,Standard Room
+SCHOOL,Wed,Period 9,Sehar Abbas,Pre-IX GI,Pak Studies,Standard Room
+SCHOOL,Thu,Period 9,Sehar Abbas,Pre-IX GI,Pak Studies,Standard Room
+SCHOOL,Mon,Period 10,Sehar Abbas,Pre-O,Islamiyat,Standard Room
 SCHOOL,Tue,Period 1,Sehar Abbas,Pre-O,Islamiyat,Standard Room
-SCHOOL,Tue,Period 5,Sehar Abbas,Pre-O,Islamiyat,Standard Room
-SCHOOL,Wed,Period 1,Sehar Abbas,Pre-O,Islamiyat,Standard Room
-SCHOOL,Wed,Period 8,Sehar Abbas,Pre-O,Islamiyat,Standard Room
-SCHOOL,Thu,Period 7,Sehar Abbas,Pre-O,Islamiyat,Standard Room
+SCHOOL,Tue,Period 10,Sehar Abbas,Pre-O,Islamiyat,Standard Room
+SCHOOL,Thu,Period 6,Sehar Abbas,Pre-O,Islamiyat,Standard Room
+SCHOOL,Thu,Period 10,Sehar Abbas,Pre-O,Islamiyat,Standard Room
 SCHOOL,Fri,Period 7,Sehar Abbas,Pre-O,Islamiyat,Standard Room
-SCHOOL,Tue,Period 6,Sehar Abbas,Pre-O,Geography,Standard Room
-SCHOOL,Tue,Period 8,Sehar Abbas,Pre-O,Geography,Standard Room
-SCHOOL,Fri,Period 6,Sehar Abbas,Pre-O,Geography,Standard Room
-SCHOOL,Mon,Period 3,Sehar Abbas,Pre-O,History,Standard Room
-SCHOOL,Mon,Period 8,Sehar Abbas,Pre-O,History,Standard Room
-SCHOOL,Tue,Period 4,Sehar Abbas,Pre-O,History,Standard Room
-SCHOOL,Tue,Period 7,Sehar Abbas,Pre-O,History,Standard Room
+SCHOOL,Tue,Period 3,Sehar Abbas,Pre-O,Geography,Standard Room
+SCHOOL,Fri,Period 9,Sehar Abbas,Pre-O,Geography,Standard Room
+SCHOOL,Fri,Period 10,Sehar Abbas,Pre-O,Geography,Standard Room
+SCHOOL,Mon,Period 5,Sehar Abbas,Pre-O,History,Standard Room
+SCHOOL,Wed,Period 8,Sehar Abbas,Pre-O,History,Standard Room
+SCHOOL,Thu,Period 2,Sehar Abbas,Pre-O,History,Standard Room
+SCHOOL,Fri,Period 1,Sehar Abbas,Pre-O,History,Standard Room
 SCHOOL,Mon,Period 2,Sehar Abbas,OI-BII,Pak Studies,Standard Room
-SCHOOL,Mon,Period 5,Sehar Abbas,OI-BII,Pak Studies,Standard Room
-SCHOOL,Wed,Period 6,Sehar Abbas,OI-BII,Pak Studies,Standard Room
-SCHOOL,Wed,Period 7,Sehar Abbas,OI-BII,Pak Studies,Standard Room
-SCHOOL,Thu,Period 3,Sehar Abbas,OI-BII,Pak Studies,Standard Room
+SCHOOL,Tue,Period 2,Sehar Abbas,OI-BII,Pak Studies,Standard Room
+SCHOOL,Tue,Period 5,Sehar Abbas,OI-BII,Pak Studies,Standard Room
+SCHOOL,Tue,Period 7,Sehar Abbas,OI-BII,Pak Studies,Standard Room
+SCHOOL,Thu,Period 4,Sehar Abbas,OI-BII,Pak Studies,Standard Room
 SCHOOL,Fri,Period 5,Sehar Abbas,OI-BII,Pak Studies,Standard Room
-SCHOOL,Wed,Period 1,Shahid Saeed,VII-BI,English,Standard Room
-SCHOOL,Wed,Period 8,Shahid Saeed,VII-BI,English,Standard Room
-SCHOOL,Thu,Period 3,Shahid Saeed,VII-BI,English,Standard Room
+SCHOOL,Mon,Period 6,Shahid Saeed,VII-BI,English,Standard Room
+SCHOOL,Tue,Period 2,Shahid Saeed,VII-BI,English,Standard Room
+SCHOOL,Tue,Period 3,Shahid Saeed,VII-BI,English,Standard Room
+SCHOOL,Tue,Period 8,Shahid Saeed,VII-BI,English,Standard Room
 SCHOOL,Thu,Period 7,Shahid Saeed,VII-BI,English,Standard Room
-SCHOOL,Fri,Period 1,Shahid Saeed,VII-BI,English,Standard Room
-SCHOOL,Fri,Period 4,Shahid Saeed,VII-BI,English,Standard Room
-SCHOOL,Mon,Period 1,Shahid Saeed,VII-BII,English,Standard Room
+SCHOOL,Fri,Period 7,Shahid Saeed,VII-BI,English,Standard Room
+SCHOOL,Mon,Period 3,Shahid Saeed,VII-BII,English,Standard Room
 SCHOOL,Tue,Period 4,Shahid Saeed,VII-BII,English,Standard Room
-SCHOOL,Tue,Period 5,Shahid Saeed,VII-BII,English,Standard Room
-SCHOOL,Thu,Period 1,Shahid Saeed,VII-BII,English,Standard Room
-SCHOOL,Thu,Period 6,Shahid Saeed,VII-BII,English,Standard Room
-SCHOOL,Fri,Period 8,Shahid Saeed,VII-BII,English,Standard Room
-SCHOOL,Mon,Period 2,Shahid Saeed,VII-BIII,English,Standard Room
-SCHOOL,Tue,Period 7,Shahid Saeed,VII-BIII,English,Standard Room
-SCHOOL,Wed,Period 5,Shahid Saeed,VII-BIII,English,Standard Room
+SCHOOL,Tue,Period 6,Shahid Saeed,VII-BII,English,Standard Room
+SCHOOL,Wed,Period 1,Shahid Saeed,VII-BII,English,Standard Room
+SCHOOL,Wed,Period 6,Shahid Saeed,VII-BII,English,Standard Room
+SCHOOL,Thu,Period 5,Shahid Saeed,VII-BII,English,Standard Room
+SCHOOL,Mon,Period 7,Shahid Saeed,VII-BIII,English,Standard Room
+SCHOOL,Mon,Period 10,Shahid Saeed,VII-BIII,English,Standard Room
+SCHOOL,Wed,Period 8,Shahid Saeed,VII-BIII,English,Standard Room
 SCHOOL,Thu,Period 4,Shahid Saeed,VII-BIII,English,Standard Room
 SCHOOL,Thu,Period 8,Shahid Saeed,VII-BIII,English,Standard Room
-SCHOOL,Fri,Period 2,Shahid Saeed,VII-BIII,English,Standard Room
-SCHOOL,Mon,Period 3,Shahid Saeed,Pre-IX BI,English,Standard Room
-SCHOOL,Mon,Period 4,Shahid Saeed,Pre-IX BI,English,Standard Room
-SCHOOL,Mon,Period 7,Shahid Saeed,Pre-IX BI,English,Standard Room
-SCHOOL,Tue,Period 3,Shahid Saeed,Pre-IX BI,English,Standard Room
-SCHOOL,Tue,Period 8,Shahid Saeed,Pre-IX BI,English,Standard Room
-SCHOOL,Tue,Period 6,Shumaila Quoom,VII-BIII,T. H. Q,Standard Room
-SCHOOL,Wed,Period 1,Shumaila Quoom,VII-BIII,T. H. Q,Standard Room
-SCHOOL,Wed,Period 4,Shumaila Quoom,VII-BIII,T. H. Q,Standard Room
-SCHOOL,Mon,Period 7,Shumaila Quoom,VII-BIII,Islamiyat,Standard Room
-SCHOOL,Wed,Period 2,Shumaila Quoom,VII-BIII,Islamiyat,Standard Room
-SCHOOL,Thu,Period 3,Shumaila Quoom,VII-BIII,Islamiyat,Standard Room
+SCHOOL,Thu,Period 10,Shahid Saeed,VII-BIII,English,Standard Room
+SCHOOL,Mon,Period 2,Shahid Saeed,Pre-IX BI,English,Standard Room
+SCHOOL,Wed,Period 9,Shahid Saeed,Pre-IX BI,English,Standard Room
+SCHOOL,Wed,Period 10,Shahid Saeed,Pre-IX BI,English,Standard Room
+SCHOOL,Fri,Period 2,Shahid Saeed,Pre-IX BI,English,Standard Room
+SCHOOL,Fri,Period 6,Shahid Saeed,Pre-IX BI,English,Standard Room
+SCHOOL,Wed,Period 6,Shumaila Quoom,VII-BIII,T. H. Q,Standard Room
+SCHOOL,Thu,Period 5,Shumaila Quoom,VII-BIII,T. H. Q,Standard Room
+SCHOOL,Thu,Period 9,Shumaila Quoom,VII-BIII,T. H. Q,Standard Room
+SCHOOL,Fri,Period 1,Shumaila Quoom,VII-BIII,Islamiyat,Standard Room
+SCHOOL,Fri,Period 4,Shumaila Quoom,VII-BIII,Islamiyat,Standard Room
+SCHOOL,Fri,Period 5,Shumaila Quoom,VII-BIII,Islamiyat,Standard Room
 SCHOOL,Tue,Period 1,Shumaila Quoom,VII-GI,T. H. Q,Standard Room
-SCHOOL,Tue,Period 2,Shumaila Quoom,VII-GI,T. H. Q,Standard Room
-SCHOOL,Wed,Period 5,Shumaila Quoom,VII-GI,T. H. Q,Standard Room
-SCHOOL,Tue,Period 8,Shumaila Quoom,VII-GI,Islamiyat,Standard Room
-SCHOOL,Wed,Period 7,Shumaila Quoom,VII-GI,Islamiyat,Standard Room
-SCHOOL,Thu,Period 7,Shumaila Quoom,VII-GI,Islamiyat,Standard Room
-SCHOOL,Tue,Period 4,Shumaila Quoom,VII-GII,T. H. Q,Standard Room
-SCHOOL,Wed,Period 8,Shumaila Quoom,VII-GII,T. H. Q,Standard Room
-SCHOOL,Thu,Period 1,Shumaila Quoom,VII-GII,T. H. Q,Standard Room
-SCHOOL,Mon,Period 1,Shumaila Quoom,VII-GIII,T. H. Q,Standard Room
+SCHOOL,Tue,Period 5,Shumaila Quoom,VII-GI,T. H. Q,Standard Room
+SCHOOL,Tue,Period 6,Shumaila Quoom,VII-GI,T. H. Q,Standard Room
+SCHOOL,Tue,Period 3,Shumaila Quoom,VII-GI,Islamiyat,Standard Room
+SCHOOL,Thu,Period 2,Shumaila Quoom,VII-GI,Islamiyat,Standard Room
+SCHOOL,Thu,Period 6,Shumaila Quoom,VII-GI,Islamiyat,Standard Room
+SCHOOL,Mon,Period 4,Shumaila Quoom,VII-GII,T. H. Q,Standard Room
+SCHOOL,Tue,Period 8,Shumaila Quoom,VII-GII,T. H. Q,Standard Room
+SCHOOL,Fri,Period 2,Shumaila Quoom,VII-GII,T. H. Q,Standard Room
 SCHOOL,Mon,Period 6,Shumaila Quoom,VII-GIII,T. H. Q,Standard Room
-SCHOOL,Tue,Period 7,Shumaila Quoom,VII-GIII,T. H. Q,Standard Room
-SCHOOL,Mon,Period 5,Shumaila Quoom,Pre-IX GI,T.H.Q,Standard Room
-SCHOOL,Tue,Period 3,Shumaila Quoom,Pre-IX GI,T.H.Q,Standard Room
-SCHOOL,Thu,Period 5,Shumaila Quoom,Pre-IX GI,T.H.Q,Standard Room
-SCHOOL,Mon,Period 4,Shumaila Quoom,Pre-IX GII,T.H.Q,Standard Room
-SCHOOL,Fri,Period 5,Shumaila Quoom,Pre-IX GII,T.H.Q,Standard Room
+SCHOOL,Mon,Period 9,Shumaila Quoom,VII-GIII,T. H. Q,Standard Room
+SCHOOL,Wed,Period 4,Shumaila Quoom,VII-GIII,T. H. Q,Standard Room
+SCHOOL,Mon,Period 3,Shumaila Quoom,Pre-IX GI,T.H.Q,Standard Room
+SCHOOL,Tue,Period 9,Shumaila Quoom,Pre-IX GI,T.H.Q,Standard Room
+SCHOOL,Thu,Period 3,Shumaila Quoom,Pre-IX GI,T.H.Q,Standard Room
+SCHOOL,Tue,Period 4,Shumaila Quoom,Pre-IX GII,T.H.Q,Standard Room
+SCHOOL,Thu,Period 4,Shumaila Quoom,Pre-IX GII,T.H.Q,Standard Room
 SCHOOL,Fri,Period 8,Shumaila Quoom,Pre-IX GII,T.H.Q,Standard Room
-SCHOOL,Tue,Period 7,Umair Murtaza,VII-BI,T. H. Q,Standard Room
-SCHOOL,Wed,Period 3,Umair Murtaza,VII-BI,T. H. Q,Standard Room
 SCHOOL,Wed,Period 5,Umair Murtaza,VII-BI,T. H. Q,Standard Room
-SCHOOL,Mon,Period 7,Umair Murtaza,VII-BII,T. H. Q,Standard Room
+SCHOOL,Thu,Period 8,Umair Murtaza,VII-BI,T. H. Q,Standard Room
+SCHOOL,Fri,Period 2,Umair Murtaza,VII-BI,T. H. Q,Standard Room
 SCHOOL,Tue,Period 1,Umair Murtaza,VII-BII,T. H. Q,Standard Room
 SCHOOL,Tue,Period 3,Umair Murtaza,VII-BII,T. H. Q,Standard Room
-SCHOOL,Wed,Period 1,Umair Murtaza,Pre-IX BI,T.H.Q,Standard Room
-SCHOOL,Wed,Period 6,Umair Murtaza,Pre-IX BI,T.H.Q,Standard Room
-SCHOOL,Fri,Period 3,Umair Murtaza,Pre-IX BI,T.H.Q,Standard Room
-SCHOOL,Mon,Period 5,Umair Murtaza,Pre-IX BII,T.H.Q,Standard Room
-SCHOOL,Tue,Period 6,Umair Murtaza,Pre-IX BII,T.H.Q,Standard Room
-SCHOOL,Thu,Period 7,Umair Murtaza,Pre-IX BII,T.H.Q,Standard Room
-SCHOOL,Mon,Period 8,Umair Murtaza,IX-BI,T.H.Q,Standard Room
+SCHOOL,Thu,Period 4,Umair Murtaza,VII-BII,T. H. Q,Standard Room
+SCHOOL,Mon,Period 6,Umair Murtaza,Pre-IX BI,T.H.Q,Standard Room
+SCHOOL,Wed,Period 3,Umair Murtaza,Pre-IX BI,T.H.Q,Standard Room
+SCHOOL,Thu,Period 2,Umair Murtaza,Pre-IX BI,T.H.Q,Standard Room
+SCHOOL,Mon,Period 7,Umair Murtaza,Pre-IX BII,T.H.Q,Standard Room
+SCHOOL,Wed,Period 4,Umair Murtaza,Pre-IX BII,T.H.Q,Standard Room
+SCHOOL,Fri,Period 7,Umair Murtaza,Pre-IX BII,T.H.Q,Standard Room
+SCHOOL,Mon,Period 1,Umair Murtaza,IX-BI,T.H.Q,Standard Room
 SCHOOL,Tue,Period 4,Umair Murtaza,IX-BI,T.H.Q,Standard Room
-SCHOOL,Tue,Period 5,Umair Murtaza,IX-BI,T.H.Q,Standard Room
-SCHOOL,Wed,Period 8,Umair Murtaza,IX-BII,T.H.Q,Standard Room
-SCHOOL,Fri,Period 4,Umair Murtaza,IX-BII,T.H.Q,Standard Room
-SCHOOL,Fri,Period 7,Umair Murtaza,IX-BII,T.H.Q,Standard Room
-SCHOOL,Tue,Period 2,Umair Murtaza,X-BI,T.H.Q,Standard Room
-SCHOOL,Thu,Period 3,Umair Murtaza,X-BI,T.H.Q,Standard Room
-SCHOOL,Fri,Period 8,Umair Murtaza,X-BI,T.H.Q,Standard Room
-SCHOOL,Tue,Period 8,Umair Murtaza,X-BII,T.H.Q,Standard Room
-SCHOOL,Thu,Period 4,Umair Murtaza,X-BII,T.H.Q,Standard Room
-SCHOOL,Fri,Period 5,Umair Murtaza,X-BII,T.H.Q,Standard Room
-SCHOOL,Mon,Period 2,Umm E Zainab,VII-GI,Maths,Standard Room
-SCHOOL,Wed,Period 3,Umm E Zainab,VII-GI,Maths,Standard Room
-SCHOOL,Wed,Period 6,Umm E Zainab,VII-GI,Maths,Standard Room
-SCHOOL,Thu,Period 1,Umm E Zainab,VII-GI,Maths,Standard Room
-SCHOOL,Fri,Period 5,Umm E Zainab,VII-GI,Maths,Standard Room
-SCHOOL,Fri,Period 7,Umm E Zainab,VII-GI,Maths,Standard Room
-SCHOOL,Mon,Period 7,Umm E Zainab,VII-GII,Maths,Standard Room
-SCHOOL,Tue,Period 5,Umm E Zainab,VII-GII,Maths,Standard Room
-SCHOOL,Wed,Period 1,Umm E Zainab,VII-GII,Maths,Standard Room
-SCHOOL,Fri,Period 1,Umm E Zainab,VII-GII,Maths,Standard Room
-SCHOOL,Fri,Period 3,Umm E Zainab,VII-GII,Maths,Standard Room
-SCHOOL,Fri,Period 6,Umm E Zainab,VII-GII,Maths,Standard Room
+SCHOOL,Wed,Period 1,Umair Murtaza,IX-BI,T.H.Q,Standard Room
+SCHOOL,Mon,Period 8,Umair Murtaza,IX-BII,T.H.Q,Standard Room
+SCHOOL,Wed,Period 10,Umair Murtaza,IX-BII,T.H.Q,Standard Room
+SCHOOL,Thu,Period 1,Umair Murtaza,IX-BII,T.H.Q,Standard Room
+SCHOOL,Mon,Period 5,Umair Murtaza,X-BI,T.H.Q,Standard Room
+SCHOOL,Thu,Period 6,Umair Murtaza,X-BI,T.H.Q,Standard Room
+SCHOOL,Thu,Period 10,Umair Murtaza,X-BI,T.H.Q,Standard Room
+SCHOOL,Mon,Period 4,Umair Murtaza,X-BII,T.H.Q,Standard Room
+SCHOOL,Wed,Period 9,Umair Murtaza,X-BII,T.H.Q,Standard Room
+SCHOOL,Fri,Period 8,Umair Murtaza,X-BII,T.H.Q,Standard Room
+SCHOOL,Mon,Period 8,Umm E Zainab,VII-GI,Maths,Standard Room
+SCHOOL,Wed,Period 1,Umm E Zainab,VII-GI,Maths,Standard Room
+SCHOOL,Wed,Period 2,Umm E Zainab,VII-GI,Maths,Standard Room
+SCHOOL,Wed,Period 9,Umm E Zainab,VII-GI,Maths,Standard Room
+SCHOOL,Thu,Period 7,Umm E Zainab,VII-GI,Maths,Standard Room
+SCHOOL,Fri,Period 9,Umm E Zainab,VII-GI,Maths,Standard Room
+SCHOOL,Mon,Period 6,Umm E Zainab,VII-GII,Maths,Standard Room
+SCHOOL,Tue,Period 10,Umm E Zainab,VII-GII,Maths,Standard Room
+SCHOOL,Thu,Period 4,Umm E Zainab,VII-GII,Maths,Standard Room
+SCHOOL,Thu,Period 9,Umm E Zainab,VII-GII,Maths,Standard Room
+SCHOOL,Fri,Period 4,Umm E Zainab,VII-GII,Maths,Standard Room
+SCHOOL,Fri,Period 5,Umm E Zainab,VII-GII,Maths,Standard Room
 SCHOOL,Mon,Period 4,Umm E Zainab,VII-GIII,Maths,Standard Room
-SCHOOL,Thu,Period 2,Umm E Zainab,VII-GIII,Maths,Standard Room
-SCHOOL,Thu,Period 4,Umm E Zainab,VII-GIII,Maths,Standard Room
-SCHOOL,Thu,Period 7,Umm E Zainab,VII-GIII,Maths,Standard Room
-SCHOOL,Fri,Period 4,Umm E Zainab,VII-GIII,Maths,Standard Room
-SCHOOL,Fri,Period 8,Umm E Zainab,VII-GIII,Maths,Standard Room
-SCHOOL,Mon,Period 1,Umm E Zainab,Pre-IX GI,Maths,Standard Room
-SCHOOL,Mon,Period 8,Umm E Zainab,Pre-IX GI,Maths,Standard Room
-SCHOOL,Tue,Period 7,Umm E Zainab,Pre-IX GI,Maths,Standard Room
-SCHOOL,Wed,Period 2,Umm E Zainab,Pre-IX GI,Maths,Standard Room
-SCHOOL,Fri,Period 2,Umm E Zainab,Pre-IX GI,Maths,Standard Room
+SCHOOL,Tue,Period 3,Umm E Zainab,VII-GIII,Maths,Standard Room
+SCHOOL,Wed,Period 7,Umm E Zainab,VII-GIII,Maths,Standard Room
+SCHOOL,Wed,Period 10,Umm E Zainab,VII-GIII,Maths,Standard Room
+SCHOOL,Thu,Period 8,Umm E Zainab,VII-GIII,Maths,Standard Room
+SCHOOL,Fri,Period 3,Umm E Zainab,VII-GIII,Maths,Standard Room
+SCHOOL,Mon,Period 2,Umm E Zainab,Pre-IX GI,Maths,Standard Room
+SCHOOL,Mon,Period 10,Umm E Zainab,Pre-IX GI,Maths,Standard Room
+SCHOOL,Tue,Period 4,Umm E Zainab,Pre-IX GI,Maths,Standard Room
+SCHOOL,Tue,Period 8,Umm E Zainab,Pre-IX GI,Maths,Standard Room
+SCHOOL,Wed,Period 6,Umm E Zainab,Pre-IX GI,Maths,Standard Room
