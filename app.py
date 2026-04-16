@@ -58,7 +58,7 @@ def run_generation(institution_type, workload_file, rest_file, res_file=None):
     if res_file:
         load_csv_safe(res_file).to_csv('resource_data.csv', index=False)
 
-    with st.spinner(f"AI calculating strict lab and theory blocks... this may take up to 60 seconds."):
+    with st.spinner(f"AI calculating strict blocks... this may take up to 60 seconds."):
         solve_timetable(num_periods=num_periods, num_working_days=num_days)
         
         if os.path.exists('final_timetable_result.csv'):
@@ -92,7 +92,7 @@ if st.session_state['generated_data'] is not None:
     st.divider()
     res_df = st.session_state['generated_data']
     
-    # CRITICAL UI FIX: Combines Class + Subject so Teachers know what they are teaching
+    # UI FIX: Show both Class and Subject in the Teacher view
     res_df['Display_Class'] = res_df['Class'] + " (" + res_df['Subject'] + ")"
     
     csv_buf = io.StringIO()

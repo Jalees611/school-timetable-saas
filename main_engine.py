@@ -1,28 +1,34 @@
 import pandas as pd
 from ortools.sat.python import cp_model
 import os
+import re
 
 def solve_timetable(num_periods=8, num_working_days=5):
     if not os.path.exists('school_data.csv'): return
     
-    # 1. Load Data
-    df = pd.read_csv('school_data.csv')
-    df.columns = [str(c).strip().lower() for c in df.columns]
-    
-    # Fallback to prevent crashes if columns are missing
-    if 'institution_type' not in df.columns: df['institution_type'] = 'school'
-    if 'required_resource_type' not in df.columns: df['required_resource_type'] = 'none'
+    # --- 1. BULLETPROOF DATA PARSER ---
+    # This strips ALL spaces, underscores, and dashes from column names 
+    # so Excel formatting can never break the engine again.
+    def normalize_cols(dataframe):
+        dataframe.columns = [re.sub(r'[^a-z0-9]', '', str(c).lower()) for c in dataframe.columns]
+        return dataframe
 
+    # Helper to safely extract data without "NaN" errors
+    def get_val(item, col, default=''):
+        val = item.get(col, default)
+        if pd.isna(val): return default
+        return str(val).strip()
+
+    df = normalize_cols(pd.read_csv('school_data.csv'))
+    
     restrictions = []
     if os.path.exists('restrictions_data.csv'):
-        rest_df = pd.read_csv('restrictions_data.csv')
-        rest_df.columns = [str(c).strip().lower() for c in rest_df.columns]
+        rest_df = normalize_cols(pd.read_csv('restrictions_data.csv'))
         restrictions = rest_df.to_dict('records')
 
     resources = []
     if os.path.exists('resource_data.csv'):
-        res_df = pd.read_csv('resource_data.csv')
-        res_df.columns = [str(c).strip().lower() for c in res_df.columns]
+        res_df = normalize_cols(pd.read_csv('resource_data.csv'))
         resources = res_df.to_dict('records')
 
     all_possible_days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -32,31 +38,31 @@ def solve_timetable(num_periods=8, num_working_days=5):
     model = cp_model.CpModel()
     lessons = {}
 
-    # 2. Create Variables & Robust Room Matching
+    # --- 2. CREATE VARIABLES & ROOM MATCHING ---
     for i, row in df.iterrows():
-        # ULTRA-ROBUST PARSING: Removes ALL spaces to prevent Excel formatting errors
-        req_type = str(row.get('required_resource_type', 'none')).lower().replace(' ', '')
-        inst_type = str(row.get('institution_type', 'school')).lower().replace(' ', '')
-        teacher_name = str(row.get('teacher_name', '')).strip().lower()
+        # Uses the normalized column names
+        req_type = get_val(row, 'requiredresourcetype', 'none').lower()
+        inst_type = get_val(row, 'institutiontype', 'school').lower()
+        teacher_name = get_val(row, 'teachername', '').lower()
         
-        is_lab = 'lab' in req_type
+        is_lab = 'lab' in req_type or 'pract' in req_type
         is_theory = 'classroom' in req_type
 
         rooms = ["Standard Room"]
-        if inst_type == 'college' and resources:
+        if 'college' in inst_type and resources:
             if is_lab:
-                rooms = [r['resource_name'] for r in resources if 'lab' in str(r.get('resource_type', '')).lower()]
+                rooms = [get_val(r, 'resourcename') for r in resources if 'lab' in get_val(r, 'resourcetype').lower()]
             elif is_theory:
-                rooms = [r['resource_name'] for r in resources if 'classroom' in str(r.get('resource_type', '')).lower()]
+                rooms = [get_val(r, 'resourcename') for r in resources if 'classroom' in get_val(r, 'resourcetype').lower()]
             if not rooms: rooms = ["Standard Room"]
 
         for d in days:
             for p in periods:
                 rest_type = None
                 for rest in restrictions:
-                    if str(rest.get('teacher_name', '')).lower() in teacher_name:
-                        if str(rest.get('day', '')).lower() == d.lower() and str(rest.get('period', '')).lower() == p.lower():
-                            rest_type = str(rest.get('restriction_type', '')).lower()
+                    if get_val(rest, 'teachername').lower() in teacher_name:
+                        if get_val(rest, 'day').lower() == d.lower() and get_val(rest, 'period').lower() == p.lower():
+                            rest_type = get_val(rest, 'restrictiontype').lower()
                             break
                 
                 for r in rooms:
@@ -64,53 +70,59 @@ def solve_timetable(num_periods=8, num_working_days=5):
                     if rest_type == "unavailable":
                         model.Add(lessons[(i, d, p, r)] == 0)
 
-    # 3. MUST TEACH LOGIC
+    # --- 3. MUST TEACH LOGIC ---
     for rest in restrictions:
-        if "must teach" in str(rest.get('restriction_type', '')).lower():
-            r_teacher = str(rest.get('teacher_name', '')).lower()
-            r_day = str(rest.get('day', ''))
-            r_period = str(rest.get('period', ''))
+        if "must teach" in get_val(rest, 'restrictiontype').lower():
+            r_teacher = get_val(rest, 'teachername').lower()
+            r_day = get_val(rest, 'day')
+            r_period = get_val(rest, 'period')
             
             if r_day in days:
                 must_teach_vars = [
                     lessons[k] for k in lessons 
-                    if k[1] == r_day and k[2] == r_period and r_teacher in str(df.loc[k[0], 'teacher_name']).lower()
+                    if k[1] == r_day and k[2] == r_period and r_teacher in get_val(df.loc[k[0]], 'teachername').lower()
                 ]
                 if must_teach_vars:
                     model.Add(sum(must_teach_vars) == 1)
 
-    # 4. STRICT BLOCK LOGIC & TARGETS
+    # --- 4. STRICT BLOCK LOGIC & TARGETS ---
     for i, row in df.iterrows():
-        target = int(row['weekly_period'])
-        req_type = str(row.get('required_resource_type', 'none')).lower().replace(' ', '')
-        inst_type = str(row.get('institution_type', 'school')).lower().replace(' ', '')
+        try:
+            target = int(float(get_val(row, 'weeklyperiod', 1)))
+        except ValueError:
+            target = 1
+            
+        req_type = get_val(row, 'requiredresourcetype', 'none').lower()
+        inst_type = get_val(row, 'institutiontype', 'school').lower()
         
-        is_lab = 'lab' in req_type
+        is_lab = 'lab' in req_type or 'pract' in req_type
 
+        # Evaluate Block Size dynamically
         block_size = 1
-        if inst_type == 'college':
+        if 'college' in inst_type:
             if is_lab:
                 block_size = 3
             elif target >= 2:
                 block_size = 2
-        elif inst_type == 'school':
+        elif 'school' in inst_type:
             if target >= 6:
                 block_size = 2
             else:
-                block_size = 1
+                block_size = 1 # 5 or less stays strictly single
         
         if block_size > 1 and target >= block_size:
             all_starts = []
             for d in days:
                 daily_starts = []
                 for p_idx in range(len(periods) - block_size + 1):
-                    # Grab available rooms for this row logic
+                    # Find available rooms for this specific subject
                     r_keys = list(set([k[3] for k in lessons if k[0] == i]))
                     for r in r_keys: 
                         s_var = model.NewBoolVar(f's_{i}_{d}_{p_idx}_{r}')
                         daily_starts.append(s_var)
                         all_starts.append(s_var)
 
+                        # Force block sequence in same room
                         for b in range(block_size):
                             p_name = periods[p_idx + b]
                             if (i, d, p_name, r) in lessons:
@@ -121,7 +133,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
             num_blocks = target // block_size
             model.Add(sum(all_starts) == num_blocks)
 
-        # STRICT DAILY MAXIMUMS (Forces NO clumping of leftover periods)
+        # STRICT DAILY MAXIMUMS
         for d in days:
             daily_lessons = [lessons[k] for k in lessons if k[0] == i and k[1] == d]
             if block_size == 3:
@@ -134,21 +146,23 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 else:
                     model.Add(sum(daily_lessons) <= 2)
 
-        # Total weekly target
         all_l = [lessons[k] for k in lessons if k[0] == i]
         model.Add(sum(all_l) == target)
 
-    # 5. OVERLAPS
+    # --- 5. OVERLAPS ---
+    teachers = set([get_val(row, 'teachername') for _, row in df.iterrows() if get_val(row, 'teachername')])
+    classes = set([get_val(row, 'classname') for _, row in df.iterrows() if get_val(row, 'classname')])
+    
     for d in days:
         for p in periods:
-            for teacher in df['teacher_name'].unique():
-                t_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and teacher == df.loc[k[0], 'teacher_name']]
+            for t in teachers:
+                t_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and t == get_val(df.loc[k[0]], 'teachername')]
                 if t_vars: model.Add(sum(t_vars) <= 1)
-            for cls in df['class_name'].unique():
-                c_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and cls == df.loc[k[0], 'class_name']]
+            for c in classes:
+                c_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and c == get_val(df.loc[k[0]], 'classname')]
                 if c_vars: model.Add(sum(c_vars) <= 1)
 
-    # 6. SOLVE
+    # --- 6. SOLVE ---
     solver = cp_model.CpSolver()
     solver.parameters.max_time_in_seconds = 60.0 
     status = solver.Solve(model)
@@ -157,5 +171,12 @@ def solve_timetable(num_periods=8, num_working_days=5):
         output = []
         for (i, d, p, r), var in lessons.items():
             if solver.Value(var):
-                output.append({"Day": d, "Period": p, "Teacher": df.loc[i, 'teacher_name'], "Class": df.loc[i, 'class_name'], "Subject": df.loc[i, 'subject_name'], "Room": r})
+                output.append({
+                    "Day": d, 
+                    "Period": p, 
+                    "Teacher": get_val(df.loc[i], 'teachername'), 
+                    "Class": get_val(df.loc[i], 'classname'), 
+                    "Subject": get_val(df.loc[i], 'subjectname'), 
+                    "Room": r
+                })
         pd.DataFrame(output).to_csv('final_timetable_result.csv', index=False)
