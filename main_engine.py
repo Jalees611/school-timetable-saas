@@ -5,6 +5,7 @@ import os
 def solve_timetable(num_periods=8, num_working_days=5):
     if not os.path.exists('school_data.csv'): return
     
+    # 1. Load Data
     df = pd.read_csv('school_data.csv')
     df.columns = [c.strip().lower() for c in df.columns]
     df['institution_type'] = df.get('institution_type', pd.Series(['school']*len(df))).astype(str).str.lower()
@@ -30,7 +31,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
     model = cp_model.CpModel()
     lessons = {}
 
-    # Create Variables with Restrictions
+    # 2. Create Variables with Restrictions
     for i, row in df.iterrows():
         req_type = row['required_resource_type']
         inst_type = row['institution_type']
@@ -51,17 +52,17 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 
                 for r in rooms:
                     lessons[(i, d, p, r)] = model.NewBoolVar(f'L_{i}_{d}_{p}_{r}')
+                    # UNVAILABLE LOGIC
                     if rest_type == "unavailable":
                         model.Add(lessons[(i, d, p, r)] == 0)
 
-    # Must Teach Logic
+    # 3. MUST TEACH LOGIC
     for rest in restrictions:
         if "must teach" in str(rest['restriction_type']).lower():
             r_teacher = str(rest['teacher_name']).lower()
             r_day = str(rest['day'])
             r_period = str(rest['period'])
             
-            # Filter only if the restricted day is within current slider range
             if r_day in days:
                 must_teach_vars = [
                     lessons[k] for k in lessons 
@@ -70,7 +71,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 if must_teach_vars:
                     model.Add(sum(must_teach_vars) == 1)
 
-    # Block Logic & Targets
+    # 4. BLOCK LOGIC & TARGETS
     for i, row in df.iterrows():
         target = int(row['weekly_period'])
         inst_type = row['institution_type']
@@ -99,7 +100,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
         all_l = [lessons[k] for k in lessons if k[0] == i]
         model.Add(sum(all_l) == target)
 
-    # Overlaps
+    # 5. OVERLAPS
     for d in days:
         for p in periods:
             for teacher in df['teacher_name'].unique():
@@ -109,8 +110,10 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 c_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and df.loc[k[0], 'class_name'] == cls]
                 if c_vars: model.Add(sum(c_vars) <= 1)
 
+    # 6. SOLVE
     solver = cp_model.CpSolver()
-    solver.parameters.max_time_in_seconds = 30.0
+    # Increased time limit to 60s for handling complex blocks and restrictions safely
+    solver.parameters.max_time_in_seconds = 60.0 
     status = solver.Solve(model)
 
     if status in [cp_model.OPTIMAL, cp_model.FEASIBLE]:

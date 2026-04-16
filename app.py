@@ -37,19 +37,29 @@ st.sidebar.markdown(f"""
 
 st.sidebar.info("💡 Data is cleared on refresh for security.")
 
-# 2. Secure Data Processing Function
+# --- 2. SAFE CSV LOADER (Fixes Unicode Error) ---
+def load_csv_safe(file):
+    try:
+        # Try standard UTF-8 encoding first
+        return pd.read_csv(file, encoding='utf-8')
+    except UnicodeDecodeError:
+        # If it crashes, reset the file pointer and try Windows Excel encoding
+        file.seek(0)
+        return pd.read_csv(file, encoding='latin-1')
+
+# --- 3. DATA PROCESSING ---
 def run_generation(institution_type, workload_file, rest_file, res_file=None):
-    df = pd.read_csv(workload_file)
+    df = load_csv_safe(workload_file)
     df['institution_type'] = institution_type.lower()
     df.to_csv('school_data.csv', index=False)
     
     if rest_file:
-        pd.read_csv(rest_file).to_csv('restrictions_data.csv', index=False)
+        load_csv_safe(rest_file).to_csv('restrictions_data.csv', index=False)
     else:
         if os.path.exists('restrictions_data.csv'): os.remove('restrictions_data.csv')
     
     if res_file:
-        pd.read_csv(res_file).to_csv('resource_data.csv', index=False)
+        load_csv_safe(res_file).to_csv('resource_data.csv', index=False)
 
     with st.spinner(f"AI calculating {total_slots} potential slots..."):
         # Pass both periods and days to the engine
@@ -59,9 +69,9 @@ def run_generation(institution_type, workload_file, rest_file, res_file=None):
             st.session_state['generated_data'] = pd.read_csv('final_timetable_result.csv')
             os.remove('final_timetable_result.csv')
         else:
-            st.error(f"Infeasible! Ensure no teacher/class is assigned more than {total_slots} periods.")
+            st.error(f"Infeasible! Check restrictions or ensure no teacher/class is assigned more than {total_slots} periods.")
 
-# 3. UI Tabs
+# --- 4. UI TABS ---
 tab1, tab2 = st.tabs(["🏫 School Mode", "🎓 College Mode"])
 
 with tab1:
@@ -81,7 +91,7 @@ with tab2:
     if st.button("🧠 Generate College"):
         if c_work and c_res: run_generation('college', c_work, c_rest, c_res)
 
-# 4. Display Logic
+# --- 5. SECURE DISPLAY LOGIC ---
 if st.session_state['generated_data'] is not None:
     st.divider()
     res_df = st.session_state['generated_data']
@@ -102,7 +112,7 @@ if st.session_state['generated_data'] is not None:
         cl_val = st.selectbox("View Class Schedule", sorted(res_df['Class'].unique()))
         st.table(res_df[res_df['Class']==cl_val].pivot(index='Period', columns='Day', values='Subject').reindex(index=p_list, columns=d_list).fillna("-"))
 
-# 5. Templates
+# --- 6. TEMPLATES ---
 st.divider()
 st.subheader("📥 Templates")
 t1, t2, t3 = st.columns(3)
