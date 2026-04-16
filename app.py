@@ -92,11 +92,16 @@ if st.session_state['generated_data'] is not None:
     st.divider()
     res_df = st.session_state['generated_data']
     
-    # UI FIX: Show both Class and Subject in the Teacher view
-    res_df['Display_Class'] = res_df['Class'] + " (" + res_df['Subject'] + ")"
+    # --- UI FIX: Add Rooms to both views ---
+    # Teacher sees: Class (Subject) [Room]
+    res_df['Teacher_Display'] = res_df['Class'] + " (" + res_df['Subject'] + ") [" + res_df['Room'] + "]"
+    
+    # Class sees: Subject (Teacher) [Room]
+    res_df['Class_Display'] = res_df['Subject'] + " (" + res_df['Teacher'] + ") [" + res_df['Room'] + "]"
     
     csv_buf = io.StringIO()
-    res_df.drop(columns=['Display_Class'], errors='ignore').to_csv(csv_buf, index=False)
+    # Drop display columns before downloading to keep the raw CSV clean
+    res_df.drop(columns=['Teacher_Display', 'Class_Display'], errors='ignore').to_csv(csv_buf, index=False)
     st.download_button("📥 Download Timetable CSV", csv_buf.getvalue(), "timetable.csv", "text/csv")
     
     p_list = [f'Period {i}' for i in range(1, num_periods + 1)]
@@ -105,13 +110,13 @@ if st.session_state['generated_data'] is not None:
 
     st.subheader("👨‍🏫 Teacher Schedule")
     t = st.selectbox("Select Teacher", sorted(res_df['Teacher'].unique()))
-    st.table(res_df[res_df['Teacher']==t].pivot(index='Period', columns='Day', values='Display_Class').reindex(index=p_list, columns=d_list).fillna("-"))
+    st.table(res_df[res_df['Teacher']==t].pivot(index='Period', columns='Day', values='Teacher_Display').reindex(index=p_list, columns=d_list).fillna("-"))
     
     st.divider()
     
     st.subheader("📚 Class Schedule")
     cl_val = st.selectbox("Select Class", sorted(res_df['Class'].unique()))
-    st.table(res_df[res_df['Class']==cl_val].pivot(index='Period', columns='Day', values='Subject').reindex(index=p_list, columns=d_list).fillna("-"))
+    st.table(res_df[res_df['Class']==cl_val].pivot(index='Period', columns='Day', values='Class_Display').reindex(index=p_list, columns=d_list).fillna("-"))
 
 # --- TEMPLATES ---
 st.divider()
