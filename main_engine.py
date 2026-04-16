@@ -5,22 +5,34 @@ import os
 def solve_timetable(num_periods=8, num_working_days=5):
     if not os.path.exists('school_data.csv'): return
     
-    # 1. Load Data
+    # 1. Load Data & Scrub Invisible Spaces
     df = pd.read_csv('school_data.csv')
     df.columns = [c.strip().lower() for c in df.columns]
-    df['institution_type'] = df.get('institution_type', pd.Series(['school']*len(df))).astype(str).str.lower()
-    df['required_resource_type'] = df.get('required_resource_type', pd.Series(['none']*len(df))).astype(str).str.lower()
+    
+    # NEW: Aggressive scrubber to fix the "scattered lab" issue caused by trailing spaces in CSV
+    for col in df.columns:
+        if df[col].dtype == 'object':
+            df[col] = df[col].astype(str).str.strip()
+            
+    df['institution_type'] = df.get('institution_type', pd.Series(['school']*len(df))).str.lower()
+    df['required_resource_type'] = df.get('required_resource_type', pd.Series(['none']*len(df))).str.lower()
 
     restrictions = []
     if os.path.exists('restrictions_data.csv'):
         rest_df = pd.read_csv('restrictions_data.csv')
         rest_df.columns = [c.strip().lower() for c in rest_df.columns]
+        for col in rest_df.columns:
+            if rest_df[col].dtype == 'object':
+                rest_df[col] = rest_df[col].astype(str).str.strip()
         restrictions = rest_df.to_dict('records')
 
     resources = []
     if os.path.exists('resource_data.csv'):
         res_df = pd.read_csv('resource_data.csv')
         res_df.columns = [c.strip().lower() for c in res_df.columns]
+        for col in res_df.columns:
+            if res_df[col].dtype == 'object':
+                res_df[col] = res_df[col].astype(str).str.strip()
         resources = res_df.to_dict('records')
 
     all_possible_days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -51,7 +63,6 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 
                 for r in rooms:
                     lessons[(i, d, p, r)] = model.NewBoolVar(f'L_{i}_{d}_{p}_{r}')
-                    # UNAVAILABLE LOGIC
                     if rest_type == "unavailable":
                         model.Add(lessons[(i, d, p, r)] == 0)
 
@@ -76,10 +87,18 @@ def solve_timetable(num_periods=8, num_working_days=5):
         inst_type = row['institution_type']
         req_type = row['required_resource_type']
         
+        # NEW: Dynamic Block Size Evaluation (College vs School)
         block_size = 1
         if inst_type == 'college':
-            if req_type == 'lab': block_size = 3
-            elif target >= 2: block_size = 2
+            if req_type == 'lab':
+                block_size = 3
+            elif target >= 2:
+                block_size = 2
+        elif inst_type == 'school':
+            if target >= 6:
+                block_size = 2
+            else:
+                block_size = 1 # 5 or less stays as single periods
         
         if block_size > 1 and target >= block_size:
             all_starts = []
@@ -91,6 +110,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
                         daily_starts.append(s_var)
                         all_starts.append(s_var)
 
+                        # Force exact sequence in the same room
                         for b in range(block_size):
                             p_name = periods[p_idx + b]
                             if (i, d, p_name, r) in lessons:
@@ -102,17 +122,19 @@ def solve_timetable(num_periods=8, num_working_days=5):
             num_blocks = target // block_size
             model.Add(sum(all_starts) == num_blocks)
 
-        # --- FIX: STRICT DAILY MAX LIMITS ---
-        # This stops the AI from clumping leftover single periods onto the same day as a block
+        # NEW: Strictly Enforced Daily Maximums
         for d in days:
             daily_lessons = [lessons[k] for k in lessons if k[0] == i and k[1] == d]
-            if inst_type == 'college':
-                if req_type == 'lab':
-                    model.Add(sum(daily_lessons) <= 3) # Labs: Max 3 periods per day (1 block)
-                else:
-                    model.Add(sum(daily_lessons) <= 2) # Theory: Max 2 periods per day (1 block)
+            if block_size == 3:
+                model.Add(sum(daily_lessons) <= 3) # Labs: Max 1 block of 3 per day
+            elif block_size == 2:
+                model.Add(sum(daily_lessons) <= 2) # Theory (College) or Heavy Subjects (School): Max 1 block of 2
             else:
-                model.Add(sum(daily_lessons) <= 2) # School: Max 2 periods per day to avoid bunching
+                # If target is 5 or less, strict maximum of 1 period per day (No blocks allowed)
+                if target <= len(days):
+                    model.Add(sum(daily_lessons) <= 1)
+                else:
+                    model.Add(sum(daily_lessons) <= 2) # Fallback if days are less than periods
 
         # Total weekly target
         all_l = [lessons[k] for k in lessons if k[0] == i]
@@ -122,10 +144,10 @@ def solve_timetable(num_periods=8, num_working_days=5):
     for d in days:
         for p in periods:
             for teacher in df['teacher_name'].unique():
-                t_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and teacher in str(df.loc[k[0], 'teacher_name'])]
+                t_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and teacher == df.loc[k[0], 'teacher_name']]
                 if t_vars: model.Add(sum(t_vars) <= 1)
             for cls in df['class_name'].unique():
-                c_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and df.loc[k[0], 'class_name'] == cls]
+                c_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and cls == df.loc[k[0], 'class_name']]
                 if c_vars: model.Add(sum(c_vars) <= 1)
 
     # 6. SOLVE

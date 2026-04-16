@@ -92,11 +92,9 @@ if st.session_state['generated_data'] is not None:
     st.divider()
     res_df = st.session_state['generated_data']
     
-    # --- FIX: Combine Class and Subject for Teacher View ---
     res_df['Display_Class'] = res_df['Class'] + " (" + res_df['Subject'] + ")"
     
     csv_buf = io.StringIO()
-    # Drop the display column so the downloaded CSV remains clean
     res_df.drop(columns=['Display_Class'], errors='ignore').to_csv(csv_buf, index=False)
     st.download_button("📥 Download Timetable CSV", csv_buf.getvalue(), "timetable.csv", "text/csv")
     
@@ -106,7 +104,6 @@ if st.session_state['generated_data'] is not None:
 
     st.subheader("👨‍🏫 Teacher Schedule")
     t = st.selectbox("Select Teacher", sorted(res_df['Teacher'].unique()))
-    # Use Display_Class here so it shows both Class and Subject
     st.table(res_df[res_df['Teacher']==t].pivot(index='Period', columns='Day', values='Display_Class').reindex(index=p_list, columns=d_list).fillna("-"))
     
     st.divider()
