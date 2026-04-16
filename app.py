@@ -92,22 +92,51 @@ if st.session_state['generated_data'] is not None:
     st.divider()
     res_df = st.session_state['generated_data']
     
-    # --- UI FIX: Add Rooms to both views ---
-    # Teacher sees: Class (Subject) [Room]
+    # Create Display Strings
     res_df['Teacher_Display'] = res_df['Class'] + " (" + res_df['Subject'] + ") [" + res_df['Room'] + "]"
-    
-    # Class sees: Subject (Teacher) [Room]
     res_df['Class_Display'] = res_df['Subject'] + " (" + res_df['Teacher'] + ") [" + res_df['Room'] + "]"
-    
-    csv_buf = io.StringIO()
-    # Drop display columns before downloading to keep the raw CSV clean
-    res_df.drop(columns=['Teacher_Display', 'Class_Display'], errors='ignore').to_csv(csv_buf, index=False)
-    st.download_button("📥 Download Timetable CSV", csv_buf.getvalue(), "timetable.csv", "text/csv")
     
     p_list = [f'Period {i}' for i in range(1, num_periods + 1)]
     full_days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     d_list = full_days[:num_days]
 
+    # --- GENERATE EXPORT FILES ---
+    # 1. Master Raw CSV
+    csv_buf_raw = io.StringIO()
+    res_df.drop(columns=['Teacher_Display', 'Class_Display'], errors='ignore').to_csv(csv_buf_raw, index=False)
+    
+    # 2. Teacher Grid CSV
+    t_rows = []
+    for t in sorted(res_df['Teacher'].unique()):
+        t_pivot = res_df[res_df['Teacher']==t].pivot(index='Day', columns='Period', values='Teacher_Display').reindex(index=d_list, columns=p_list).fillna("-")
+        for d in d_list:
+            row = {"Teacher": t, "Day": d}
+            for p in p_list: row[p] = t_pivot.loc[d, p]
+            t_rows.append(row)
+    csv_buf_teacher = io.StringIO()
+    pd.DataFrame(t_rows).to_csv(csv_buf_teacher, index=False)
+    
+    # 3. Class Grid CSV
+    c_rows = []
+    for c in sorted(res_df['Class'].unique()):
+        c_pivot = res_df[res_df['Class']==c].pivot(index='Day', columns='Period', values='Class_Display').reindex(index=d_list, columns=p_list).fillna("-")
+        for d in d_list:
+            row = {"Class": c, "Day": d}
+            for p in p_list: row[p] = c_pivot.loc[d, p]
+            c_rows.append(row)
+    csv_buf_class = io.StringIO()
+    pd.DataFrame(c_rows).to_csv(csv_buf_class, index=False)
+
+    # --- UI DOWNLOAD BUTTONS ---
+    st.markdown("### 📥 Export Timetables")
+    dl1, dl2, dl3 = st.columns(3)
+    with dl1: st.download_button("📋 Download Master CSV (Raw)", csv_buf_raw.getvalue(), "master_timetable.csv", "text/csv", use_container_width=True)
+    with dl2: st.download_button("👨‍🏫 Download All Teachers CSV", csv_buf_teacher.getvalue(), "teachers_timetable.csv", "text/csv", use_container_width=True)
+    with dl3: st.download_button("📚 Download All Classes CSV", csv_buf_class.getvalue(), "classes_timetable.csv", "text/csv", use_container_width=True)
+    
+    st.divider()
+
+    # --- UI VISUAL TABLES ---
     st.subheader("👨‍🏫 Teacher Schedule")
     t = st.selectbox("Select Teacher", sorted(res_df['Teacher'].unique()))
     st.table(res_df[res_df['Teacher']==t].pivot(index='Period', columns='Day', values='Teacher_Display').reindex(index=p_list, columns=d_list).fillna("-"))
