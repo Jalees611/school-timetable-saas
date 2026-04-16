@@ -9,7 +9,7 @@ st.set_page_config(page_title="AI Timetable Generator Pro", layout="wide")
 if 'generated_data' not in st.session_state:
     st.session_state['generated_data'] = None
 
-# --- 1. SIDEBAR WITH DUAL SLIDERS & DYNAMIC COUNTING ---
+# --- SIDEBAR ---
 st.sidebar.header("⚙️ Institution Configuration")
 
 num_periods = st.sidebar.slider("Periods per Day", 5, 12, 8)
@@ -36,7 +36,7 @@ st.sidebar.markdown(f"""
 
 st.sidebar.info("💡 Data is cleared on refresh for security.")
 
-# --- 2. SAFE CSV LOADER ---
+# --- SAFE CSV LOADER ---
 def load_csv_safe(file):
     try:
         return pd.read_csv(file, encoding='utf-8')
@@ -44,7 +44,7 @@ def load_csv_safe(file):
         file.seek(0)
         return pd.read_csv(file, encoding='latin-1')
 
-# --- 3. DATA PROCESSING ---
+# --- DATA PROCESSING ---
 def run_generation(institution_type, workload_file, rest_file, res_file=None):
     df = load_csv_safe(workload_file)
     df['institution_type'] = institution_type.lower()
@@ -67,7 +67,7 @@ def run_generation(institution_type, workload_file, rest_file, res_file=None):
         else:
             st.error(f"Infeasible! Check restrictions or ensure no teacher/class is assigned more than {total_slots} periods.")
 
-# --- 4. UI TABS ---
+# --- UI TABS ---
 tab1, tab2 = st.tabs(["🏫 School Mode", "🎓 College Mode"])
 
 with tab1:
@@ -87,11 +87,12 @@ with tab2:
     if st.button("🧠 Generate College"):
         if c_work and c_res: run_generation('college', c_work, c_rest, c_res)
 
-# --- 5. SECURE DISPLAY LOGIC (VERTICAL STACKED) ---
+# --- SECURE DISPLAY LOGIC ---
 if st.session_state['generated_data'] is not None:
     st.divider()
     res_df = st.session_state['generated_data']
     
+    # CRITICAL UI FIX: Combines Class + Subject so Teachers know what they are teaching
     res_df['Display_Class'] = res_df['Class'] + " (" + res_df['Subject'] + ")"
     
     csv_buf = io.StringIO()
@@ -112,7 +113,7 @@ if st.session_state['generated_data'] is not None:
     cl_val = st.selectbox("Select Class", sorted(res_df['Class'].unique()))
     st.table(res_df[res_df['Class']==cl_val].pivot(index='Period', columns='Day', values='Subject').reindex(index=p_list, columns=d_list).fillna("-"))
 
-# --- 6. TEMPLATES ---
+# --- TEMPLATES ---
 st.divider()
 st.subheader("📥 Templates")
 t1, t2, t3 = st.columns(3)
