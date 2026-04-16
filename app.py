@@ -91,7 +91,7 @@ with tab2:
     if st.button("🧠 Generate College"):
         if c_work and c_res: run_generation('college', c_work, c_rest, c_res)
 
-# --- 5. SECURE DISPLAY LOGIC ---
+# --- 5. SECURE DISPLAY LOGIC (UPDATED: VERTICAL STACKED LAYOUT) ---
 if st.session_state['generated_data'] is not None:
     st.divider()
     res_df = st.session_state['generated_data']
@@ -99,18 +99,22 @@ if st.session_state['generated_data'] is not None:
     res_df.to_csv(csv_buf, index=False)
     st.download_button("📥 Download Timetable", csv_buf.getvalue(), "timetable.csv", "text/csv")
     
-    cl, cr = st.columns(2)
     p_list = [f'Period {i}' for i in range(1, num_periods + 1)]
     # Use the selected number of days to define column order
     full_days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     d_list = full_days[:num_days]
 
-    with cl:
-        t = st.selectbox("View Teacher Schedule", sorted(res_df['Teacher'].unique()))
-        st.table(res_df[res_df['Teacher']==t].pivot(index='Period', columns='Day', values='Class').reindex(index=p_list, columns=d_list).fillna("-"))
-    with cr:
-        cl_val = st.selectbox("View Class Schedule", sorted(res_df['Class'].unique()))
-        st.table(res_df[res_df['Class']==cl_val].pivot(index='Period', columns='Day', values='Subject').reindex(index=p_list, columns=d_list).fillna("-"))
+    # Teacher Table (Top)
+    st.subheader("👨‍🏫 Teacher Schedule")
+    t = st.selectbox("Select Teacher", sorted(res_df['Teacher'].unique()))
+    st.table(res_df[res_df['Teacher']==t].pivot(index='Period', columns='Day', values='Class').reindex(index=p_list, columns=d_list).fillna("-"))
+    
+    st.divider() # Visual separator
+    
+    # Class Table (Bottom)
+    st.subheader("📚 Class Schedule")
+    cl_val = st.selectbox("Select Class", sorted(res_df['Class'].unique()))
+    st.table(res_df[res_df['Class']==cl_val].pivot(index='Period', columns='Day', values='Subject').reindex(index=p_list, columns=d_list).fillna("-"))
 
 # --- 6. TEMPLATES ---
 st.divider()
