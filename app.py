@@ -15,7 +15,6 @@ st.sidebar.header("⚙️ Institution Configuration")
 num_periods = st.sidebar.slider("Periods per Day", 5, 12, 8)
 num_days = st.sidebar.slider("Working Days per Week", 1, 7, 5)
 
-# Dynamic Weekly Count
 total_slots = num_periods * num_days
 
 st.sidebar.divider()
@@ -37,13 +36,11 @@ st.sidebar.markdown(f"""
 
 st.sidebar.info("💡 Data is cleared on refresh for security.")
 
-# --- 2. SAFE CSV LOADER (Fixes Unicode Error) ---
+# --- 2. SAFE CSV LOADER ---
 def load_csv_safe(file):
     try:
-        # Try standard UTF-8 encoding first
         return pd.read_csv(file, encoding='utf-8')
     except UnicodeDecodeError:
-        # If it crashes, reset the file pointer and try Windows Excel encoding
         file.seek(0)
         return pd.read_csv(file, encoding='latin-1')
 
@@ -61,8 +58,7 @@ def run_generation(institution_type, workload_file, rest_file, res_file=None):
     if res_file:
         load_csv_safe(res_file).to_csv('resource_data.csv', index=False)
 
-    with st.spinner(f"AI calculating {total_slots} potential slots..."):
-        # Pass both periods and days to the engine
+    with st.spinner(f"AI calculating strict lab and theory blocks... this may take up to 60 seconds."):
         solve_timetable(num_periods=num_periods, num_working_days=num_days)
         
         if os.path.exists('final_timetable_result.csv'):
@@ -91,27 +87,30 @@ with tab2:
     if st.button("🧠 Generate College"):
         if c_work and c_res: run_generation('college', c_work, c_rest, c_res)
 
-# --- 5. SECURE DISPLAY LOGIC (UPDATED: VERTICAL STACKED LAYOUT) ---
+# --- 5. SECURE DISPLAY LOGIC (VERTICAL STACKED) ---
 if st.session_state['generated_data'] is not None:
     st.divider()
     res_df = st.session_state['generated_data']
+    
+    # --- FIX: Combine Class and Subject for Teacher View ---
+    res_df['Display_Class'] = res_df['Class'] + " (" + res_df['Subject'] + ")"
+    
     csv_buf = io.StringIO()
-    res_df.to_csv(csv_buf, index=False)
-    st.download_button("📥 Download Timetable", csv_buf.getvalue(), "timetable.csv", "text/csv")
+    # Drop the display column so the downloaded CSV remains clean
+    res_df.drop(columns=['Display_Class'], errors='ignore').to_csv(csv_buf, index=False)
+    st.download_button("📥 Download Timetable CSV", csv_buf.getvalue(), "timetable.csv", "text/csv")
     
     p_list = [f'Period {i}' for i in range(1, num_periods + 1)]
-    # Use the selected number of days to define column order
     full_days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     d_list = full_days[:num_days]
 
-    # Teacher Table (Top)
     st.subheader("👨‍🏫 Teacher Schedule")
     t = st.selectbox("Select Teacher", sorted(res_df['Teacher'].unique()))
-    st.table(res_df[res_df['Teacher']==t].pivot(index='Period', columns='Day', values='Class').reindex(index=p_list, columns=d_list).fillna("-"))
+    # Use Display_Class here so it shows both Class and Subject
+    st.table(res_df[res_df['Teacher']==t].pivot(index='Period', columns='Day', values='Display_Class').reindex(index=p_list, columns=d_list).fillna("-"))
     
-    st.divider() # Visual separator
+    st.divider()
     
-    # Class Table (Bottom)
     st.subheader("📚 Class Schedule")
     cl_val = st.selectbox("Select Class", sorted(res_df['Class'].unique()))
     st.table(res_df[res_df['Class']==cl_val].pivot(index='Period', columns='Day', values='Subject').reindex(index=p_list, columns=d_list).fillna("-"))

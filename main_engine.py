@@ -23,7 +23,6 @@ def solve_timetable(num_periods=8, num_working_days=5):
         res_df.columns = [c.strip().lower() for c in res_df.columns]
         resources = res_df.to_dict('records')
 
-    # DYNAMIC DAYS LIST BASED ON SLIDER
     all_possible_days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     days = all_possible_days[:num_working_days]
     periods = [f'Period {i}' for i in range(1, num_periods + 1)]
@@ -52,7 +51,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 
                 for r in rooms:
                     lessons[(i, d, p, r)] = model.NewBoolVar(f'L_{i}_{d}_{p}_{r}')
-                    # UNVAILABLE LOGIC
+                    # UNAVAILABLE LOGIC
                     if rest_type == "unavailable":
                         model.Add(lessons[(i, d, p, r)] == 0)
 
@@ -71,7 +70,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 if must_teach_vars:
                     model.Add(sum(must_teach_vars) == 1)
 
-    # 4. BLOCK LOGIC & TARGETS
+    # 4. STRICT BLOCK LOGIC & TARGETS
     for i, row in df.iterrows():
         target = int(row['weekly_period'])
         inst_type = row['institution_type']
@@ -83,20 +82,39 @@ def solve_timetable(num_periods=8, num_working_days=5):
             elif target >= 2: block_size = 2
         
         if block_size > 1 and target >= block_size:
+            all_starts = []
             for d in days:
-                starts = []
+                daily_starts = []
                 for p_idx in range(len(periods) - block_size + 1):
-                    s_var = model.NewBoolVar(f's_{i}_{d}_{p_idx}')
-                    starts.append(s_var)
-                    for b in range(block_size):
-                        p_name = periods[p_idx + b]
-                        room = "Standard Room"
-                        if inst_type == 'college' and resources and req_type not in ['none', 'classroom']:
-                            comp_rooms = [r['resource_name'] for r in resources if r['resource_type'] == req_type]
-                            if comp_rooms: room = comp_rooms[0]
-                        model.AddImplication(s_var, lessons[(i, d, p_name, room)])
-                model.Add(sum(starts) <= 1)
-        
+                    for r in rooms: 
+                        s_var = model.NewBoolVar(f's_{i}_{d}_{p_idx}_{r}')
+                        daily_starts.append(s_var)
+                        all_starts.append(s_var)
+
+                        for b in range(block_size):
+                            p_name = periods[p_idx + b]
+                            if (i, d, p_name, r) in lessons:
+                                model.Add(lessons[(i, d, p_name, r)] == 1).OnlyEnforceIf(s_var)
+                
+                # Max 1 block per day for a subject
+                model.Add(sum(daily_starts) <= 1)
+            
+            num_blocks = target // block_size
+            model.Add(sum(all_starts) == num_blocks)
+
+        # --- FIX: STRICT DAILY MAX LIMITS ---
+        # This stops the AI from clumping leftover single periods onto the same day as a block
+        for d in days:
+            daily_lessons = [lessons[k] for k in lessons if k[0] == i and k[1] == d]
+            if inst_type == 'college':
+                if req_type == 'lab':
+                    model.Add(sum(daily_lessons) <= 3) # Labs: Max 3 periods per day (1 block)
+                else:
+                    model.Add(sum(daily_lessons) <= 2) # Theory: Max 2 periods per day (1 block)
+            else:
+                model.Add(sum(daily_lessons) <= 2) # School: Max 2 periods per day to avoid bunching
+
+        # Total weekly target
         all_l = [lessons[k] for k in lessons if k[0] == i]
         model.Add(sum(all_l) == target)
 
@@ -112,7 +130,6 @@ def solve_timetable(num_periods=8, num_working_days=5):
 
     # 6. SOLVE
     solver = cp_model.CpSolver()
-    # Increased time limit to 60s for handling complex blocks and restrictions safely
     solver.parameters.max_time_in_seconds = 60.0 
     status = solver.Solve(model)
 
