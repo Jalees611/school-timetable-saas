@@ -36,13 +36,27 @@ st.sidebar.markdown(f"""
 
 st.sidebar.info("💡 Data is cleared on refresh for security.")
 
-# --- SAFE CSV LOADER ---
+# --- ULTRA-SAFE CSV LOADER ---
 def load_csv_safe(file):
+    import pandas as pd
+    import streamlit as st
+    
     try:
+        file.seek(0)
         return pd.read_csv(file, encoding='utf-8')
     except UnicodeDecodeError:
         file.seek(0)
-        return pd.read_csv(file, encoding='latin-1')
+        try:
+            return pd.read_csv(file, encoding='latin-1')
+        except pd.errors.ParserError:
+            st.error(f"🚨 **Formatting Error in {file.name}**\n\nThe file contains a broken row or a stray comma. Please open it in Excel, remove any commas from your subject/teacher names, and save it again as a CSV.")
+            st.stop()
+    except pd.errors.ParserError:
+        st.error(f"🚨 **Formatting Error in {file.name}**\n\nThe file contains a broken row or a stray comma. Please open it in Excel, remove any commas from your subject/teacher names, and save it again as a CSV.")
+        st.stop()
+    except Exception as e:
+        st.error(f"🚨 **Error reading {file.name}**: {str(e)}")
+        st.stop()
 
 # --- DATA PROCESSING ---
 def run_generation(institution_type, workload_file, rest_file, res_file=None):
