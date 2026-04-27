@@ -106,6 +106,9 @@ if st.session_state['generated_data'] is not None:
     st.divider()
     res_df = st.session_state['generated_data']
     
+    # Fill any empty fields to prevent crash errors
+    res_df.fillna("Unknown", inplace=True)
+    
     # Create Display Strings
     res_df['Teacher_Display'] = res_df['Class'] + " (" + res_df['Subject'] + ") [" + res_df['Room'] + "]"
     res_df['Class_Display'] = res_df['Subject'] + " (" + res_df['Teacher'] + ") [" + res_df['Room'] + "]"
@@ -119,10 +122,10 @@ if st.session_state['generated_data'] is not None:
     csv_buf_raw = io.StringIO()
     res_df.drop(columns=['Teacher_Display', 'Class_Display'], errors='ignore').to_csv(csv_buf_raw, index=False)
     
-    # 2. Teacher Grid CSV
+    # 2. Teacher Grid CSV (Uses pivot_table to safely merge overlaps)
     t_rows = []
     for t in sorted(res_df['Teacher'].unique()):
-        t_pivot = res_df[res_df['Teacher']==t].pivot(index='Day', columns='Period', values='Teacher_Display').reindex(index=d_list, columns=p_list).fillna("-")
+        t_pivot = res_df[res_df['Teacher']==t].pivot_table(index='Day', columns='Period', values='Teacher_Display', aggfunc=lambda x: ' | '.join(x.dropna().astype(str))).reindex(index=d_list, columns=p_list).fillna("-")
         for d in d_list:
             row = {"Teacher": t, "Day": d}
             for p in p_list: row[p] = t_pivot.loc[d, p]
@@ -130,10 +133,10 @@ if st.session_state['generated_data'] is not None:
     csv_buf_teacher = io.StringIO()
     pd.DataFrame(t_rows).to_csv(csv_buf_teacher, index=False)
     
-    # 3. Class Grid CSV
+    # 3. Class Grid CSV (Uses pivot_table to safely merge overlaps)
     c_rows = []
     for c in sorted(res_df['Class'].unique()):
-        c_pivot = res_df[res_df['Class']==c].pivot(index='Day', columns='Period', values='Class_Display').reindex(index=d_list, columns=p_list).fillna("-")
+        c_pivot = res_df[res_df['Class']==c].pivot_table(index='Day', columns='Period', values='Class_Display', aggfunc=lambda x: ' | '.join(x.dropna().astype(str))).reindex(index=d_list, columns=p_list).fillna("-")
         for d in d_list:
             row = {"Class": c, "Day": d}
             for p in p_list: row[p] = c_pivot.loc[d, p]
@@ -153,13 +156,13 @@ if st.session_state['generated_data'] is not None:
     # --- UI VISUAL TABLES ---
     st.subheader("👨‍🏫 Teacher Schedule")
     t = st.selectbox("Select Teacher", sorted(res_df['Teacher'].unique()))
-    st.table(res_df[res_df['Teacher']==t].pivot(index='Period', columns='Day', values='Teacher_Display').reindex(index=p_list, columns=d_list).fillna("-"))
+    st.table(res_df[res_df['Teacher']==t].pivot_table(index='Period', columns='Day', values='Teacher_Display', aggfunc=lambda x: ' | '.join(x.dropna().astype(str))).reindex(index=p_list, columns=d_list).fillna("-"))
     
     st.divider()
     
     st.subheader("📚 Class Schedule")
     cl_val = st.selectbox("Select Class", sorted(res_df['Class'].unique()))
-    st.table(res_df[res_df['Class']==cl_val].pivot(index='Period', columns='Day', values='Class_Display').reindex(index=p_list, columns=d_list).fillna("-"))
+    st.table(res_df[res_df['Class']==cl_val].pivot_table(index='Period', columns='Day', values='Class_Display', aggfunc=lambda x: ' | '.join(x.dropna().astype(str))).reindex(index=p_list, columns=d_list).fillna("-"))
 
 # --- TEMPLATES ---
 st.divider()
