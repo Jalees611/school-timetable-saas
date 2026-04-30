@@ -3,9 +3,9 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import streamlit.components.v1 as components
+import google.generativeai as genai
 import warnings
 
-# Ignore warnings
 warnings.filterwarnings('ignore')
 
 st.set_page_config(page_title="Survey Analyzer Pro", layout="wide")
@@ -20,260 +20,169 @@ st.markdown("""
         .stDownloadButton {display: none !important;}
         .stButton {display: none !important;}
         div.element-container { page-break-inside: avoid !important; }
-        * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-        }
+        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Likert Dictionaries
-LIKERT_MAP = {
-    "5": "Strongly Agree",
-    "4": "Agree",
-    "3": "Neutral",
-    "2": "Disagree",
-    "1": "Strongly Disagree"
-}
-
-# Reverse map for Google Forms text parsing
-REVERSE_MAP = {
-    "Strongly Agree": "5",
-    "Agree": "4",
-    "Neutral": "3",
-    "Uncertain": "3", # Handles variations
-    "Disagree": "2",
-    "Strongly Disagree": "1"
-}
+LIKERT_MAP = {"5": "Strongly Agree", "4": "Agree", "3": "Neutral", "2": "Disagree", "1": "Strongly Disagree"}
+REVERSE_MAP = {"Strongly Agree": "5", "Agree": "4", "Neutral": "3", "Uncertain": "3", "Disagree": "2", "Strongly Disagree": "1"}
 
 def parse_system_report(df):
-    """Parses the original pre-calculated system report format."""
     questions = {}
     current_q = None
-
     for index, row in df.iterrows():
-        val_0 = str(row[0]).strip() if pd.notna(row[0]) else ""
-        val_2 = str(row[2]).strip() if pd.notna(row[2]) else ""
-        val_5 = row[5] if pd.notna(row[5]) else np.nan
-        
+        val_0, val_2, val_5 = str(row[0]).strip() if pd.notna(row[0]) else "", str(row[2]).strip() if pd.notna(row[2]) else "", row[5] if pd.notna(row[5]) else np.nan
         if val_0 and val_0[0].isdigit() and "." in val_0[:3]:
             current_q = val_0
             questions[current_q] = {"5": 0.0, "4": 0.0, "3": 0.0, "2": 0.0, "1": 0.0}
             continue
-            
         if current_q and val_2 in ["5", "4", "3", "2", "1", "5.0", "4.0", "3.0", "2.0", "1.0"]:
             try:
-                clean_key = str(int(float(val_2))) 
-                pct = round(float(val_5), 2) if pd.notna(val_5) else 0.0
-                questions[current_q][clean_key] = pct
-            except ValueError:
-                pass
-
+                questions[current_q][str(int(float(val_2)))] = round(float(val_5), 2) if pd.notna(val_5) else 0.0
+            except ValueError: pass
     return {q: data for q, data in questions.items() if sum(data.values()) > 0}
 
 def parse_google_forms(df):
-    """Parses raw row-by-row data from Google Sheets/MS Forms."""
     questions = {}
-    
-    # Columns to ignore (Metadata)
     skip_cols = ['timestamp', 'time', 'email', 'name', 'id', 'roll', 'section']
-    
     for col in df.columns:
-        # Skip demographic columns
-        if any(skip in str(col).lower() for skip in skip_cols):
-            continue
-            
+        if any(skip in str(col).lower() for skip in skip_cols): continue
         counts = df[col].value_counts(dropna=True)
         total_responses = counts.sum()
-        
-        if total_responses == 0:
-            continue
-            
-        q_data = {"5": 0.0, "4": 0.0, "3": 0.0, "2": 0.0, "1": 0.0}
-        valid_likert_found = False
-        
+        if total_responses == 0: continue
+        q_data, valid_likert_found = {"5": 0.0, "4": 0.0, "3": 0.0, "2": 0.0, "1": 0.0}, False
         for val, count in counts.items():
             val_str = str(val).strip()
-            
-            # Map Text (e.g. "Strongly Agree") to our 1-5 keys
             if val_str in REVERSE_MAP:
-                key = REVERSE_MAP[val_str]
-                q_data[key] += count
+                q_data[REVERSE_MAP[val_str]] += count
                 valid_likert_found = True
-                
-            # Map raw Numbers (e.g. "5" or 5.0) to our keys
             elif val_str in ["5", "4", "3", "2", "1", "5.0", "4.0", "3.0", "2.0", "1.0"]:
-                key = str(int(float(val_str)))
-                q_data[key] += count
+                q_data[str(int(float(val_str)))] += count
                 valid_likert_found = True
-                
-        # If it was a valid survey question, convert counts to percentages!
         if valid_likert_found:
-            for k in q_data:
-                q_data[k] = round((q_data[k] / total_responses) * 100, 2)
+            for k in q_data: q_data[k] = round((q_data[k] / total_responses) * 100, 2)
             questions[str(col)] = q_data
-            
     return questions
 
 def process_file(file):
-    """Smart engine that detects file type and routes it to the correct parser."""
-    # First, read it purely as raw data
     df = pd.read_excel(file)
-    
-    # Auto-Detect Logic: Does it look like the System Report?
     if len(df.columns) > 1 and "Unnamed" in str(df.columns[1]):
-        # Reset the file pointer and read without headers
         file.seek(0)
-        df_system = pd.read_excel(file, header=None)
-        return parse_system_report(df_system)
-    else:
-        # It's a Google/MS Form raw export
-        return parse_google_forms(df)
+        return parse_system_report(pd.read_excel(file, header=None))
+    return parse_google_forms(df)
 
 def create_table_and_chart(q_name, q_data, unique_key):
-    """Generates the UI for a single question (Table + Pie Chart + Individual Download)"""
-    table_data = []
-    for key in sorted(q_data.keys(), reverse=True):
-        table_data.append({
-            "Option": key,
-            "Response Type": LIKERT_MAP.get(key, "Unknown"),
-            "Percentage (%)": q_data[key]
-        })
-    df_table = pd.DataFrame(table_data)
-    
-    df_chart = df_table[df_table["Percentage (%)"] > 0]
+    table_data = [{"Option": k, "Response Type": LIKERT_MAP[k], "Percentage (%)": q_data[k]} for k in sorted(q_data.keys(), reverse=True)]
+    df_table, df_chart = pd.DataFrame(table_data), pd.DataFrame(table_data)[pd.DataFrame(table_data)["Percentage (%)"] > 0]
     
     st.subheader(q_name)
     col1, col2 = st.columns([1, 2])
-    
     with col1:
         st.dataframe(df_table, use_container_width=True, hide_index=True)
-        csv_data = df_table.to_csv(index=False).encode('utf-8')
-        safe_name = "".join([c for c in q_name if c.isalpha() or c.isdigit() or c==' ']).rstrip()[:30]
-        st.download_button(
-            label="📥 Download Table",
-            data=csv_data,
-            file_name=f"{safe_name}_results.csv",
-            mime="text/csv",
-            key=f"dl_{unique_key}" 
-        )
-        
+        safe_name = "".join([c for c in q_name if c.isalnum() or c==' ']).rstrip()[:30]
+        st.download_button("📥 Download Table", data=df_table.to_csv(index=False).encode('utf-8'), file_name=f"{safe_name}.csv", mime="text/csv", key=f"dl_{unique_key}")
     with col2:
         if not df_chart.empty:
-            fig = px.pie(
-                df_chart, 
-                values='Percentage (%)', 
-                names='Response Type',
-                color='Response Type',
-                color_discrete_map={
-                    "Strongly Agree": "#1f77b4", "Agree": "#2ca02c",
-                    "Neutral": "#ff7f0e", "Disagree": "#d62728",
-                    "Strongly Disagree": "#9467bd"
-                }
-            )
+            fig = px.pie(df_chart, values='Percentage (%)', names='Response Type', color='Response Type',
+                         color_discrete_map={"Strongly Agree": "#1f77b4", "Agree": "#2ca02c", "Neutral": "#ff7f0e", "Disagree": "#d62728", "Strongly Disagree": "#9467bd"})
             fig.update_traces(textposition='inside', textinfo='percent+label')
             st.plotly_chart(fig, use_container_width=True, key=unique_key)
-        else:
-            st.info("No valid data to plot.")
     st.divider()
 
+# --- AI GENERATION FUNCTION ---
+def generate_ai_summary(api_key, topic_name, data):
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel('gemini-1.5-flash') # Fast and powerful model
+    
+    # This is the "Argumentative" Prompt
+    prompt = f"""
+    You are an expert Educational Data Analyst and Argumentative AI. 
+    Analyze the following survey results for the metric: "{topic_name}".
+    
+    Data (Percentages):
+    Strongly Agree: {data['5']}%
+    Agree: {data['4']}%
+    Neutral: {data['3']}%
+    Disagree: {data['2']}%
+    Strongly Disagree: {data['1']}%
+    
+    Your task:
+    1. Identify the core argument the data makes (e.g., is this overwhelmingly positive, deeply divided, or leaning negative?).
+    2. Synthesize a logical conclusion based strictly on these numbers.
+    3. Provide one concrete, actionable recommendation for management/educators to improve or maintain this metric.
+    
+    Keep it professional, objective, and format it clearly with bold headings. Maximum 3 paragraphs. Do not use generic filler.
+    """
+    try:
+        response = model.generate_content(prompt)
+        return response.text
+    except Exception as e:
+        return f"❌ AI Error: {e}"
+
 # --- MAIN UI ---
+# Sidebar for AI Key
+with st.sidebar:
+    st.header("🧠 AI Settings")
+    st.markdown("Enter your Gemini API key to unlock Argumentative AI summaries.")
+    api_key_input = st.text_input("Gemini API Key", type="password")
+    st.markdown("[Get a free API key here](https://aistudio.google.com/)")
+
 st.title("📊 Survey Analyzer Pro")
 
-if 'combo_count' not in st.session_state:
-    st.session_state['combo_count'] = 1
+if 'combo_count' not in st.session_state: st.session_state['combo_count'] = 1
 
 uploaded_file = st.file_uploader("Upload Google/MS Forms Response Excel (.xlsx)", type=["xlsx"])
 
 if uploaded_file:
     try:
-        # RUN THE SMART ENGINE
         parsed_data = process_file(uploaded_file)
+        if not parsed_data: st.stop()
         
-        if not parsed_data:
-            st.error("Could not find valid survey data. Ensure responses contain standard Likert scales (Strongly Agree, Agree, etc. or 1-5).")
-            st.stop()
-            
-        st.success(f"Successfully loaded {len(parsed_data)} Likert-scale questions!")
-        
-        # --- EXPORT & PRINT CONTROLS ---
         st.markdown("### 📥 Export Options")
-        
         c1, c2 = st.columns(2)
         with c1:
-            master_rows = []
-            for q, data in parsed_data.items():
-                row = {"Question": q}
-                for key in ["5", "4", "3", "2", "1"]:
-                    row[f"{LIKERT_MAP[key]} (%)"] = data[key]
-                master_rows.append(row)
-                
-            df_master = pd.DataFrame(master_rows)
-            master_csv = df_master.to_csv(index=False).encode('utf-8')
-            
-            st.download_button(
-                label="📥 Download Master Report (CSV)",
-                data=master_csv,
-                file_name="Master_Survey_Report.csv",
-                mime="text/csv",
-                type="primary",
-                use_container_width=True
-            )
-            
+            df_master = pd.DataFrame([{"Question": q, **{f"{LIKERT_MAP[k]} (%)": data[k] for k in ["5","4","3","2","1"]}} for q, data in parsed_data.items()])
+            st.download_button("📥 Download Master Report (CSV)", data=df_master.to_csv(index=False).encode('utf-8'), file_name="Master.csv", mime="text/csv", type="primary", use_container_width=True)
         with c2:
-            components.html(
-                """
-                <script>function triggerPrint() {window.parent.print();}</script>
-                <button onclick="triggerPrint()" style="background-color:#ff4b4b; color:white; border:none; border-radius:8px; padding: 10px 15px; font-weight: 600; font-family: 'Source Sans Pro', sans-serif; cursor: pointer; width: 100%; height: 42px; font-size: 16px;">
-                🖨️ Print Dashboard to PDF
-                </button>
-                """, height=50
-            )
+            components.html("""<script>function triggerPrint() {window.parent.print();}</script><button onclick="triggerPrint()" style="background-color:#ff4b4b; color:white; border:none; border-radius:8px; padding: 10px 15px; font-weight: 600; cursor: pointer; width: 100%; height: 42px; font-size: 16px;">🖨️ Print Dashboard to PDF</button>""", height=50)
         st.divider()
 
-        tab1, tab2 = st.tabs(["📋 Individual Questions", "🔗 Custom Combiner"])
+        tab1, tab2 = st.tabs(["📋 Individual Questions", "🔗 Custom Combiner & AI"])
         
         with tab1:
             st.header("Individual Question Results")
-            for i, (q_name, q_data) in enumerate(parsed_data.items()):
-                create_table_and_chart(q_name, q_data, unique_key=f"chart_tab1_{i}")
+            for i, (q_name, q_data) in enumerate(parsed_data.items()): create_table_and_chart(q_name, q_data, unique_key=f"chart_tab1_{i}")
                 
         with tab2:
-            st.header("Dynamic Combiner")
-            st.markdown("Create multiple custom combinations. Click the **+** button to add more sections.")
-            
-            if st.button("➕ Add Another Combination"):
-                st.session_state['combo_count'] += 1
+            st.header("Dynamic Combiner & AI Analysis")
+            if st.button("➕ Add Another Combination"): st.session_state['combo_count'] += 1
             st.divider()
             
             combo_configs = []
             for i in range(st.session_state['combo_count']):
                 with st.container(border=True):
-                    st.markdown(f"**Combination {i + 1}**")
-                    c_name = st.text_input(f"Label:", value=f"Combined Topic {i + 1}", key=f"name_{i}")
-                    c_qs = st.multiselect(f"Select Questions:", options=list(parsed_data.keys()), key=f"qs_{i}")
+                    c_name = st.text_input("Label:", value=f"Combined Topic {i + 1}", key=f"name_{i}")
+                    c_qs = st.multiselect("Select Questions:", options=list(parsed_data.keys()), key=f"qs_{i}")
                     combo_configs.append({"name": c_name, "questions": c_qs})
             
             if st.button("🚀 Generate All Combined Charts", type="primary"):
                 st.markdown("---")
-                st.header("📊 Your Combined Results")
-                
                 for i, config in enumerate(combo_configs):
                     if config["questions"]:
-                        combined_data = {"5": 0.0, "4": 0.0, "3": 0.0, "2": 0.0, "1": 0.0}
-                        num_qs = len(config["questions"])
-                        
-                        for q in config["questions"]:
-                            for key in combined_data.keys():
-                                combined_data[key] += parsed_data[q][key]
-                        
-                        for key in combined_data.keys():
-                            combined_data[key] = round(combined_data[key] / num_qs, 2)
+                        combined_data = {k: sum(parsed_data[q][k] for q in config["questions"]) / len(config["questions"]) for k in ["5", "4", "3", "2", "1"]}
+                        combined_data = {k: round(v, 2) for k, v in combined_data.items()}
                         
                         create_table_and_chart(config["name"], combined_data, unique_key=f"chart_combo_{i}")
-                    else:
-                        st.warning(f"Skipped '{config['name']}' because no questions were selected.")
-
+                        
+                        # --- AI INTEGRATION TRIGGER ---
+                        if api_key_input:
+                            with st.expander(f"✨ AI Executive Summary for: {config['name']}", expanded=True):
+                                with st.spinner("Analyzing data..."):
+                                    ai_response = generate_ai_summary(api_key_input, config["name"], combined_data)
+                                    st.markdown(ai_response)
+                        else:
+                            st.info("💡 Enter your Gemini API key in the sidebar to generate an automatic Argumentative AI summary for this metric.")
+                            
     except Exception as e:
         st.error(f"Error processing file: {e}")

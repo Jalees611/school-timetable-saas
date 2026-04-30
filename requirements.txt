@@ -3,3 +3,4 @@ streamlit
 ortools
 plotly
 openpyxl
+google-generativeai
