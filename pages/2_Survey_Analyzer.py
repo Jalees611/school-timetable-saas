@@ -93,7 +93,8 @@ def create_table_and_chart(q_name, q_data, unique_key):
 # --- AI GENERATION FUNCTION ---
 def generate_ai_summary(api_key, topic_name, data):
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    # Changed model to gemini-pro for maximum compatibility
+    model = genai.GenerativeModel('gemini-pro')
     
     prompt = f"""
     You are an expert Educational Data Analyst and Argumentative AI. 
