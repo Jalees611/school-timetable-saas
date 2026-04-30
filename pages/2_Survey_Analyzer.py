@@ -25,40 +25,33 @@ def parse_survey_excel(file):
     current_q = None
 
     for index, row in df.iterrows():
-        # Clean column values safely
         val_0 = str(row[0]).strip() if pd.notna(row[0]) else ""
         val_2 = str(row[2]).strip() if pd.notna(row[2]) else ""
         val_5 = row[5] if pd.notna(row[5]) else np.nan
         
-        # Identify a question row (Starts with a number and a dot, e.g., "02.")
         if val_0 and val_0[0].isdigit() and "." in val_0[:3]:
             current_q = val_0
-            # Initialize with default 0.0 for ALL options
             questions[current_q] = {"5": 0.0, "4": 0.0, "3": 0.0, "2": 0.0, "1": 0.0}
             continue
             
-        # If we are inside a question, capture the scores
         if current_q and val_2 in ["5", "4", "3", "2", "1", "5.0", "4.0", "3.0", "2.0", "1.0"]:
             try:
-                clean_key = str(int(float(val_2))) # Forces "5.0" to "5"
+                clean_key = str(int(float(val_2))) 
                 pct = round(float(val_5), 2) if pd.notna(val_5) else 0.0
                 questions[current_q][clean_key] = pct
             except ValueError:
                 pass
 
-    # Filter out questions that have exactly 0.0 for all Likert options (like attendance)
     filtered_questions = {
         q: data for q, data in questions.items() 
         if sum(data.values()) > 0
     }
-    
     return filtered_questions
 
 def create_table_and_chart(q_name, q_data, unique_key):
     """Generates the UI for a single question (Table + Pie Chart)"""
-    # 1. Create the structured Dataframe (always contains 5 rows)
     table_data = []
-    for key in sorted(q_data.keys(), reverse=True): # 5, 4, 3, 2, 1
+    for key in sorted(q_data.keys(), reverse=True):
         table_data.append({
             "Option": key,
             "Response Type": LIKERT_MAP.get(key, "Unknown"),
@@ -66,7 +59,6 @@ def create_table_and_chart(q_name, q_data, unique_key):
         })
     df_table = pd.DataFrame(table_data)
     
-    # 2. Filter out zeros for the visual Pie Chart
     df_chart = df_table[df_table["Percentage (%)"] > 0]
     
     st.subheader(q_name)
@@ -83,15 +75,14 @@ def create_table_and_chart(q_name, q_data, unique_key):
                 names='Response Type',
                 color='Response Type',
                 color_discrete_map={
-                    "Strongly Agree": "#1f77b4", # Blue
-                    "Agree": "#2ca02c",          # Green
-                    "Neutral": "#ff7f0e",        # Orange
-                    "Disagree": "#d62728",       # Red
-                    "Strongly Disagree": "#9467bd" # Purple
+                    "Strongly Agree": "#1f77b4",
+                    "Agree": "#2ca02c",
+                    "Neutral": "#ff7f0e",
+                    "Disagree": "#d62728",
+                    "Strongly Disagree": "#9467bd"
                 }
             )
             fig.update_traces(textposition='inside', textinfo='percent+label')
-            # ADDED UNIQUE KEY HERE TO FIX THE ERROR
             st.plotly_chart(fig, use_container_width=True, key=unique_key)
         else:
             st.info("No valid data to plot.")
@@ -100,11 +91,14 @@ def create_table_and_chart(q_name, q_data, unique_key):
 # --- MAIN UI ---
 st.title("📊 Survey Analyzer Pro")
 
+# Initialize session state for dynamic combiners
+if 'combo_count' not in st.session_state:
+    st.session_state['combo_count'] = 1
+
 uploaded_file = st.file_uploader("Upload Google/MS Forms Response Excel (.xlsx)", type=["xlsx"])
 
 if uploaded_file:
     try:
-        # Load and Parse the data
         parsed_data = parse_survey_excel(uploaded_file)
         
         if not parsed_data:
@@ -113,38 +107,58 @@ if uploaded_file:
             
         st.success(f"Successfully loaded {len(parsed_data)} Likert-scale questions!")
         
-        # --- TABS ---
         tab1, tab2 = st.tabs(["📋 Individual Questions", "🔗 Custom Combiner"])
         
         with tab1:
             st.header("Individual Question Results")
-            # PASSING A UNIQUE KEY (i) FOR EVERY CHART IN THE LOOP
             for i, (q_name, q_data) in enumerate(parsed_data.items()):
                 create_table_and_chart(q_name, q_data, unique_key=f"chart_tab1_{i}")
                 
         with tab2:
-            st.header("Combine Questions")
-            st.markdown("Select multiple questions below to calculate their average and generate a combined result.")
+            st.header("Dynamic Combiner")
+            st.markdown("Create multiple custom combinations. Click the **+** button to add more sections.")
             
-            combo_name = st.text_input("Label for Combined Chart:", "Overall Satisfaction")
-            selected_qs = st.multiselect("Select Questions to Combine:", options=list(parsed_data.keys()))
+            # The "+" Button to add more sections
+            if st.button("➕ Add Another Combination"):
+                st.session_state['combo_count'] += 1
+
+            st.divider()
             
-            if st.button("Generate Combined Chart") and selected_qs:
-                # Calculate the exact mathematical average of the selected questions
-                combined_data = {"5": 0.0, "4": 0.0, "3": 0.0, "2": 0.0, "1": 0.0}
-                num_qs = len(selected_qs)
-                
-                for q in selected_qs:
-                    for key in combined_data.keys():
-                        combined_data[key] += parsed_data[q][key]
-                
-                # Average them out
-                for key in combined_data.keys():
-                    combined_data[key] = round(combined_data[key] / num_qs, 2)
-                
-                # Render it with a specific key for the combo chart
+            # Create a list to store user inputs
+            combo_configs = []
+            
+            # Loop to generate the UI based on how many combiners the user wants
+            for i in range(st.session_state['combo_count']):
+                with st.container(border=True): # Adds a nice border around each section
+                    st.markdown(f"**Combination {i + 1}**")
+                    c_name = st.text_input(f"Label:", value=f"Combined Topic {i + 1}", key=f"name_{i}")
+                    c_qs = st.multiselect(f"Select Questions:", options=list(parsed_data.keys()), key=f"qs_{i}")
+                    
+                    # Store their choices in our list
+                    combo_configs.append({"name": c_name, "questions": c_qs})
+            
+            # The Master Generation Button
+            if st.button("🚀 Generate All Combined Charts", type="primary"):
                 st.markdown("---")
-                create_table_and_chart(combo_name, combined_data, unique_key="chart_combo")
+                st.header("📊 Your Combined Results")
+                
+                # Loop through all configured combiners
+                for i, config in enumerate(combo_configs):
+                    if config["questions"]: # Only generate if they actually selected questions
+                        combined_data = {"5": 0.0, "4": 0.0, "3": 0.0, "2": 0.0, "1": 0.0}
+                        num_qs = len(config["questions"])
+                        
+                        for q in config["questions"]:
+                            for key in combined_data.keys():
+                                combined_data[key] += parsed_data[q][key]
+                        
+                        # Average them out
+                        for key in combined_data.keys():
+                            combined_data[key] = round(combined_data[key] / num_qs, 2)
+                        
+                        create_table_and_chart(config["name"], combined_data, unique_key=f"chart_combo_{i}")
+                    else:
+                        st.warning(f"Skipped '{config['name']}' because no questions were selected.")
 
     except Exception as e:
         st.error(f"Error processing file: {e}")
