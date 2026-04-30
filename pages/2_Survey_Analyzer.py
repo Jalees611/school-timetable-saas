@@ -5,13 +5,12 @@ import plotly.express as px
 import streamlit.components.v1 as components
 import warnings
 
-# Ignore openpyxl warnings
+# Ignore warnings
 warnings.filterwarnings('ignore')
 
 st.set_page_config(page_title="Survey Analyzer Pro", layout="wide")
 
 # --- INJECT PRINT CSS ---
-# This CSS automatically hides the UI elements (buttons, uploaders, sidebars) when printing
 st.markdown("""
     <style>
     @media print {
@@ -20,11 +19,7 @@ st.markdown("""
         [data-testid="stFileUploader"] {display: none !important;}
         .stDownloadButton {display: none !important;}
         .stButton {display: none !important;}
-        
-        /* Ensure charts and tables don't get cut in half across pages */
         div.element-container { page-break-inside: avoid !important; }
-        
-        /* Force backgrounds to print correctly */
         * {
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
@@ -33,7 +28,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Custom dictionary to map number scores to Likert text
+# Likert Dictionaries
 LIKERT_MAP = {
     "5": "Strongly Agree",
     "4": "Agree",
@@ -42,9 +37,18 @@ LIKERT_MAP = {
     "1": "Strongly Disagree"
 }
 
-def parse_survey_excel(file):
-    """Parses the specific format of the Course Evaluation Excel file."""
-    df = pd.read_excel(file, header=None)
+# Reverse map for Google Forms text parsing
+REVERSE_MAP = {
+    "Strongly Agree": "5",
+    "Agree": "4",
+    "Neutral": "3",
+    "Uncertain": "3", # Handles variations
+    "Disagree": "2",
+    "Strongly Disagree": "1"
+}
+
+def parse_system_report(df):
+    """Parses the original pre-calculated system report format."""
     questions = {}
     current_q = None
 
@@ -66,11 +70,66 @@ def parse_survey_excel(file):
             except ValueError:
                 pass
 
-    filtered_questions = {
-        q: data for q, data in questions.items() 
-        if sum(data.values()) > 0
-    }
-    return filtered_questions
+    return {q: data for q, data in questions.items() if sum(data.values()) > 0}
+
+def parse_google_forms(df):
+    """Parses raw row-by-row data from Google Sheets/MS Forms."""
+    questions = {}
+    
+    # Columns to ignore (Metadata)
+    skip_cols = ['timestamp', 'time', 'email', 'name', 'id', 'roll', 'section']
+    
+    for col in df.columns:
+        # Skip demographic columns
+        if any(skip in str(col).lower() for skip in skip_cols):
+            continue
+            
+        counts = df[col].value_counts(dropna=True)
+        total_responses = counts.sum()
+        
+        if total_responses == 0:
+            continue
+            
+        q_data = {"5": 0.0, "4": 0.0, "3": 0.0, "2": 0.0, "1": 0.0}
+        valid_likert_found = False
+        
+        for val, count in counts.items():
+            val_str = str(val).strip()
+            
+            # Map Text (e.g. "Strongly Agree") to our 1-5 keys
+            if val_str in REVERSE_MAP:
+                key = REVERSE_MAP[val_str]
+                q_data[key] += count
+                valid_likert_found = True
+                
+            # Map raw Numbers (e.g. "5" or 5.0) to our keys
+            elif val_str in ["5", "4", "3", "2", "1", "5.0", "4.0", "3.0", "2.0", "1.0"]:
+                key = str(int(float(val_str)))
+                q_data[key] += count
+                valid_likert_found = True
+                
+        # If it was a valid survey question, convert counts to percentages!
+        if valid_likert_found:
+            for k in q_data:
+                q_data[k] = round((q_data[k] / total_responses) * 100, 2)
+            questions[str(col)] = q_data
+            
+    return questions
+
+def process_file(file):
+    """Smart engine that detects file type and routes it to the correct parser."""
+    # First, read it purely as raw data
+    df = pd.read_excel(file)
+    
+    # Auto-Detect Logic: Does it look like the System Report?
+    if len(df.columns) > 1 and "Unnamed" in str(df.columns[1]):
+        # Reset the file pointer and read without headers
+        file.seek(0)
+        df_system = pd.read_excel(file, header=None)
+        return parse_system_report(df_system)
+    else:
+        # It's a Google/MS Form raw export
+        return parse_google_forms(df)
 
 def create_table_and_chart(q_name, q_data, unique_key):
     """Generates the UI for a single question (Table + Pie Chart + Individual Download)"""
@@ -90,10 +149,8 @@ def create_table_and_chart(q_name, q_data, unique_key):
     
     with col1:
         st.dataframe(df_table, use_container_width=True, hide_index=True)
-        
         csv_data = df_table.to_csv(index=False).encode('utf-8')
         safe_name = "".join([c for c in q_name if c.isalpha() or c.isdigit() or c==' ']).rstrip()[:30]
-        
         st.download_button(
             label="📥 Download Table",
             data=csv_data,
@@ -110,10 +167,8 @@ def create_table_and_chart(q_name, q_data, unique_key):
                 names='Response Type',
                 color='Response Type',
                 color_discrete_map={
-                    "Strongly Agree": "#1f77b4",
-                    "Agree": "#2ca02c",
-                    "Neutral": "#ff7f0e",
-                    "Disagree": "#d62728",
+                    "Strongly Agree": "#1f77b4", "Agree": "#2ca02c",
+                    "Neutral": "#ff7f0e", "Disagree": "#d62728",
                     "Strongly Disagree": "#9467bd"
                 }
             )
@@ -133,10 +188,11 @@ uploaded_file = st.file_uploader("Upload Google/MS Forms Response Excel (.xlsx)"
 
 if uploaded_file:
     try:
-        parsed_data = parse_survey_excel(uploaded_file)
+        # RUN THE SMART ENGINE
+        parsed_data = process_file(uploaded_file)
         
         if not parsed_data:
-            st.error("Could not find valid survey data. Please ensure the Excel format matches the system report.")
+            st.error("Could not find valid survey data. Ensure responses contain standard Likert scales (Strongly Agree, Agree, etc. or 1-5).")
             st.stop()
             
         st.success(f"Successfully loaded {len(parsed_data)} Likert-scale questions!")
@@ -146,7 +202,6 @@ if uploaded_file:
         
         c1, c2 = st.columns(2)
         with c1:
-            # 1. Excel/CSV Download
             master_rows = []
             for q, data in parsed_data.items():
                 row = {"Question": q}
@@ -167,23 +222,15 @@ if uploaded_file:
             )
             
         with c2:
-            # 2. Print to PDF Button (Injects Javascript to trigger browser print)
             components.html(
                 """
-                <script>
-                function triggerPrint() {
-                    window.parent.print();
-                }
-                </script>
+                <script>function triggerPrint() {window.parent.print();}</script>
                 <button onclick="triggerPrint()" style="background-color:#ff4b4b; color:white; border:none; border-radius:8px; padding: 10px 15px; font-weight: 600; font-family: 'Source Sans Pro', sans-serif; cursor: pointer; width: 100%; height: 42px; font-size: 16px;">
                 🖨️ Print Dashboard to PDF
                 </button>
-                """,
-                height=50
+                """, height=50
             )
-            
         st.divider()
-        # -----------------------------
 
         tab1, tab2 = st.tabs(["📋 Individual Questions", "🔗 Custom Combiner"])
         
@@ -198,17 +245,14 @@ if uploaded_file:
             
             if st.button("➕ Add Another Combination"):
                 st.session_state['combo_count'] += 1
-
             st.divider()
             
             combo_configs = []
-            
             for i in range(st.session_state['combo_count']):
                 with st.container(border=True):
                     st.markdown(f"**Combination {i + 1}**")
                     c_name = st.text_input(f"Label:", value=f"Combined Topic {i + 1}", key=f"name_{i}")
                     c_qs = st.multiselect(f"Select Questions:", options=list(parsed_data.keys()), key=f"qs_{i}")
-                    
                     combo_configs.append({"name": c_name, "questions": c_qs})
             
             if st.button("🚀 Generate All Combined Charts", type="primary"):
