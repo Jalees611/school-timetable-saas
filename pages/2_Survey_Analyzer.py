@@ -49,7 +49,7 @@ def parse_survey_excel(file):
     return filtered_questions
 
 def create_table_and_chart(q_name, q_data, unique_key):
-    """Generates the UI for a single question (Table + Pie Chart)"""
+    """Generates the UI for a single question (Table + Pie Chart + Individual Download)"""
     table_data = []
     for key in sorted(q_data.keys(), reverse=True):
         table_data.append({
@@ -66,6 +66,17 @@ def create_table_and_chart(q_name, q_data, unique_key):
     
     with col1:
         st.dataframe(df_table, use_container_width=True, hide_index=True)
+        
+        csv_data = df_table.to_csv(index=False).encode('utf-8')
+        safe_name = "".join([c for c in q_name if c.isalpha() or c.isdigit() or c==' ']).rstrip()[:30]
+        
+        st.download_button(
+            label="📥 Download Table",
+            data=csv_data,
+            file_name=f"{safe_name}_results.csv",
+            mime="text/csv",
+            key=f"dl_{unique_key}" 
+        )
         
     with col2:
         if not df_chart.empty:
@@ -90,8 +101,8 @@ def create_table_and_chart(q_name, q_data, unique_key):
 
 # --- MAIN UI ---
 st.title("📊 Survey Analyzer Pro")
+st.info("💡 **Pro Tip:** To download any pie chart as an image, hover over the chart and click the **Camera Icon** in the top right corner!")
 
-# Initialize session state for dynamic combiners
 if 'combo_count' not in st.session_state:
     st.session_state['combo_count'] = 1
 
@@ -107,6 +118,30 @@ if uploaded_file:
             
         st.success(f"Successfully loaded {len(parsed_data)} Likert-scale questions!")
         
+        # --- MASTER EXPORT FEATURE ---
+        master_rows = []
+        for q, data in parsed_data.items():
+            row = {"Question": q}
+            # Add columns for each Likert option
+            for key in ["5", "4", "3", "2", "1"]:
+                row[f"{LIKERT_MAP[key]} (%)"] = data[key]
+            master_rows.append(row)
+            
+        df_master = pd.DataFrame(master_rows)
+        master_csv = df_master.to_csv(index=False).encode('utf-8')
+        
+        # Big prominent download button at the top
+        st.download_button(
+            label="📥 Download Complete Master Report (All Questions)",
+            data=master_csv,
+            file_name="Master_Survey_Report.csv",
+            mime="text/csv",
+            type="primary",
+            use_container_width=True
+        )
+        st.divider()
+        # -----------------------------
+
         tab1, tab2 = st.tabs(["📋 Individual Questions", "🔗 Custom Combiner"])
         
         with tab1:
@@ -118,33 +153,27 @@ if uploaded_file:
             st.header("Dynamic Combiner")
             st.markdown("Create multiple custom combinations. Click the **+** button to add more sections.")
             
-            # The "+" Button to add more sections
             if st.button("➕ Add Another Combination"):
                 st.session_state['combo_count'] += 1
 
             st.divider()
             
-            # Create a list to store user inputs
             combo_configs = []
             
-            # Loop to generate the UI based on how many combiners the user wants
             for i in range(st.session_state['combo_count']):
-                with st.container(border=True): # Adds a nice border around each section
+                with st.container(border=True):
                     st.markdown(f"**Combination {i + 1}**")
                     c_name = st.text_input(f"Label:", value=f"Combined Topic {i + 1}", key=f"name_{i}")
                     c_qs = st.multiselect(f"Select Questions:", options=list(parsed_data.keys()), key=f"qs_{i}")
                     
-                    # Store their choices in our list
                     combo_configs.append({"name": c_name, "questions": c_qs})
             
-            # The Master Generation Button
             if st.button("🚀 Generate All Combined Charts", type="primary"):
                 st.markdown("---")
                 st.header("📊 Your Combined Results")
                 
-                # Loop through all configured combiners
                 for i, config in enumerate(combo_configs):
-                    if config["questions"]: # Only generate if they actually selected questions
+                    if config["questions"]:
                         combined_data = {"5": 0.0, "4": 0.0, "3": 0.0, "2": 0.0, "1": 0.0}
                         num_qs = len(config["questions"])
                         
@@ -152,7 +181,6 @@ if uploaded_file:
                             for key in combined_data.keys():
                                 combined_data[key] += parsed_data[q][key]
                         
-                        # Average them out
                         for key in combined_data.keys():
                             combined_data[key] = round(combined_data[key] / num_qs, 2)
                         
