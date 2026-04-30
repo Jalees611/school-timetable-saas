@@ -2,12 +2,36 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+import streamlit.components.v1 as components
 import warnings
 
 # Ignore openpyxl warnings
 warnings.filterwarnings('ignore')
 
 st.set_page_config(page_title="Survey Analyzer Pro", layout="wide")
+
+# --- INJECT PRINT CSS ---
+# This CSS automatically hides the UI elements (buttons, uploaders, sidebars) when printing
+st.markdown("""
+    <style>
+    @media print {
+        header {display: none !important;}
+        [data-testid="stSidebar"] {display: none !important;}
+        [data-testid="stFileUploader"] {display: none !important;}
+        .stDownloadButton {display: none !important;}
+        .stButton {display: none !important;}
+        
+        /* Ensure charts and tables don't get cut in half across pages */
+        div.element-container { page-break-inside: avoid !important; }
+        
+        /* Force backgrounds to print correctly */
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 # Custom dictionary to map number scores to Likert text
 LIKERT_MAP = {
@@ -101,7 +125,6 @@ def create_table_and_chart(q_name, q_data, unique_key):
 
 # --- MAIN UI ---
 st.title("📊 Survey Analyzer Pro")
-st.info("💡 **Pro Tip:** To download any pie chart as an image, hover over the chart and click the **Camera Icon** in the top right corner!")
 
 if 'combo_count' not in st.session_state:
     st.session_state['combo_count'] = 1
@@ -118,27 +141,47 @@ if uploaded_file:
             
         st.success(f"Successfully loaded {len(parsed_data)} Likert-scale questions!")
         
-        # --- MASTER EXPORT FEATURE ---
-        master_rows = []
-        for q, data in parsed_data.items():
-            row = {"Question": q}
-            # Add columns for each Likert option
-            for key in ["5", "4", "3", "2", "1"]:
-                row[f"{LIKERT_MAP[key]} (%)"] = data[key]
-            master_rows.append(row)
-            
-        df_master = pd.DataFrame(master_rows)
-        master_csv = df_master.to_csv(index=False).encode('utf-8')
+        # --- EXPORT & PRINT CONTROLS ---
+        st.markdown("### 📥 Export Options")
         
-        # Big prominent download button at the top
-        st.download_button(
-            label="📥 Download Complete Master Report (All Questions)",
-            data=master_csv,
-            file_name="Master_Survey_Report.csv",
-            mime="text/csv",
-            type="primary",
-            use_container_width=True
-        )
+        c1, c2 = st.columns(2)
+        with c1:
+            # 1. Excel/CSV Download
+            master_rows = []
+            for q, data in parsed_data.items():
+                row = {"Question": q}
+                for key in ["5", "4", "3", "2", "1"]:
+                    row[f"{LIKERT_MAP[key]} (%)"] = data[key]
+                master_rows.append(row)
+                
+            df_master = pd.DataFrame(master_rows)
+            master_csv = df_master.to_csv(index=False).encode('utf-8')
+            
+            st.download_button(
+                label="📥 Download Master Report (CSV)",
+                data=master_csv,
+                file_name="Master_Survey_Report.csv",
+                mime="text/csv",
+                type="primary",
+                use_container_width=True
+            )
+            
+        with c2:
+            # 2. Print to PDF Button (Injects Javascript to trigger browser print)
+            components.html(
+                """
+                <script>
+                function triggerPrint() {
+                    window.parent.print();
+                }
+                </script>
+                <button onclick="triggerPrint()" style="background-color:#ff4b4b; color:white; border:none; border-radius:8px; padding: 10px 15px; font-weight: 600; font-family: 'Source Sans Pro', sans-serif; cursor: pointer; width: 100%; height: 42px; font-size: 16px;">
+                🖨️ Print Dashboard to PDF
+                </button>
+                """,
+                height=50
+            )
+            
         st.divider()
         # -----------------------------
 
