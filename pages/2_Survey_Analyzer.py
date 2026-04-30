@@ -38,7 +38,6 @@ def parse_survey_excel(file):
             continue
             
         # If we are inside a question, capture the scores
-        # We check against "5.0" and "5" to handle Excel formatting variations
         if current_q and val_2 in ["5", "4", "3", "2", "1", "5.0", "4.0", "3.0", "2.0", "1.0"]:
             try:
                 clean_key = str(int(float(val_2))) # Forces "5.0" to "5"
@@ -55,7 +54,7 @@ def parse_survey_excel(file):
     
     return filtered_questions
 
-def create_table_and_chart(q_name, q_data):
+def create_table_and_chart(q_name, q_data, unique_key):
     """Generates the UI for a single question (Table + Pie Chart)"""
     # 1. Create the structured Dataframe (always contains 5 rows)
     table_data = []
@@ -92,7 +91,8 @@ def create_table_and_chart(q_name, q_data):
                 }
             )
             fig.update_traces(textposition='inside', textinfo='percent+label')
-            st.plotly_chart(fig, use_container_width=True)
+            # ADDED UNIQUE KEY HERE TO FIX THE ERROR
+            st.plotly_chart(fig, use_container_width=True, key=unique_key)
         else:
             st.info("No valid data to plot.")
     st.divider()
@@ -118,8 +118,9 @@ if uploaded_file:
         
         with tab1:
             st.header("Individual Question Results")
-            for q_name, q_data in parsed_data.items():
-                create_table_and_chart(q_name, q_data)
+            # PASSING A UNIQUE KEY (i) FOR EVERY CHART IN THE LOOP
+            for i, (q_name, q_data) in enumerate(parsed_data.items()):
+                create_table_and_chart(q_name, q_data, unique_key=f"chart_tab1_{i}")
                 
         with tab2:
             st.header("Combine Questions")
@@ -141,9 +142,9 @@ if uploaded_file:
                 for key in combined_data.keys():
                     combined_data[key] = round(combined_data[key] / num_qs, 2)
                 
-                # Render it
+                # Render it with a specific key for the combo chart
                 st.markdown("---")
-                create_table_and_chart(combo_name, combined_data)
+                create_table_and_chart(combo_name, combined_data, unique_key="chart_combo")
 
     except Exception as e:
         st.error(f"Error processing file: {e}")
