@@ -1,3 +1,5 @@
 pandas
 streamlit
 ortools
+plotly
+openpyxl
