@@ -90,31 +90,44 @@ def create_table_and_chart(q_name, q_data, unique_key):
             st.plotly_chart(fig, use_container_width=True, key=unique_key)
     st.divider()
 
-# --- AI GENERATION FUNCTION ---
+# --- BULLETPROOF AI AUTO-DETECTOR ---
 def generate_ai_summary(api_key, topic_name, data):
-    genai.configure(api_key=api_key)
-    # Changed model to gemini-pro for maximum compatibility
-    model = genai.GenerativeModel('gemini-pro')
-    
-    prompt = f"""
-    You are an expert Educational Data Analyst and Argumentative AI. 
-    Analyze the following survey results for the metric: "{topic_name}".
-    
-    Data (Percentages):
-    Strongly Agree: {data['5']}%
-    Agree: {data['4']}%
-    Neutral: {data['3']}%
-    Disagree: {data['2']}%
-    Strongly Disagree: {data['1']}%
-    
-    Your task:
-    1. Identify the core argument the data makes (e.g., is this overwhelmingly positive, deeply divided, or leaning negative?).
-    2. Synthesize a logical conclusion based strictly on these numbers.
-    3. Provide one concrete, actionable recommendation for management/educators to improve or maintain this metric.
-    
-    Keep it professional, objective, and format it clearly with bold headings. Maximum 3 paragraphs. Do not use generic filler.
-    """
     try:
+        genai.configure(api_key=api_key)
+        
+        # 1. Ask Google what models are unlocked for this specific API key
+        available_models = [m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods]
+        
+        if not available_models:
+            return "❌ AI Error: Your API key is valid, but Google has not unlocked text generation for your region yet."
+            
+        # 2. Pick the best available model automatically
+        chosen_model = available_models[0] # Fallback to whatever is first
+        for pref in ['models/gemini-1.5-flash', 'models/gemini-1.5-pro', 'models/gemini-pro', 'models/gemini-1.0-pro']:
+            if pref in available_models:
+                chosen_model = pref
+                break
+                
+        model = genai.GenerativeModel(chosen_model)
+        
+        prompt = f"""
+        You are an expert Educational Data Analyst and Argumentative AI. 
+        Analyze the following survey results for the metric: "{topic_name}".
+        
+        Data (Percentages):
+        Strongly Agree: {data['5']}%
+        Agree: {data['4']}%
+        Neutral: {data['3']}%
+        Disagree: {data['2']}%
+        Strongly Disagree: {data['1']}%
+        
+        Your task:
+        1. Identify the core argument the data makes (e.g., is this overwhelmingly positive, deeply divided, or leaning negative?).
+        2. Synthesize a logical conclusion based strictly on these numbers.
+        3. Provide one concrete, actionable recommendation for management/educators to improve or maintain this metric.
+        
+        Keep it professional, objective, and format it clearly with bold headings. Maximum 3 paragraphs. Do not use generic filler.
+        """
         response = model.generate_content(prompt)
         return response.text
     except Exception as e:
@@ -123,7 +136,6 @@ def generate_ai_summary(api_key, topic_name, data):
 # --- MAIN UI ---
 st.title("📊 Survey Analyzer Pro")
 
-# --- SECRET KEY LOGIC ---
 try:
     SYSTEM_API_KEY = st.secrets["GEMINI_API_KEY"]
 except (FileNotFoundError, KeyError):
@@ -131,7 +143,6 @@ except (FileNotFoundError, KeyError):
 
 api_key_input = SYSTEM_API_KEY
 
-# Only show the sidebar if the Secret is NOT set
 if not api_key_input:
     with st.sidebar:
         st.header("🧠 AI Settings")
@@ -184,14 +195,13 @@ if uploaded_file:
                         
                         create_table_and_chart(config["name"], combined_data, unique_key=f"chart_combo_{i}")
                         
-                        # --- AI INTEGRATION TRIGGER ---
                         if api_key_input:
                             with st.expander(f"✨ AI Executive Summary for: {config['name']}", expanded=True):
-                                with st.spinner("Analyzing data..."):
+                                with st.spinner("Asking Google for available models and analyzing data..."):
                                     ai_response = generate_ai_summary(api_key_input, config["name"], combined_data)
                                     st.markdown(ai_response)
                         else:
-                            st.info("💡 Enter your Gemini API key in the sidebar (or in Streamlit Secrets) to generate an automatic Argumentative AI summary for this metric.")
+                            st.info("💡 Enter your Gemini API key in the sidebar to generate an automatic Argumentative AI summary.")
                             
     except Exception as e:
         st.error(f"Error processing file: {e}")
