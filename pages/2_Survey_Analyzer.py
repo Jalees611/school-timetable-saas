@@ -93,9 +93,8 @@ def create_table_and_chart(q_name, q_data, unique_key):
 # --- AI GENERATION FUNCTION ---
 def generate_ai_summary(api_key, topic_name, data):
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.5-flash') # Fast and powerful model
+    model = genai.GenerativeModel('gemini-1.5-flash')
     
-    # This is the "Argumentative" Prompt
     prompt = f"""
     You are an expert Educational Data Analyst and Argumentative AI. 
     Analyze the following survey results for the metric: "{topic_name}".
@@ -121,14 +120,23 @@ def generate_ai_summary(api_key, topic_name, data):
         return f"❌ AI Error: {e}"
 
 # --- MAIN UI ---
-# Sidebar for AI Key
-with st.sidebar:
-    st.header("🧠 AI Settings")
-    st.markdown("Enter your Gemini API key to unlock Argumentative AI summaries.")
-    api_key_input = st.text_input("Gemini API Key", type="password")
-    st.markdown("[Get a free API key here](https://aistudio.google.com/)")
-
 st.title("📊 Survey Analyzer Pro")
+
+# --- SECRET KEY LOGIC ---
+try:
+    SYSTEM_API_KEY = st.secrets["GEMINI_API_KEY"]
+except (FileNotFoundError, KeyError):
+    SYSTEM_API_KEY = None
+
+api_key_input = SYSTEM_API_KEY
+
+# Only show the sidebar if the Secret is NOT set
+if not api_key_input:
+    with st.sidebar:
+        st.header("🧠 AI Settings")
+        st.markdown("Enter your Gemini API key to unlock Argumentative AI summaries.")
+        api_key_input = st.text_input("Gemini API Key", type="password")
+        st.markdown("[Get a free API key here](https://aistudio.google.com/)")
 
 if 'combo_count' not in st.session_state: st.session_state['combo_count'] = 1
 
@@ -182,7 +190,7 @@ if uploaded_file:
                                     ai_response = generate_ai_summary(api_key_input, config["name"], combined_data)
                                     st.markdown(ai_response)
                         else:
-                            st.info("💡 Enter your Gemini API key in the sidebar to generate an automatic Argumentative AI summary for this metric.")
+                            st.info("💡 Enter your Gemini API key in the sidebar (or in Streamlit Secrets) to generate an automatic Argumentative AI summary for this metric.")
                             
     except Exception as e:
         st.error(f"Error processing file: {e}")
