@@ -4,4 +4,4 @@ numpy
 plotly
 openpyxl
 google-generativeai
-ortools
+ortools==9.8.3296
