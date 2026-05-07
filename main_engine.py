@@ -94,22 +94,30 @@ def solve_timetable(num_periods=8, num_working_days=5):
             
         req_type = get_val(row, 'requiredresourcetype', 'none').lower()
         inst_type = get_val(row, 'institutiontype', 'school').lower()
-        
         is_lab = 'lab' in req_type or 'pract' in req_type
 
-        # Evaluate Block Size dynamically
-        block_size = 1
+        # -------------------------------------------------------------
+        # USER RULE: Double periods ONLY if weekly periods are > 5
+        # -------------------------------------------------------------
+        if target > 5:
+            block_size = 2
+            max_per_day = 2
+        else:
+            block_size = 1
+            max_per_day = 1 # Strictly 1 per day for 5 or fewer periods
+            
+        # (Preserve college/lab overrides just in case you use them later)
         if 'college' in inst_type:
             if is_lab:
                 block_size = 3
+                max_per_day = 3
             elif target >= 2:
                 block_size = 2
-        elif 'school' in inst_type:
-            if target >= 6:
-                block_size = 2
-            else:
-                block_size = 1 # 5 or less stays strictly single
-        
+                max_per_day = 2
+
+        # -------------------------------------------------------------
+        # BLOCK SEQUENCE LOGIC
+        # -------------------------------------------------------------
         if block_size > 1 and target >= block_size:
             all_starts = []
             for d in days:
@@ -133,18 +141,12 @@ def solve_timetable(num_periods=8, num_working_days=5):
             num_blocks = target // block_size
             model.Add(sum(all_starts) == num_blocks)
 
-        # STRICT DAILY MAXIMUMS
+        # -------------------------------------------------------------
+        # APPLY DAILY MAXIMUMS
+        # -------------------------------------------------------------
         for d in days:
             daily_lessons = [lessons[k] for k in lessons if k[0] == i and k[1] == d]
-            if block_size == 3:
-                model.Add(sum(daily_lessons) <= 3)
-            elif block_size == 2:
-                model.Add(sum(daily_lessons) <= 2)
-            else:
-                if target <= len(days):
-                    model.Add(sum(daily_lessons) <= 1)
-                else:
-                    model.Add(sum(daily_lessons) <= 2)
+            model.Add(sum(daily_lessons) <= max_per_day)
 
         all_l = [lessons[k] for k in lessons if k[0] == i]
         model.Add(sum(all_l) == target)
