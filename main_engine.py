@@ -14,11 +14,11 @@ def solve_timetable(num_periods=8, num_working_days=5):
         if pd.isna(val): return default
         return str(val).strip()
 
-    # Find files dynamically
-    school_file = next((f for f in os.listdir('.') if ('school' in f.lower() or 'workload' in f.lower()) and f.endswith('.csv')), 'school_data.csv')
-    if not os.path.exists(school_file): return
+    # Find the main data file
+    data_file = next((f for f in os.listdir('.') if ('school' in f.lower() or 'workload' in f.lower()) and f.endswith('.csv')), 'school_data.csv')
+    if not os.path.exists(data_file): return
     
-    df = normalize_cols(pd.read_csv(school_file))
+    df = normalize_cols(pd.read_csv(data_file))
     
     restrictions = []
     rest_file = next((f for f in os.listdir('.') if 'restrict' in f.lower() and f.endswith('.csv')), None)
@@ -31,9 +31,6 @@ def solve_timetable(num_periods=8, num_working_days=5):
     if res_file:
         res_df = normalize_cols(pd.read_csv(res_file))
         resources = res_df.to_dict('records')
-
-    # EXPLICIT MODE DETECTOR: If you upload resources, it's a College. Otherwise, it's a School.
-    is_college_mode = len(resources) > 0
 
     all_possible_days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     days = all_possible_days[:num_working_days]
@@ -64,13 +61,17 @@ def solve_timetable(num_periods=8, num_working_days=5):
 
     # --- 2. VARIABLES & ROOM MATCHING ---
     for i, row in df.iterrows():
+        # THE USER'S EXPLICIT RULE COLUMN:
+        inst_type = get_val(row, 'institutiontype', 'school').lower()
         req_type = get_val(row, 'requiredresourcetype', 'none').lower()
         teacher_name = get_val(row, 'teachername', '').lower()
+        
+        is_college = 'college' in inst_type
         is_lab = 'lab' in req_type or 'pract' in req_type
 
-        # PHYSICAL ROOMS ONLY FOR COLLEGE LABS
+        # Only restrict physical rooms for College Labs to prevent bottlenecks
         rooms = ["Standard Room"]
-        if is_college_mode and is_lab:
+        if is_college and is_lab and resources:
             lab_rooms = [get_val(r, 'resourcename') for r in resources if 'lab' in get_val(r, 'resourcetype').lower()]
             if lab_rooms: rooms = lab_rooms
 
@@ -97,80 +98,78 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 must_teach_vars = [lessons[k] for k in lessons if k[1] == r_day and k[2] == r_period and r_teacher in get_val(df.loc[k[0]], 'teachername').lower()]
                 if must_teach_vars: model.Add(sum(must_teach_vars) == 1)
 
-    # --- 4. ISOLATED LOGIC (SCHOOL VS COLLEGE) ---
+    # --- 4. EXPLICIT LOGIC (SCHOOL VS COLLEGE) ---
     for i, row in df.iterrows():
         try: target = int(float(get_val(row, 'weeklyperiod', 1)))
         except ValueError: target = 1
             
+        inst_type = get_val(row, 'institutiontype', 'school').lower()
         req_type = get_val(row, 'requiredresourcetype', 'none').lower()
+        
+        is_college = 'college' in inst_type
         is_lab = 'lab' in req_type or 'pract' in req_type
 
-        is_strict_lab = False
-
-        if is_college_mode:
-            # ====== COLLEGE LOGIC ======
-            if is_lab:
-                max_per_day = 3
-                if target % 3 == 0: 
-                    is_strict_lab = True # Force exact blocks of 3
-            else:
-                max_per_day = 2 # College Theory: allows 2 consecutive + 1 single
-        else:
-            # ====== SCHOOL LOGIC (DO NOT TOUCH) ======
-            if target > 5:
-                max_per_day = 2
-            else:
-                max_per_day = 1 
-
-        # Apply limits and constraints
         sub_rooms = list(set(k[3] for k in lessons if k[0] == i))
 
         for d in days:
-            day_active = model.NewBoolVar(f'day_act_{i}_{d}')
-            r_actives = {r: model.NewBoolVar(f'r_act_{i}_{d}_{r}') for r in sub_rooms}
-
-            # Anti-Room Hopping
-            model.Add(sum(r_actives.values()) == day_active)
-
+            # Gather daily variables
             daily_p_vars = []
             for p in periods:
                 p_sum = []
                 for r in sub_rooms:
-                    l_var = lessons[(i, d, p, r)]
-                    p_sum.append(l_var)
-                    model.Add(l_var <= r_actives[r])
+                    p_sum.append(lessons[(i, d, p, r)])
                 daily_p_vars.append(sum(p_sum))
-
-            daily_sum = sum(daily_p_vars)
             
-            if is_strict_lab:
-                # STRICT COLLEGE LAB RULE: 3 periods exactly
-                model.Add(daily_sum == 3 * day_active)
-            else:
-                # STANDARD LIMITS (Applies perfectly to both School and College Theory)
-                model.Add(daily_sum <= max_per_day)
-                model.Add(daily_sum <= len(periods) * day_active)
+            daily_sum = sum(daily_p_vars)
+            day_active = model.NewBoolVar(f'day_act_{i}_{d}')
+            model.Add(daily_sum > 0).OnlyEnforceIf(day_active)
+            model.Add(daily_sum == 0).OnlyEnforceIf(day_active.Not())
 
-            # GAPLESS CONSECUTIVE RULE
-            if max_per_day > 1:
-                starts = []
-                s0 = model.NewIntVar(0, 1, f's0_{i}_{d}')
-                model.Add(s0 == daily_p_vars[0])
-                starts.append(s0)
+            # ---------------------------------------------------------
+            # THE RULES
+            # ---------------------------------------------------------
+            if is_college and is_lab:
+                # COLLEGE LAB: Force exactly 3 periods per day. 
+                model.Add(daily_sum == 3 * day_active)
                 
-                for p_idx in range(1, len(periods)):
-                    s = model.NewIntVar(0, 1, f'start_{i}_{d}_{p_idx}')
-                    model.Add(s >= daily_p_vars[p_idx] - daily_p_vars[p_idx-1])
-                    model.Add(s <= daily_p_vars[p_idx])
-                    model.Add(s <= 1 - daily_p_vars[p_idx-1])
-                    starts.append(s)
-                
-                model.Add(sum(starts) <= 1)
+                # Anti-Room Hopping: Must stay in one physical lab room all 3 periods
+                if len(sub_rooms) > 1:
+                    r_actives = {r: model.NewBoolVar(f'ract_{i}_{d}_{r}') for r in sub_rooms}
+                    model.Add(sum(r_actives.values()) == day_active)
+                    for p in periods:
+                        for r in sub_rooms:
+                            model.Add(lessons[(i, d, p, r)] <= r_actives[r])
+
+            elif is_college and not is_lab:
+                # COLLEGE THEORY: Max 2 periods per day
+                model.Add(daily_sum <= 2)
+
+            else:
+                # SCHOOL LOGIC: 1 per day, unless > 5
+                max_per_day = 2 if target > 5 else 1
+                model.Add(daily_sum <= max_per_day)
+
+            # ---------------------------------------------------------
+            # GAPLESS GUARANTEE: No matter the rule, periods must be consecutive
+            # ---------------------------------------------------------
+            starts = []
+            s0 = model.NewIntVar(0, 1, f's0_{i}_{d}')
+            model.Add(s0 == daily_p_vars[0])
+            starts.append(s0)
+            
+            for p_idx in range(1, len(periods)):
+                s = model.NewIntVar(0, 1, f'start_{i}_{d}_{p_idx}')
+                model.Add(s >= daily_p_vars[p_idx] - daily_p_vars[p_idx-1])
+                model.Add(s <= daily_p_vars[p_idx])
+                model.Add(s <= 1 - daily_p_vars[p_idx-1])
+                starts.append(s)
+            
+            model.Add(sum(starts) <= 1)
 
         all_l = [lessons[k] for k in lessons if k[0] == i]
         model.Add(sum(all_l) == target)
 
-    # --- 5. OVERLAPS & ROOM CONFLICTS ---
+    # --- 5. OVERLAPS & CONFLICTS ---
     teachers = set([get_val(row, 'teachername') for _, row in df.iterrows() if get_val(row, 'teachername')])
     classes = set([get_val(row, 'classname') for _, row in df.iterrows() if get_val(row, 'classname')])
     
@@ -183,7 +182,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 c_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and c == get_val(df.loc[k[0]], 'classname')]
                 if c_vars: model.Add(sum(c_vars) <= 1)
             
-            # Prevent lab double-booking
+            # Prevent Lab double-booking (Ignores Standard Room overlaps)
             r_keys = set(k[3] for k in lessons)
             for r in r_keys:
                 if r != "Standard Room":
