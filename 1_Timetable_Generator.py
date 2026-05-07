@@ -6,7 +6,7 @@ from main_engine import solve_timetable
 st.set_page_config(page_title="AI Timetable Generator", page_icon="📅", layout="wide")
 
 # ==========================================
-# ⚙️ SIDEBAR SETTINGS (THE SLIDERS ARE BACK!)
+# ⚙️ SIDEBAR SETTINGS
 # ==========================================
 with st.sidebar:
     st.header("⚙️ Schedule Settings")
@@ -93,7 +93,8 @@ with tab1:
     with col1:
         st.download_button("📥 Download School Workload Template", get_school_template(), "school_template.csv", "text/csv")
     with col2:
-        st.download_button("📥 Download Restrictions Template", get_restriction_template(), "restrictions_template.csv", "text/csv")
+        # ADDED KEY HERE
+        st.download_button("📥 Download Restrictions Template", get_restriction_template(), "restrictions_template.csv", "text/csv", key="school_rest_btn")
 
     school_data = st.file_uploader("1️⃣ Upload School Workload (CSV)", type=['csv'], key="school_data")
     school_rest = st.file_uploader("2️⃣ Upload Restrictions (CSV) - Optional", type=['csv'], key="school_rest")
@@ -106,7 +107,6 @@ with tab1:
                 save_uploaded_file(school_rest, "restrictions-school.csv")
                 
                 try:
-                    # SLIDERS ARE PASSED TO THE ENGINE HERE!
                     solve_timetable(num_periods=num_periods, num_working_days=num_working_days)
                     
                     if os.path.exists('final_timetable_result.csv'):
@@ -114,7 +114,7 @@ with tab1:
                         result_df = pd.read_csv('final_timetable_result.csv')
                         st.dataframe(result_df, use_container_width=True)
                         csv = result_df.to_csv(index=False).encode('utf-8')
-                        st.download_button("💾 Download Final Timetable", csv, "Final_School_Timetable.csv", "text/csv")
+                        st.download_button("💾 Download Final Timetable", csv, "Final_School_Timetable.csv", "text/csv", key="school_download")
                     else:
                         st.error("❌ Infeasible! The AI could not fit the schedule. Please check for impossible restrictions.")
                 except Exception as e:
@@ -129,7 +129,8 @@ with tab2:
     with col1:
         st.download_button("📥 Download College Workload Template", get_college_template(), "college_template.csv", "text/csv")
     with col2:
-        st.download_button("📥 Download Restrictions Template", get_restriction_template(), "restrictions_template.csv", "text/csv")
+        # ADDED KEY HERE
+        st.download_button("📥 Download Restrictions Template", get_restriction_template(), "restrictions_template.csv", "text/csv", key="college_rest_btn")
 
     col_data = st.file_uploader("1️⃣ Upload College Workload (CSV)", type=['csv'], key="col_data")
     col_res = st.file_uploader("2️⃣ Upload Resource/Rooms (CSV)", type=['csv'], key="col_res")
@@ -144,7 +145,6 @@ with tab2:
                 save_uploaded_file(col_rest, "restrictons-IEER.csv")
                 
                 try:
-                    # SLIDERS ARE PASSED TO THE ENGINE HERE!
                     solve_timetable(num_periods=num_periods, num_working_days=num_working_days)
                     
                     if os.path.exists('final_timetable_result.csv'):
@@ -152,7 +152,8 @@ with tab2:
                         result_df = pd.read_csv('final_timetable_result.csv')
                         st.dataframe(result_df, use_container_width=True)
                         csv = result_df.to_csv(index=False).encode('utf-8')
-                        st.download_button("💾 Download Final Timetable", csv, "Final_College_Timetable.csv", "text/csv")
+                        # ADDED KEY HERE TO PREVENT FUTURE CRASHES
+                        st.download_button("💾 Download Final Timetable", csv, "Final_College_Timetable.csv", "text/csv", key="college_download")
                     else:
                         st.error("❌ Infeasible! Check restrictions or ensure no teacher is mathematically overbooked.")
                 except Exception as e:
