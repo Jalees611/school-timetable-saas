@@ -14,22 +14,30 @@ def solve_timetable(num_periods=8, num_working_days=5):
         if pd.isna(val): return default
         return str(val).strip()
 
+    # THE FIX: Makes the engine immune to Excel's weird text encoding
+    def safe_read_csv(file_path):
+        try:
+            return pd.read_csv(file_path, encoding='utf-8')
+        except UnicodeDecodeError:
+            return pd.read_csv(file_path, encoding='windows-1252')
+
     # Find the main data file
     data_file = next((f for f in os.listdir('.') if ('school' in f.lower() or 'workload' in f.lower()) and f.endswith('.csv')), 'school_data.csv')
     if not os.path.exists(data_file): return
     
-    df = normalize_cols(pd.read_csv(data_file))
+    # Use the safe reader!
+    df = normalize_cols(safe_read_csv(data_file))
     
     restrictions = []
     rest_file = next((f for f in os.listdir('.') if 'restrict' in f.lower() and f.endswith('.csv')), None)
     if rest_file:
-        rest_df = normalize_cols(pd.read_csv(rest_file))
+        rest_df = normalize_cols(safe_read_csv(rest_file))
         restrictions = rest_df.to_dict('records')
 
     resources = []
     res_file = next((f for f in os.listdir('.') if 'resource' in f.lower() and f.endswith('.csv')), None)
     if res_file:
-        res_df = normalize_cols(pd.read_csv(res_file))
+        res_df = normalize_cols(safe_read_csv(res_file))
         resources = res_df.to_dict('records')
 
     all_possible_days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -61,7 +69,6 @@ def solve_timetable(num_periods=8, num_working_days=5):
 
     # --- 2. VARIABLES & ROOM MATCHING ---
     for i, row in df.iterrows():
-        # THE USER'S EXPLICIT RULE COLUMN:
         inst_type = get_val(row, 'institutiontype', 'school').lower()
         req_type = get_val(row, 'requiredresourcetype', 'none').lower()
         teacher_name = get_val(row, 'teachername', '').lower()
@@ -112,7 +119,6 @@ def solve_timetable(num_periods=8, num_working_days=5):
         sub_rooms = list(set(k[3] for k in lessons if k[0] == i))
 
         for d in days:
-            # Gather daily variables
             daily_p_vars = []
             for p in periods:
                 p_sum = []
@@ -182,7 +188,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 c_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and c == get_val(df.loc[k[0]], 'classname')]
                 if c_vars: model.Add(sum(c_vars) <= 1)
             
-            # Prevent Lab double-booking (Ignores Standard Room overlaps)
+            # Prevent Lab double-booking
             r_keys = set(k[3] for k in lessons)
             for r in r_keys:
                 if r != "Standard Room":
