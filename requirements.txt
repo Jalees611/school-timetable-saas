@@ -5,3 +5,4 @@ plotly
 openpyxl
 google-generativeai>=0.7.0
 ortools>=9.10.0
+supabase
