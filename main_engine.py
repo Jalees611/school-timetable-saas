@@ -14,7 +14,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
         if pd.isna(val): return default
         return str(val).strip()
 
-    # THE FIX: Makes the engine immune to Excel's weird text encoding
+    # Makes the engine immune to Excel's weird text encoding
     def safe_read_csv(file_path):
         try:
             return pd.read_csv(file_path, encoding='utf-8')
@@ -25,7 +25,6 @@ def solve_timetable(num_periods=8, num_working_days=5):
     data_file = next((f for f in os.listdir('.') if ('school' in f.lower() or 'workload' in f.lower()) and f.endswith('.csv')), 'school_data.csv')
     if not os.path.exists(data_file): return
     
-    # Use the safe reader!
     df = normalize_cols(safe_read_csv(data_file))
     
     restrictions = []
@@ -76,11 +75,15 @@ def solve_timetable(num_periods=8, num_working_days=5):
         is_college = 'college' in inst_type
         is_lab = 'lab' in req_type or 'pract' in req_type
 
-        # Only restrict physical rooms for College Labs to prevent bottlenecks
+        # ---> THE UPDATE: NOW DYNAMICALLY ASSIGNS BOTH LABS AND THEORY ROOMS <---
         rooms = ["Standard Room"]
-        if is_college and is_lab and resources:
-            lab_rooms = [get_val(r, 'resourcename') for r in resources if 'lab' in get_val(r, 'resourcetype').lower()]
-            if lab_rooms: rooms = lab_rooms
+        if is_college and resources:
+            if is_lab:
+                lab_rooms = [get_val(r, 'resourcename') for r in resources if 'lab' in get_val(r, 'resourcetype').lower()]
+                if lab_rooms: rooms = lab_rooms
+            else:
+                theory_rooms = [get_val(r, 'resourcename') for r in resources if 'classroom' in get_val(r, 'resourcetype').lower()]
+                if theory_rooms: rooms = theory_rooms
 
         for d in days:
             for p in periods:
@@ -138,7 +141,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 # COLLEGE LAB: Force exactly 3 periods per day. 
                 model.Add(daily_sum == 3 * day_active)
                 
-                # Anti-Room Hopping: Must stay in one physical lab room all 3 periods
+                # Anti-Room Hopping: Stay in one physical lab all 3 periods
                 if len(sub_rooms) > 1:
                     r_actives = {r: model.NewBoolVar(f'ract_{i}_{d}_{r}') for r in sub_rooms}
                     model.Add(sum(r_actives.values()) == day_active)
@@ -149,6 +152,14 @@ def solve_timetable(num_periods=8, num_working_days=5):
             elif is_college and not is_lab:
                 # COLLEGE THEORY: Max 2 periods per day
                 model.Add(daily_sum <= 2)
+
+                # ---> THE UPDATE: Anti-Room Hopping for Theory Classes <---
+                if len(sub_rooms) > 1 and "Standard Room" not in sub_rooms:
+                    r_actives = {r: model.NewBoolVar(f'ract_{i}_{d}_{r}') for r in sub_rooms}
+                    model.Add(sum(r_actives.values()) == day_active)
+                    for p in periods:
+                        for r in sub_rooms:
+                            model.Add(lessons[(i, d, p, r)] <= r_actives[r])
 
             else:
                 # SCHOOL LOGIC: 1 per day, unless > 5
@@ -188,7 +199,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 c_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and c == get_val(df.loc[k[0]], 'classname')]
                 if c_vars: model.Add(sum(c_vars) <= 1)
             
-            # Prevent Lab double-booking
+            # ---> THE UPDATE: Prevent double-booking for ALL physical rooms <---
             r_keys = set(k[3] for k in lessons)
             for r in r_keys:
                 if r != "Standard Room":
