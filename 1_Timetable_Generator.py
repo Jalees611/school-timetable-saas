@@ -81,7 +81,6 @@ def get_restriction_template():
     })
     return df.to_csv(index=False).encode('utf-8')
 
-# ---> THE MISSING RESOURCE TEMPLATE <---
 @st.cache_data
 def get_resource_template():
     df = pd.DataFrame({
@@ -94,7 +93,7 @@ def get_resource_template():
 # ==========================================
 # UI TABS
 # ==========================================
-tab1, tab2 = st.tabs(["🏫 School Timetable", "🎓 College Timetable"])
+tab1, tab2, tab3 = st.tabs(["🏫 School Timetable", "🎓 College Timetable", "🖨️ View & Download Timetables"])
 
 # --- TAB 1: SCHOOL ---
 with tab1:
@@ -116,13 +115,8 @@ with tab1:
                 
                 try:
                     solve_timetable(num_periods=num_periods, num_working_days=num_working_days)
-                    
                     if os.path.exists('final_timetable_result.csv'):
-                        st.success("✅ Timetable Generated Successfully!")
-                        result_df = pd.read_csv('final_timetable_result.csv')
-                        st.dataframe(result_df, use_container_width=True)
-                        csv = result_df.to_csv(index=False).encode('utf-8')
-                        st.download_button("💾 Download Final Timetable", csv, "Final_School_Timetable.csv", "text/csv", key="school_download")
+                        st.success("✅ Timetable Generated Successfully! Go to the 'View & Download' tab to see it.")
                     else:
                         st.error("❌ Infeasible! The AI could not fit the schedule. Please check for impossible restrictions.")
                 except Exception as e:
@@ -133,7 +127,6 @@ with tab1:
 
 # --- TAB 2: COLLEGE ---
 with tab2:
-    # ---> UPDATED TO 3 COLUMNS TO FIT ALL TEMPLATES <---
     col1, col2, col3 = st.columns(3)
     with col1:
         st.download_button("📥 Download Workload Template", get_college_template(), "college_template.csv", "text/csv")
@@ -157,16 +150,49 @@ with tab2:
                 
                 try:
                     solve_timetable(num_periods=num_periods, num_working_days=num_working_days)
-                    
                     if os.path.exists('final_timetable_result.csv'):
-                        st.success("✅ Timetable Generated Successfully!")
-                        result_df = pd.read_csv('final_timetable_result.csv')
-                        st.dataframe(result_df, use_container_width=True)
-                        csv = result_df.to_csv(index=False).encode('utf-8')
-                        st.download_button("💾 Download Final Timetable", csv, "Final_College_Timetable.csv", "text/csv", key="college_download")
+                        st.success("✅ Timetable Generated Successfully! Go to the 'View & Download' tab to see it.")
                     else:
                         st.error("❌ Infeasible! Check restrictions or ensure no teacher is mathematically overbooked.")
                 except Exception as e:
                     st.error(f"❌ An error occurred: {e}")
         else:
             st.warning("⚠️ Please upload BOTH the College Workload and the Resource files.")
+
+
+# --- TAB 3: MASTER DOWNLOADS & VIEWER ---
+with tab3:
+    st.header("🖨️ View & Download Generated Timetables")
+    
+    if os.path.exists('final_timetable_result.csv'):
+        df = pd.read_csv('final_timetable_result.csv')
+        st.success("✅ A generated timetable is currently available in memory!")
+
+        # 1. Master Download
+        st.subheader("📚 Master Timetable (All Classes & Teachers)")
+        st.dataframe(df, use_container_width=True)
+        st.download_button("💾 Download Master Timetable", df.to_csv(index=False).encode('utf-8'), "Master_Timetable.csv", "text/csv", key="master_dl")
+
+        st.markdown("---")
+        
+        # 2. Filter by Class
+        colA, colB = st.columns(2)
+        with colA:
+            st.subheader("🎒 Filter by Class")
+            classes = sorted(df['Class'].dropna().unique())
+            selected_class = st.selectbox("Select a Class:", classes)
+            class_df = df[df['Class'] == selected_class]
+            st.dataframe(class_df, use_container_width=True)
+            st.download_button(f"💾 Download {selected_class} Schedule", class_df.to_csv(index=False).encode('utf-8'), f"{selected_class}_Timetable.csv", "text/csv", key="class_dl")
+
+        # 3. Filter by Teacher
+        with colB:
+            st.subheader("👨‍🏫 Filter by Teacher")
+            teachers = sorted(df['Teacher'].dropna().unique())
+            selected_teacher = st.selectbox("Select a Teacher:", teachers)
+            teacher_df = df[df['Teacher'] == selected_teacher]
+            st.dataframe(teacher_df, use_container_width=True)
+            st.download_button(f"💾 Download {selected_teacher} Schedule", teacher_df.to_csv(index=False).encode('utf-8'), f"{selected_teacher}_Timetable.csv", "text/csv", key="teacher_dl")
+
+    else:
+        st.info("ℹ️ No timetable has been generated yet. Please go to the School or College tab, upload your files, and click Generate first!")
