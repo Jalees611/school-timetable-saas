@@ -22,7 +22,6 @@ def solve_timetable(num_periods=8, num_working_days=5):
     if os.path.exists('restrictions_data.csv'):
         rest_df = normalize_cols(pd.read_csv('restrictions_data.csv'))
         restrictions = rest_df.to_dict('records')
-    # Fallback to the specific file name you uploaded
     elif os.path.exists('restrictions-school.csv'):
         rest_df = normalize_cols(pd.read_csv('restrictions-school.csv'))
         restrictions = rest_df.to_dict('records')
@@ -35,6 +34,32 @@ def solve_timetable(num_periods=8, num_working_days=5):
     all_possible_days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     days = all_possible_days[:num_working_days]
     periods = [f'Period {i}' for i in range(1, num_periods + 1)]
+    
+    # --- 1.5 BULLETPROOF RESTRICTION FORMATTER ---
+    # This guarantees that typos like "Monday" or "6" never break the rules
+    def parse_period(p_str):
+        nums = re.findall(r'\d+', str(p_str))
+        return f"Period {nums[0]}" if nums else str(p_str).strip()
+
+    def parse_day(d_str):
+        d_str = str(d_str).lower().strip()
+        if d_str.startswith('mo'): return 'Mon'
+        if d_str.startswith('tu'): return 'Tue'
+        if d_str.startswith('we'): return 'Wed'
+        if d_str.startswith('th'): return 'Thu'
+        if d_str.startswith('fr'): return 'Fri'
+        if d_str.startswith('sa'): return 'Sat'
+        if d_str.startswith('su'): return 'Sun'
+        return str(d_str).strip()
+
+    normalized_restrictions = []
+    for rest in restrictions:
+        normalized_restrictions.append({
+            'teachername': get_val(rest, 'teachername').lower(),
+            'day': parse_day(get_val(rest, 'day')),
+            'period': parse_period(get_val(rest, 'period')),
+            'restrictiontype': get_val(rest, 'restrictiontype').lower()
+        })
     
     model = cp_model.CpModel()
     lessons = {}
@@ -59,10 +84,10 @@ def solve_timetable(num_periods=8, num_working_days=5):
         for d in days:
             for p in periods:
                 rest_type = None
-                for rest in restrictions:
-                    if get_val(rest, 'teachername').lower() in teacher_name:
-                        if get_val(rest, 'day').lower() == d.lower() and get_val(rest, 'period').lower() == p.lower():
-                            rest_type = get_val(rest, 'restrictiontype').lower()
+                for rest in normalized_restrictions:
+                    if rest['teachername'] in teacher_name:
+                        if rest['day'] == d and rest['period'] == p:
+                            rest_type = rest['restrictiontype']
                             break
                 
                 for r in rooms:
@@ -71,13 +96,13 @@ def solve_timetable(num_periods=8, num_working_days=5):
                         model.Add(lessons[(i, d, p, r)] == 0)
 
     # --- 3. MUST TEACH LOGIC ---
-    for rest in restrictions:
-        if "must teach" in get_val(rest, 'restrictiontype').lower():
-            r_teacher = get_val(rest, 'teachername').lower()
-            r_day = get_val(rest, 'day')
-            r_period = get_val(rest, 'period')
+    for rest in normalized_restrictions:
+        if "must teach" in rest['restrictiontype']:
+            r_teacher = rest['teachername']
+            r_day = rest['day']
+            r_period = rest['period']
             
-            if r_day in days:
+            if r_day in days and r_period in periods:
                 must_teach_vars = [
                     lessons[k] for k in lessons 
                     if k[1] == r_day and k[2] == r_period and r_teacher in get_val(df.loc[k[0]], 'teachername').lower()
@@ -96,11 +121,10 @@ def solve_timetable(num_periods=8, num_working_days=5):
         inst_type = get_val(row, 'institutiontype', 'school').lower()
         is_lab = 'lab' in req_type or 'pract' in req_type
 
-        # USER RULE: Allow up to 2 periods ONLY if weekly periods are > 5
         if target > 5:
             max_per_day = 2
         else:
-            max_per_day = 1 # Strictly 1 per day for 5 or fewer periods
+            max_per_day = 1 
             
         if 'college' in inst_type and is_lab:
             max_per_day = 3
@@ -109,20 +133,16 @@ def solve_timetable(num_periods=8, num_working_days=5):
             daily_lessons_vars = []
             for p in periods:
                 p_vars = [lessons[k] for k in lessons if k[0] == i and k[1] == d and k[2] == p]
-                # Since each period only has one room scheduled for this subject/class, sum(p_vars) is 0 or 1
                 daily_lessons_vars.append(sum(p_vars))
                 
             model.Add(sum(daily_lessons_vars) <= max_per_day)
 
-            # If max_per_day is 2, ensure that IF 2 periods are scheduled on the same day, they are consecutive.
-            # We enforce this by forbidding any two scheduled periods from having a gap between them.
             if max_per_day == 2:
                 num_p = len(periods)
                 for a in range(num_p):
                     for b in range(a + 2, num_p):
                         model.Add(daily_lessons_vars[a] + daily_lessons_vars[b] <= 1)
 
-        # Force total weekly periods to equal the target
         all_l = [lessons[k] for k in lessons if k[0] == i]
         model.Add(sum(all_l) == target)
 
