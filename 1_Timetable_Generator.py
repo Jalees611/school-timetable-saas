@@ -168,31 +168,55 @@ with tab3:
         df = pd.read_csv('final_timetable_result.csv')
         st.success("✅ A generated timetable is currently available in memory!")
 
-        # 1. Master Download
-        st.subheader("📚 Master Timetable (All Classes & Teachers)")
-        st.dataframe(df, use_container_width=True)
-        st.download_button("💾 Download Master Timetable", df.to_csv(index=False).encode('utf-8'), "Master_Timetable.csv", "text/csv", key="master_dl")
+        # --- DATA FORMATTING FOR BEAUTIFUL GRIDS ---
+        # 1. Sort Days and Periods properly (so Mon comes before Tue, and Period 1 before 10)
+        days_order = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        df['Day'] = pd.Categorical(df['Day'], categories=days_order, ordered=True)
+        df['Period_Num'] = df['Period'].str.extract(r'(\d+)').astype(int)
+        df = df.sort_values(['Day', 'Period_Num'])
 
-        st.markdown("---")
-        
-        # 2. Filter by Class
-        colA, colB = st.columns(2)
-        with colA:
-            st.subheader("🎒 Filter by Class")
-            classes = sorted(df['Class'].dropna().unique())
-            selected_class = st.selectbox("Select a Class:", classes)
-            class_df = df[df['Class'] == selected_class]
-            st.dataframe(class_df, use_container_width=True)
-            st.download_button(f"💾 Download {selected_class} Schedule", class_df.to_csv(index=False).encode('utf-8'), f"{selected_class}_Timetable.csv", "text/csv", key="class_dl")
+        # 2. Create Display Strings for the cells
+        df['Class_View'] = df['Subject'] + " (" + df['Teacher'] + ") [" + df['Room'] + "]"
+        df['Teacher_View'] = df['Subject'] + " (" + df['Class'] + ") [" + df['Room'] + "]"
 
-        # 3. Filter by Teacher
-        with colB:
-            st.subheader("👨‍🏫 Filter by Teacher")
-            teachers = sorted(df['Teacher'].dropna().unique())
-            selected_teacher = st.selectbox("Select a Teacher:", teachers)
-            teacher_df = df[df['Teacher'] == selected_teacher]
-            st.dataframe(teacher_df, use_container_width=True)
-            st.download_button(f"💾 Download {selected_teacher} Schedule", teacher_df.to_csv(index=False).encode('utf-8'), f"{selected_teacher}_Timetable.csv", "text/csv", key="teacher_dl")
+        # 3. Pivot the Tables
+        class_grid = df.pivot_table(index=['Day', 'Period'], columns='Class', values='Class_View', aggfunc=lambda x: " / ".join(x)).fillna("---")
+        teacher_grid = df.pivot_table(index=['Day', 'Period'], columns='Teacher', values='Teacher_View', aggfunc=lambda x: " / ".join(x)).fillna("---")
+
+        # --- DISPLAY SUB-TABS ---
+        grid_tab1, grid_tab2, grid_tab3 = st.tabs(["🎒 Complete Classes Grid", "👨‍🏫 Complete Teachers Grid", "📄 Raw List & Filters"])
+
+        with grid_tab1:
+            st.subheader("Master Timetable: All Classes")
+            st.dataframe(class_grid, use_container_width=True)
+            st.download_button("💾 Download Classes Master Grid (CSV)", class_grid.to_csv().encode('utf-8'), "Master_Classes_Grid.csv", "text/csv", key="cg_dl")
+
+        with grid_tab2:
+            st.subheader("Master Timetable: All Teachers")
+            st.dataframe(teacher_grid, use_container_width=True)
+            st.download_button("💾 Download Teachers Master Grid (CSV)", teacher_grid.to_csv().encode('utf-8'), "Master_Teachers_Grid.csv", "text/csv", key="tg_dl")
+
+        with grid_tab3:
+            st.subheader("Raw List Data (For Excel Filtering)")
+            clean_df = df.drop(columns=['Period_Num', 'Class_View', 'Teacher_View'])
+            st.dataframe(clean_df, use_container_width=True)
+            st.download_button("💾 Download Raw List", clean_df.to_csv(index=False).encode('utf-8'), "Raw_Timetable_List.csv", "text/csv", key="raw_dl")
+
+            st.markdown("---")
+            colA, colB = st.columns(2)
+            with colA:
+                st.subheader("🎒 Filter Single Class")
+                selected_class = st.selectbox("Select a Class:", sorted(clean_df['Class'].dropna().unique()))
+                class_df = clean_df[clean_df['Class'] == selected_class]
+                st.dataframe(class_df, use_container_width=True)
+                st.download_button(f"💾 Download {selected_class} List", class_df.to_csv(index=False).encode('utf-8'), f"{selected_class}_Timetable.csv", "text/csv", key="class_dl")
+
+            with colB:
+                st.subheader("👨‍🏫 Filter Single Teacher")
+                selected_teacher = st.selectbox("Select a Teacher:", sorted(clean_df['Teacher'].dropna().unique()))
+                teacher_df = clean_df[clean_df['Teacher'] == selected_teacher]
+                st.dataframe(teacher_df, use_container_width=True)
+                st.download_button(f"💾 Download {selected_teacher} List", teacher_df.to_csv(index=False).encode('utf-8'), f"{selected_teacher}_Timetable.csv", "text/csv", key="teacher_dl")
 
     else:
         st.info("ℹ️ No timetable has been generated yet. Please go to the School or College tab, upload your files, and click Generate first!")
