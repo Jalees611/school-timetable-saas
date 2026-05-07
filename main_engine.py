@@ -58,20 +58,17 @@ def solve_timetable(num_periods=8, num_working_days=5):
     model = cp_model.CpModel()
     lessons = {}
 
-    # --- 2. CREATE VARIABLES & ROOM MATCHING ---
+    # --- 2. VARIABLES & SMART ROOM MATCHING ---
     for i, row in df.iterrows():
         req_type = get_val(row, 'requiredresourcetype', 'none').lower()
-        inst_type = get_val(row, 'institutiontype', 'school').lower()
         teacher_name = get_val(row, 'teachername', '').lower()
-        
         is_lab = 'lab' in req_type or 'pract' in req_type
-        is_theory = 'classroom' in req_type
 
+        # STRICT LAB ROOM LOGIC (Prevents Theory Classroom Bottlenecks)
         rooms = ["Standard Room"]
-        if resources:
-            if is_lab: rooms = [get_val(r, 'resourcename') for r in resources if 'lab' in get_val(r, 'resourcetype').lower()]
-            elif is_theory: rooms = [get_val(r, 'resourcename') for r in resources if 'classroom' in get_val(r, 'resourcetype').lower()]
-        if not rooms: rooms = ["Standard Room"]
+        if is_lab and resources:
+            lab_rooms = [get_val(r, 'resourcename') for r in resources if 'lab' in get_val(r, 'resourcetype').lower()]
+            if lab_rooms: rooms = lab_rooms
 
         for d in days:
             for p in periods:
@@ -96,7 +93,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 must_teach_vars = [lessons[k] for k in lessons if k[1] == r_day and k[2] == r_period and r_teacher in get_val(df.loc[k[0]], 'teachername').lower()]
                 if must_teach_vars: model.Add(sum(must_teach_vars) == 1)
 
-    # --- 4. STRICT LAB BLOCKS & GAPLESS LOGIC ---
+    # --- 4. DUAL ARCHITECTURE: SCHOOL VS COLLEGE ---
     for i, row in df.iterrows():
         try: target = int(float(get_val(row, 'weeklyperiod', 1)))
         except ValueError: target = 1
@@ -105,17 +102,24 @@ def solve_timetable(num_periods=8, num_working_days=5):
         inst_type = get_val(row, 'institutiontype', 'school').lower()
         is_lab = 'lab' in req_type or 'pract' in req_type
 
-        # Base Limits
-        if target >= 7: max_per_day = 3
-        elif target >= 3: max_per_day = 2
-        else: max_per_day = 1 
-            
-        # Determine if this is a College Lab that perfectly fits blocks of 3
         is_strict_lab = False
-        if 'college' in inst_type and is_lab:
-            max_per_day = 3
-            if target % 3 == 0: 
-                is_strict_lab = True
+
+        if 'college' in inst_type:
+            if is_lab:
+                if target % 3 == 0:
+                    is_strict_lab = True
+                    max_per_day = 6 # Allows extreme flexibility (0, 3, or 6 periods in blocks of 3)
+                else:
+                    max_per_day = 3
+            else:
+                # College Theory: Universally allow up to 2 consecutive periods
+                max_per_day = 2
+        else:
+            # School Architecture
+            if target > 5:
+                max_per_day = 2
+            else:
+                max_per_day = 1
 
         for d in days:
             daily_lessons_vars = []
@@ -125,15 +129,15 @@ def solve_timetable(num_periods=8, num_working_days=5):
             
             daily_sum = sum(daily_lessons_vars)
 
-            # STRICT LAB LOCK: If a lab is scheduled today, it MUST be exactly 3 periods. No splitting.
+            # FORCE PERFECT BLOCKS OF 3 FOR LABS
             if is_strict_lab:
-                day_active = model.NewBoolVar(f'active_lab_{i}_{d}')
-                model.Add(daily_sum == 3 * day_active)
+                num_blocks = model.NewIntVar(0, 2, f'blocks_{i}_{d}')
+                model.Add(daily_sum == 3 * num_blocks)
             else:
                 model.Add(daily_sum <= max_per_day)
 
-            # GAPLESS GUARANTEE: Any scheduled periods MUST be perfectly consecutive without gaps
-            if max_per_day > 1:
+            # GAPLESS GUARANTEE: Everything scheduled must be unbroken
+            if max_per_day > 1 or is_strict_lab:
                 starts = []
                 s0 = model.NewIntVar(0, 1, f's0_{i}_{d}')
                 model.Add(s0 == daily_lessons_vars[0])
@@ -163,6 +167,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 c_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and c == get_val(df.loc[k[0]], 'classname')]
                 if c_vars: model.Add(sum(c_vars) <= 1)
             
+            # Room constraints ONLY applied to physical labs
             r_keys = set(k[3] for k in lessons)
             for r in r_keys:
                 if r != "Standard Room":
