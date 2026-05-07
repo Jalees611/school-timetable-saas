@@ -3,5 +3,6 @@ pandas
 numpy
 plotly
 openpyxl
-google-generativeai
-ortools
+google-generativeai==0.4.1
+ortools==9.8.3296
+protobuf==3.20.3
