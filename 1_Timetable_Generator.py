@@ -165,7 +165,6 @@ with tab3:
     st.header("🖨️ View & Download Generated Timetables")
     
     if os.path.exists('final_timetable_result.csv'):
-        # Ignore excel character decoding errors just to be safe
         try:
             df = pd.read_csv('final_timetable_result.csv', encoding='utf-8')
         except UnicodeDecodeError:
@@ -175,68 +174,63 @@ with tab3:
 
         # --- DATA FORMATTING & PREPARATION ---
         days_order = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        active_days = days_order[:num_working_days]
+        active_periods = [f"Period {i}" for i in range(1, num_periods + 1)]
+
         df['Day'] = pd.Categorical(df['Day'], categories=days_order, ordered=True)
-        
-        # Extract number so "Period 2" comes before "Period 10"
         df['Period_Num'] = df['Period'].str.extract(r'(\d+)').astype(int)
-        df['Period'] = pd.Categorical(df['Period'], categories=[f"Period {i}" for i in range(1, 20)], ordered=True)
+        df['Period'] = pd.Categorical(df['Period'], categories=active_periods, ordered=True)
         
         df = df.sort_values(['Day', 'Period_Num'])
 
         df['Class_View'] = df['Subject'] + " (" + df['Teacher'] + ") [" + df['Room'] + "]"
         df['Teacher_View'] = df['Subject'] + " (" + df['Class'] + ") [" + df['Room'] + "]"
 
-        # THE MASTER EXPORT GRIDS (Untouched)
+        # THE MASTER EXPORT GRIDS
         master_class_grid = df.pivot_table(index=['Day', 'Period'], columns='Class', values='Class_View', aggfunc=lambda x: " / ".join(x)).fillna("---")
         master_teacher_grid = df.pivot_table(index=['Day', 'Period'], columns='Teacher', values='Teacher_View', aggfunc=lambda x: " / ".join(x)).fillna("---")
 
         # --- DISPLAY SUB-TABS ---
         grid_tab1, grid_tab2, grid_tab3 = st.tabs(["🎒 Class View", "👨‍🏫 Teacher View", "📄 Raw List & Filters"])
 
-        # 1. CLASS VIEWER (TRUE MATRIX GRID)
+        # 1. CLASS VIEWER (FORCED FULL GRID)
         with grid_tab1:
             st.subheader("🎒 Class Timetable Viewer")
             all_classes = sorted(df['Class'].dropna().unique())
             selected_class = st.selectbox("Select a Class to view:", all_classes, key="view_class")
             
-            # Create a dedicated Matrix for the selected class (Periods on Rows, Days on Columns)
             single_class_df = df[df['Class'] == selected_class]
             class_display_matrix = single_class_df.pivot_table(
                 index='Period', 
                 columns='Day', 
                 values='Class_View', 
                 aggfunc=lambda x: " / ".join(x)
-            ).fillna("---")
+            ).reindex(index=active_periods, columns=active_days).fillna("---") # <--- THE FIX
             
-            # Show the beautiful matrix!
             st.dataframe(class_display_matrix, use_container_width=True)
             
             st.markdown("---")
             st.markdown("⬇️ **Download Complete Data**")
-            # The download button still downloads the ENTIRE master grid
             st.download_button("💾 Download COMPLETE Master Classes Grid (CSV)", master_class_grid.to_csv().encode('utf-8'), "Master_Classes_Grid.csv", "text/csv", key="cg_dl")
 
-        # 2. TEACHER VIEWER (TRUE MATRIX GRID)
+        # 2. TEACHER VIEWER (FORCED FULL GRID)
         with grid_tab2:
             st.subheader("👨‍🏫 Teacher Timetable Viewer")
             all_teachers = sorted(df['Teacher'].dropna().unique())
             selected_teacher = st.selectbox("Select a Teacher to view:", all_teachers, key="view_teacher")
             
-            # Create a dedicated Matrix for the selected teacher (Periods on Rows, Days on Columns)
             single_teacher_df = df[df['Teacher'] == selected_teacher]
             teacher_display_matrix = single_teacher_df.pivot_table(
                 index='Period', 
                 columns='Day', 
                 values='Teacher_View', 
                 aggfunc=lambda x: " / ".join(x)
-            ).fillna("---")
+            ).reindex(index=active_periods, columns=active_days).fillna("---") # <--- THE FIX
             
-            # Show the beautiful matrix!
             st.dataframe(teacher_display_matrix, use_container_width=True)
             
             st.markdown("---")
             st.markdown("⬇️ **Download Complete Data**")
-            # The download button still downloads the ENTIRE master grid
             st.download_button("💾 Download COMPLETE Master Teachers Grid (CSV)", master_teacher_grid.to_csv().encode('utf-8'), "Master_Teachers_Grid.csv", "text/csv", key="tg_dl")
 
         # 3. RAW DATA & INDIVIDUAL LIST DOWNLOADS
