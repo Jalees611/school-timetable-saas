@@ -81,6 +81,15 @@ def get_restriction_template():
     })
     return df.to_csv(index=False).encode('utf-8')
 
+# ---> THE MISSING RESOURCE TEMPLATE <---
+@st.cache_data
+def get_resource_template():
+    df = pd.DataFrame({
+        "resource_name": ["CL-1", "CL-2", "Comp-Lab", "Wastewater-Lab"],
+        "resource_type": ["classroom", "classroom", "lab", "lab"]
+    })
+    return df.to_csv(index=False).encode('utf-8')
+
 
 # ==========================================
 # UI TABS
@@ -93,7 +102,6 @@ with tab1:
     with col1:
         st.download_button("📥 Download School Workload Template", get_school_template(), "school_template.csv", "text/csv")
     with col2:
-        # ADDED KEY HERE
         st.download_button("📥 Download Restrictions Template", get_restriction_template(), "restrictions_template.csv", "text/csv", key="school_rest_btn")
 
     school_data = st.file_uploader("1️⃣ Upload School Workload (CSV)", type=['csv'], key="school_data")
@@ -125,13 +133,16 @@ with tab1:
 
 # --- TAB 2: COLLEGE ---
 with tab2:
-    col1, col2 = st.columns(2)
+    # ---> UPDATED TO 3 COLUMNS TO FIT ALL TEMPLATES <---
+    col1, col2, col3 = st.columns(3)
     with col1:
-        st.download_button("📥 Download College Workload Template", get_college_template(), "college_template.csv", "text/csv")
+        st.download_button("📥 Download Workload Template", get_college_template(), "college_template.csv", "text/csv")
     with col2:
-        # ADDED KEY HERE
+        st.download_button("📥 Download Resource Template", get_resource_template(), "resource_template.csv", "text/csv")
+    with col3:
         st.download_button("📥 Download Restrictions Template", get_restriction_template(), "restrictions_template.csv", "text/csv", key="college_rest_btn")
 
+    st.markdown("---")
     col_data = st.file_uploader("1️⃣ Upload College Workload (CSV)", type=['csv'], key="col_data")
     col_res = st.file_uploader("2️⃣ Upload Resource/Rooms (CSV)", type=['csv'], key="col_res")
     col_rest = st.file_uploader("3️⃣ Upload Restrictions (CSV) - Optional", type=['csv'], key="col_rest")
@@ -152,7 +163,6 @@ with tab2:
                         result_df = pd.read_csv('final_timetable_result.csv')
                         st.dataframe(result_df, use_container_width=True)
                         csv = result_df.to_csv(index=False).encode('utf-8')
-                        # ADDED KEY HERE TO PREVENT FUTURE CRASHES
                         st.download_button("💾 Download Final Timetable", csv, "Final_College_Timetable.csv", "text/csv", key="college_download")
                     else:
                         st.error("❌ Infeasible! Check restrictions or ensure no teacher is mathematically overbooked.")
