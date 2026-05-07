@@ -4,8 +4,6 @@ import os
 import re
 
 def solve_timetable(num_periods=8, num_working_days=5):
-    if not os.path.exists('school_data.csv'): return
-    
     # --- 1. BULLETPROOF DATA PARSER ---
     def normalize_cols(dataframe):
         dataframe.columns = [re.sub(r'[^a-z0-9]', '', str(c).lower()) for c in dataframe.columns]
@@ -16,40 +14,36 @@ def solve_timetable(num_periods=8, num_working_days=5):
         if pd.isna(val): return default
         return str(val).strip()
 
-    df = normalize_cols(pd.read_csv('school_data.csv'))
+    school_file = next((f for f in os.listdir('.') if ('school' in f.lower() or 'workload' in f.lower()) and f.endswith('.csv')), 'school_data.csv')
+    if not os.path.exists(school_file): return
+    
+    df = normalize_cols(pd.read_csv(school_file))
     
     restrictions = []
-    if os.path.exists('restrictions_data.csv'):
-        rest_df = normalize_cols(pd.read_csv('restrictions_data.csv'))
-        restrictions = rest_df.to_dict('records')
-    elif os.path.exists('restrictions-school.csv'):
-        rest_df = normalize_cols(pd.read_csv('restrictions-school.csv'))
+    rest_file = next((f for f in os.listdir('.') if 'restrict' in f.lower() and f.endswith('.csv')), None)
+    if rest_file:
+        rest_df = normalize_cols(pd.read_csv(rest_file))
         restrictions = rest_df.to_dict('records')
 
     resources = []
-    if os.path.exists('resource_data.csv'):
-        res_df = normalize_cols(pd.read_csv('resource_data.csv'))
+    res_file = next((f for f in os.listdir('.') if 'resource' in f.lower() and f.endswith('.csv')), None)
+    if res_file:
+        res_df = normalize_cols(pd.read_csv(res_file))
         resources = res_df.to_dict('records')
 
     all_possible_days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     days = all_possible_days[:num_working_days]
     periods = [f'Period {i}' for i in range(1, num_periods + 1)]
     
-    # --- 1.5 BULLETPROOF RESTRICTION FORMATTER ---
-    # This guarantees that typos like "Monday" or "6" never break the rules
+    # --- 1.5 FORMATTER ---
     def parse_period(p_str):
         nums = re.findall(r'\d+', str(p_str))
         return f"Period {nums[0]}" if nums else str(p_str).strip()
 
     def parse_day(d_str):
         d_str = str(d_str).lower().strip()
-        if d_str.startswith('mo'): return 'Mon'
-        if d_str.startswith('tu'): return 'Tue'
-        if d_str.startswith('we'): return 'Wed'
-        if d_str.startswith('th'): return 'Thu'
-        if d_str.startswith('fr'): return 'Fri'
-        if d_str.startswith('sa'): return 'Sat'
-        if d_str.startswith('su'): return 'Sun'
+        for prefix, full in zip(['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'], all_possible_days):
+            if d_str.startswith(prefix): return full
         return str(d_str).strip()
 
     normalized_restrictions = []
@@ -74,26 +68,22 @@ def solve_timetable(num_periods=8, num_working_days=5):
         is_theory = 'classroom' in req_type
 
         rooms = ["Standard Room"]
-        if 'college' in inst_type and resources:
-            if is_lab:
-                rooms = [get_val(r, 'resourcename') for r in resources if 'lab' in get_val(r, 'resourcetype').lower()]
-            elif is_theory:
-                rooms = [get_val(r, 'resourcename') for r in resources if 'classroom' in get_val(r, 'resourcetype').lower()]
-            if not rooms: rooms = ["Standard Room"]
+        if resources:
+            if is_lab: rooms = [get_val(r, 'resourcename') for r in resources if 'lab' in get_val(r, 'resourcetype').lower()]
+            elif is_theory: rooms = [get_val(r, 'resourcename') for r in resources if 'classroom' in get_val(r, 'resourcetype').lower()]
+        if not rooms: rooms = ["Standard Room"]
 
         for d in days:
             for p in periods:
                 rest_type = None
                 for rest in normalized_restrictions:
-                    if rest['teachername'] in teacher_name:
-                        if rest['day'] == d and rest['period'] == p:
-                            rest_type = rest['restrictiontype']
-                            break
+                    if rest['teachername'] in teacher_name and rest['day'] == d and rest['period'] == p:
+                        rest_type = rest['restrictiontype']
+                        break
                 
                 for r in rooms:
                     lessons[(i, d, p, r)] = model.NewBoolVar(f'L_{i}_{d}_{p}_{r}')
-                    if rest_type == "unavailable":
-                        model.Add(lessons[(i, d, p, r)] == 0)
+                    if rest_type == "unavailable": model.Add(lessons[(i, d, p, r)] == 0)
 
     # --- 3. MUST TEACH LOGIC ---
     for rest in normalized_restrictions:
@@ -103,50 +93,64 @@ def solve_timetable(num_periods=8, num_working_days=5):
             r_period = rest['period']
             
             if r_day in days and r_period in periods:
-                must_teach_vars = [
-                    lessons[k] for k in lessons 
-                    if k[1] == r_day and k[2] == r_period and r_teacher in get_val(df.loc[k[0]], 'teachername').lower()
-                ]
-                if must_teach_vars:
-                    model.Add(sum(must_teach_vars) == 1)
+                must_teach_vars = [lessons[k] for k in lessons if k[1] == r_day and k[2] == r_period and r_teacher in get_val(df.loc[k[0]], 'teachername').lower()]
+                if must_teach_vars: model.Add(sum(must_teach_vars) == 1)
 
-    # --- 4. DAILY MAXIMUMS & CONSECUTIVE DOUBLE PERIODS ---
+    # --- 4. STRICT LAB BLOCKS & GAPLESS LOGIC ---
     for i, row in df.iterrows():
-        try:
-            target = int(float(get_val(row, 'weeklyperiod', 1)))
-        except ValueError:
-            target = 1
+        try: target = int(float(get_val(row, 'weeklyperiod', 1)))
+        except ValueError: target = 1
             
         req_type = get_val(row, 'requiredresourcetype', 'none').lower()
         inst_type = get_val(row, 'institutiontype', 'school').lower()
         is_lab = 'lab' in req_type or 'pract' in req_type
 
-        if target > 5:
-            max_per_day = 2
-        else:
-            max_per_day = 1 
+        # Base Limits
+        if target >= 7: max_per_day = 3
+        elif target >= 3: max_per_day = 2
+        else: max_per_day = 1 
             
+        # Determine if this is a College Lab that perfectly fits blocks of 3
+        is_strict_lab = False
         if 'college' in inst_type and is_lab:
             max_per_day = 3
+            if target % 3 == 0: 
+                is_strict_lab = True
 
         for d in days:
             daily_lessons_vars = []
             for p in periods:
                 p_vars = [lessons[k] for k in lessons if k[0] == i and k[1] == d and k[2] == p]
                 daily_lessons_vars.append(sum(p_vars))
-                
-            model.Add(sum(daily_lessons_vars) <= max_per_day)
+            
+            daily_sum = sum(daily_lessons_vars)
 
-            if max_per_day == 2:
-                num_p = len(periods)
-                for a in range(num_p):
-                    for b in range(a + 2, num_p):
-                        model.Add(daily_lessons_vars[a] + daily_lessons_vars[b] <= 1)
+            # STRICT LAB LOCK: If a lab is scheduled today, it MUST be exactly 3 periods. No splitting.
+            if is_strict_lab:
+                day_active = model.NewBoolVar(f'active_lab_{i}_{d}')
+                model.Add(daily_sum == 3 * day_active)
+            else:
+                model.Add(daily_sum <= max_per_day)
+
+            # GAPLESS GUARANTEE: Any scheduled periods MUST be perfectly consecutive without gaps
+            if max_per_day > 1:
+                starts = []
+                s0 = model.NewIntVar(0, 1, f's0_{i}_{d}')
+                model.Add(s0 == daily_lessons_vars[0])
+                starts.append(s0)
+                
+                for p_idx in range(1, len(periods)):
+                    s = model.NewIntVar(0, 1, f'start_{i}_{d}_{p_idx}')
+                    model.Add(s >= daily_lessons_vars[p_idx] - daily_lessons_vars[p_idx-1])
+                    model.Add(s <= daily_lessons_vars[p_idx])
+                    model.Add(s <= 1 - daily_lessons_vars[p_idx-1])
+                    starts.append(s)
+                model.Add(sum(starts) <= 1)
 
         all_l = [lessons[k] for k in lessons if k[0] == i]
         model.Add(sum(all_l) == target)
 
-    # --- 5. OVERLAPS ---
+    # --- 5. OVERLAPS & ROOM CONFLICTS ---
     teachers = set([get_val(row, 'teachername') for _, row in df.iterrows() if get_val(row, 'teachername')])
     classes = set([get_val(row, 'classname') for _, row in df.iterrows() if get_val(row, 'classname')])
     
@@ -158,6 +162,12 @@ def solve_timetable(num_periods=8, num_working_days=5):
             for c in classes:
                 c_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and c == get_val(df.loc[k[0]], 'classname')]
                 if c_vars: model.Add(sum(c_vars) <= 1)
+            
+            r_keys = set(k[3] for k in lessons)
+            for r in r_keys:
+                if r != "Standard Room":
+                    r_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and k[3]==r]
+                    if r_vars: model.Add(sum(r_vars) <= 1)
 
     # --- 6. SOLVE ---
     solver = cp_model.CpSolver()
@@ -169,8 +179,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
         for (i, d, p, r), var in lessons.items():
             if solver.Value(var):
                 output.append({
-                    "Day": d, 
-                    "Period": p, 
+                    "Day": d, "Period": p, 
                     "Teacher": get_val(df.loc[i], 'teachername'), 
                     "Class": get_val(df.loc[i], 'classname'), 
                     "Subject": get_val(df.loc[i], 'subjectname'), 
