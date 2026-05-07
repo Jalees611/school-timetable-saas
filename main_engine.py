@@ -7,13 +7,10 @@ def solve_timetable(num_periods=8, num_working_days=5):
     if not os.path.exists('school_data.csv'): return
     
     # --- 1. BULLETPROOF DATA PARSER ---
-    # This strips ALL spaces, underscores, and dashes from column names 
-    # so Excel formatting can never break the engine again.
     def normalize_cols(dataframe):
         dataframe.columns = [re.sub(r'[^a-z0-9]', '', str(c).lower()) for c in dataframe.columns]
         return dataframe
 
-    # Helper to safely extract data without "NaN" errors
     def get_val(item, col, default=''):
         val = item.get(col, default)
         if pd.isna(val): return default
@@ -24,6 +21,10 @@ def solve_timetable(num_periods=8, num_working_days=5):
     restrictions = []
     if os.path.exists('restrictions_data.csv'):
         rest_df = normalize_cols(pd.read_csv('restrictions_data.csv'))
+        restrictions = rest_df.to_dict('records')
+    # Fallback to the specific file name you uploaded
+    elif os.path.exists('restrictions-school.csv'):
+        rest_df = normalize_cols(pd.read_csv('restrictions-school.csv'))
         restrictions = rest_df.to_dict('records')
 
     resources = []
@@ -40,7 +41,6 @@ def solve_timetable(num_periods=8, num_working_days=5):
 
     # --- 2. CREATE VARIABLES & ROOM MATCHING ---
     for i, row in df.iterrows():
-        # Uses the normalized column names
         req_type = get_val(row, 'requiredresourcetype', 'none').lower()
         inst_type = get_val(row, 'institutiontype', 'school').lower()
         teacher_name = get_val(row, 'teachername', '').lower()
@@ -85,7 +85,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 if must_teach_vars:
                     model.Add(sum(must_teach_vars) == 1)
 
-    # --- 4. STRICT BLOCK LOGIC & TARGETS ---
+    # --- 4. DAILY MAXIMUMS & CONSECUTIVE DOUBLE PERIODS ---
     for i, row in df.iterrows():
         try:
             target = int(float(get_val(row, 'weeklyperiod', 1)))
@@ -96,58 +96,33 @@ def solve_timetable(num_periods=8, num_working_days=5):
         inst_type = get_val(row, 'institutiontype', 'school').lower()
         is_lab = 'lab' in req_type or 'pract' in req_type
 
-        # -------------------------------------------------------------
-        # USER RULE: Double periods ONLY if weekly periods are > 5
-        # -------------------------------------------------------------
+        # USER RULE: Allow up to 2 periods ONLY if weekly periods are > 5
         if target > 5:
-            block_size = 2
             max_per_day = 2
         else:
-            block_size = 1
             max_per_day = 1 # Strictly 1 per day for 5 or fewer periods
             
-        # (Preserve college/lab overrides just in case you use them later)
-        if 'college' in inst_type:
-            if is_lab:
-                block_size = 3
-                max_per_day = 3
-            elif target >= 2:
-                block_size = 2
-                max_per_day = 2
+        if 'college' in inst_type and is_lab:
+            max_per_day = 3
 
-        # -------------------------------------------------------------
-        # BLOCK SEQUENCE LOGIC
-        # -------------------------------------------------------------
-        if block_size > 1 and target >= block_size:
-            all_starts = []
-            for d in days:
-                daily_starts = []
-                for p_idx in range(len(periods) - block_size + 1):
-                    # Find available rooms for this specific subject
-                    r_keys = list(set([k[3] for k in lessons if k[0] == i]))
-                    for r in r_keys: 
-                        s_var = model.NewBoolVar(f's_{i}_{d}_{p_idx}_{r}')
-                        daily_starts.append(s_var)
-                        all_starts.append(s_var)
-
-                        # Force block sequence in same room
-                        for b in range(block_size):
-                            p_name = periods[p_idx + b]
-                            if (i, d, p_name, r) in lessons:
-                                model.Add(lessons[(i, d, p_name, r)] == 1).OnlyEnforceIf(s_var)
-                
-                model.Add(sum(daily_starts) <= 1)
-            
-            num_blocks = target // block_size
-            model.Add(sum(all_starts) == num_blocks)
-
-        # -------------------------------------------------------------
-        # APPLY DAILY MAXIMUMS
-        # -------------------------------------------------------------
         for d in days:
-            daily_lessons = [lessons[k] for k in lessons if k[0] == i and k[1] == d]
-            model.Add(sum(daily_lessons) <= max_per_day)
+            daily_lessons_vars = []
+            for p in periods:
+                p_vars = [lessons[k] for k in lessons if k[0] == i and k[1] == d and k[2] == p]
+                # Since each period only has one room scheduled for this subject/class, sum(p_vars) is 0 or 1
+                daily_lessons_vars.append(sum(p_vars))
+                
+            model.Add(sum(daily_lessons_vars) <= max_per_day)
 
+            # If max_per_day is 2, ensure that IF 2 periods are scheduled on the same day, they are consecutive.
+            # We enforce this by forbidding any two scheduled periods from having a gap between them.
+            if max_per_day == 2:
+                num_p = len(periods)
+                for a in range(num_p):
+                    for b in range(a + 2, num_p):
+                        model.Add(daily_lessons_vars[a] + daily_lessons_vars[b] <= 1)
+
+        # Force total weekly periods to equal the target
         all_l = [lessons[k] for k in lessons if k[0] == i]
         model.Add(sum(all_l) == target)
 
