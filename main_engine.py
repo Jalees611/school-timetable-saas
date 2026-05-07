@@ -14,14 +14,12 @@ def solve_timetable(num_periods=8, num_working_days=5):
         if pd.isna(val): return default
         return str(val).strip()
 
-    # Makes the engine immune to Excel's weird text encoding
     def safe_read_csv(file_path):
         try:
             return pd.read_csv(file_path, encoding='utf-8')
         except UnicodeDecodeError:
             return pd.read_csv(file_path, encoding='windows-1252')
 
-    # Find the main data file
     data_file = next((f for f in os.listdir('.') if ('school' in f.lower() or 'workload' in f.lower()) and f.endswith('.csv')), 'school_data.csv')
     if not os.path.exists(data_file): return
     
@@ -30,20 +28,18 @@ def solve_timetable(num_periods=8, num_working_days=5):
     restrictions = []
     rest_file = next((f for f in os.listdir('.') if 'restrict' in f.lower() and f.endswith('.csv')), None)
     if rest_file:
-        rest_df = normalize_cols(safe_read_csv(rest_file))
-        restrictions = rest_df.to_dict('records')
+        restrictions = normalize_cols(safe_read_csv(rest_file)).to_dict('records')
 
     resources = []
     res_file = next((f for f in os.listdir('.') if 'resource' in f.lower() and f.endswith('.csv')), None)
     if res_file:
-        res_df = normalize_cols(safe_read_csv(res_file))
-        resources = res_df.to_dict('records')
+        resources = normalize_cols(safe_read_csv(res_file)).to_dict('records')
 
     all_possible_days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     days = all_possible_days[:num_working_days]
     periods = [f'Period {i}' for i in range(1, num_periods + 1)]
     
-    # --- 1.5 FORMATTER ---
+    # --- 1.5 FORMATTERS ---
     def parse_period(p_str):
         nums = re.findall(r'\d+', str(p_str))
         return f"Period {nums[0]}" if nums else str(p_str).strip()
@@ -62,28 +58,45 @@ def solve_timetable(num_periods=8, num_working_days=5):
             'period': parse_period(get_val(rest, 'period')),
             'restrictiontype': get_val(rest, 'restrictiontype').lower()
         })
+
+    # --- AGGRESSIVE RESOURCE SORTING ---
+    lab_rooms = []
+    theory_rooms = []
+    for r in resources:
+        r_name = get_val(r, 'resourcename', '')
+        r_type = get_val(r, 'resourcetype', '').lower()
+        
+        # Fallback if column headers are weird
+        if not r_name and len(r) > 0: r_name = str(list(r.values())[0]).strip()
+        if not r_type and len(r) > 1: r_type = str(list(r.values())[1]).strip().lower()
+        
+        if r_name:
+            if 'lab' in r_type or 'pract' in r_type:
+                lab_rooms.append(r_name)
+            else:
+                theory_rooms.append(r_name)
     
     model = cp_model.CpModel()
     lessons = {}
 
-    # --- 2. VARIABLES & ROOM MATCHING ---
+    # --- 2. VARIABLES & STRICT PHYSICAL ROOM MATCHING ---
     for i, row in df.iterrows():
-        inst_type = get_val(row, 'institutiontype', 'school').lower()
+        inst_type = get_val(row, 'institutiontype', '').lower()
+        
+        # Forced College logic if resources exist
+        is_college = 'college' in inst_type or (len(resources) > 0 and 'school' not in inst_type)
+        
         req_type = get_val(row, 'requiredresourcetype', 'none').lower()
         teacher_name = get_val(row, 'teachername', '').lower()
         
-        is_college = 'college' in inst_type
         is_lab = 'lab' in req_type or 'pract' in req_type
 
-        # ---> THE UPDATE: NOW DYNAMICALLY ASSIGNS BOTH LABS AND THEORY ROOMS <---
-        rooms = ["Standard Room"]
+        rooms = ["Standard Room"] # Default Fallback
         if is_college and resources:
-            if is_lab:
-                lab_rooms = [get_val(r, 'resourcename') for r in resources if 'lab' in get_val(r, 'resourcetype').lower()]
-                if lab_rooms: rooms = lab_rooms
-            else:
-                theory_rooms = [get_val(r, 'resourcename') for r in resources if 'classroom' in get_val(r, 'resourcetype').lower()]
-                if theory_rooms: rooms = theory_rooms
+            if is_lab and lab_rooms:
+                rooms = lab_rooms
+            elif not is_lab and theory_rooms:
+                rooms = theory_rooms
 
         for d in days:
             for p in periods:
@@ -113,10 +126,10 @@ def solve_timetable(num_periods=8, num_working_days=5):
         try: target = int(float(get_val(row, 'weeklyperiod', 1)))
         except ValueError: target = 1
             
-        inst_type = get_val(row, 'institutiontype', 'school').lower()
-        req_type = get_val(row, 'requiredresourcetype', 'none').lower()
+        inst_type = get_val(row, 'institutiontype', '').lower()
+        is_college = 'college' in inst_type or (len(resources) > 0 and 'school' not in inst_type)
         
-        is_college = 'college' in inst_type
+        req_type = get_val(row, 'requiredresourcetype', 'none').lower()
         is_lab = 'lab' in req_type or 'pract' in req_type
 
         sub_rooms = list(set(k[3] for k in lessons if k[0] == i))
@@ -153,7 +166,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 # COLLEGE THEORY: Max 2 periods per day
                 model.Add(daily_sum <= 2)
 
-                # ---> THE UPDATE: Anti-Room Hopping for Theory Classes <---
+                # Anti-Room Hopping: Stay in one physical classroom for consecutive theory blocks
                 if len(sub_rooms) > 1 and "Standard Room" not in sub_rooms:
                     r_actives = {r: model.NewBoolVar(f'ract_{i}_{d}_{r}') for r in sub_rooms}
                     model.Add(sum(r_actives.values()) == day_active)
@@ -199,7 +212,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 c_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and c == get_val(df.loc[k[0]], 'classname')]
                 if c_vars: model.Add(sum(c_vars) <= 1)
             
-            # ---> THE UPDATE: Prevent double-booking for ALL physical rooms <---
+            # Prevent double-booking for ALL physical rooms (Labs and Theory)
             r_keys = set(k[3] for k in lessons)
             for r in r_keys:
                 if r != "Standard Room":
