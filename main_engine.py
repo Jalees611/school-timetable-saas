@@ -20,6 +20,7 @@ def solve_timetable(num_periods=8, num_working_days=5):
         except UnicodeDecodeError:
             return pd.read_csv(file_path, encoding='windows-1252')
 
+    # Find the main data file
     data_file = next((f for f in os.listdir('.') if ('school' in f.lower() or 'workload' in f.lower()) and f.endswith('.csv')), 'school_data.csv')
     if not os.path.exists(data_file): return
     
@@ -66,7 +67,6 @@ def solve_timetable(num_periods=8, num_working_days=5):
         r_name = get_val(r, 'resourcename', '')
         r_type = get_val(r, 'resourcetype', '').lower()
         
-        # Fallback if column headers are weird
         if not r_name and len(r) > 0: r_name = str(list(r.values())[0]).strip()
         if not r_type and len(r) > 1: r_type = str(list(r.values())[1]).strip().lower()
         
@@ -82,13 +82,9 @@ def solve_timetable(num_periods=8, num_working_days=5):
     # --- 2. VARIABLES & STRICT PHYSICAL ROOM MATCHING ---
     for i, row in df.iterrows():
         inst_type = get_val(row, 'institutiontype', '').lower()
-        
-        # Forced College logic if resources exist
         is_college = 'college' in inst_type or (len(resources) > 0 and 'school' not in inst_type)
-        
         req_type = get_val(row, 'requiredresourcetype', 'none').lower()
         teacher_name = get_val(row, 'teachername', '').lower()
-        
         is_lab = 'lab' in req_type or 'pract' in req_type
 
         rooms = ["Standard Room"] # Default Fallback
@@ -128,7 +124,6 @@ def solve_timetable(num_periods=8, num_working_days=5):
             
         inst_type = get_val(row, 'institutiontype', '').lower()
         is_college = 'college' in inst_type or (len(resources) > 0 and 'school' not in inst_type)
-        
         req_type = get_val(row, 'requiredresourcetype', 'none').lower()
         is_lab = 'lab' in req_type or 'pract' in req_type
 
@@ -147,14 +142,9 @@ def solve_timetable(num_periods=8, num_working_days=5):
             model.Add(daily_sum > 0).OnlyEnforceIf(day_active)
             model.Add(daily_sum == 0).OnlyEnforceIf(day_active.Not())
 
-            # ---------------------------------------------------------
-            # THE RULES
-            # ---------------------------------------------------------
             if is_college and is_lab:
-                # COLLEGE LAB: Force exactly 3 periods per day. 
+                # COLLEGE LAB: Force 3 periods
                 model.Add(daily_sum == 3 * day_active)
-                
-                # Anti-Room Hopping: Stay in one physical lab all 3 periods
                 if len(sub_rooms) > 1:
                     r_actives = {r: model.NewBoolVar(f'ract_{i}_{d}_{r}') for r in sub_rooms}
                     model.Add(sum(r_actives.values()) == day_active)
@@ -163,10 +153,9 @@ def solve_timetable(num_periods=8, num_working_days=5):
                             model.Add(lessons[(i, d, p, r)] <= r_actives[r])
 
             elif is_college and not is_lab:
-                # COLLEGE THEORY: Max 2 periods per day
+                # COLLEGE THEORY: Max 2 periods
                 model.Add(daily_sum <= 2)
-
-                # Anti-Room Hopping: Stay in one physical classroom for consecutive theory blocks
+                # Anti-room hopping for theory
                 if len(sub_rooms) > 1 and "Standard Room" not in sub_rooms:
                     r_actives = {r: model.NewBoolVar(f'ract_{i}_{d}_{r}') for r in sub_rooms}
                     model.Add(sum(r_actives.values()) == day_active)
@@ -175,25 +164,21 @@ def solve_timetable(num_periods=8, num_working_days=5):
                             model.Add(lessons[(i, d, p, r)] <= r_actives[r])
 
             else:
-                # SCHOOL LOGIC: 1 per day, unless > 5
+                # SCHOOL: 1 or 2 max
                 max_per_day = 2 if target > 5 else 1
                 model.Add(daily_sum <= max_per_day)
 
-            # ---------------------------------------------------------
-            # GAPLESS GUARANTEE: No matter the rule, periods must be consecutive
-            # ---------------------------------------------------------
+            # GAPLESS Logic
             starts = []
             s0 = model.NewIntVar(0, 1, f's0_{i}_{d}')
             model.Add(s0 == daily_p_vars[0])
             starts.append(s0)
-            
             for p_idx in range(1, len(periods)):
                 s = model.NewIntVar(0, 1, f'start_{i}_{d}_{p_idx}')
                 model.Add(s >= daily_p_vars[p_idx] - daily_p_vars[p_idx-1])
                 model.Add(s <= daily_p_vars[p_idx])
                 model.Add(s <= 1 - daily_p_vars[p_idx-1])
                 starts.append(s)
-            
             model.Add(sum(starts) <= 1)
 
         all_l = [lessons[k] for k in lessons if k[0] == i]
@@ -212,7 +197,6 @@ def solve_timetable(num_periods=8, num_working_days=5):
                 c_vars = [lessons[k] for k in lessons if k[1]==d and k[2]==p and c == get_val(df.loc[k[0]], 'classname')]
                 if c_vars: model.Add(sum(c_vars) <= 1)
             
-            # Prevent double-booking for ALL physical rooms (Labs and Theory)
             r_keys = set(k[3] for k in lessons)
             for r in r_keys:
                 if r != "Standard Room":
