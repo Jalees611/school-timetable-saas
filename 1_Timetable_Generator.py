@@ -103,6 +103,13 @@ def register(email, password, full_name, inst_type, inst_name):
         st.session_state.auth_mode = 'Login'
     except Exception as e: st.error(f"Error: {e}")
 
+def reset_password(email):
+    try:
+        supabase.auth.reset_password_for_email(email)
+        st.success("✅ Password reset link sent to your email!")
+        st.session_state.auth_mode = 'Login'
+    except Exception as e: st.error(f"Error: {e}")
+
 def check_freemium_limits(df):
     if st.session_state.user is not None: return True
     if st.session_state.guest_uses >= 5:
@@ -124,8 +131,9 @@ with st.sidebar:
         st.header("👋 Welcome, Guest")
         st.progress(st.session_state.guest_uses / 5.0, text=f"Free Uses: {st.session_state.guest_uses}/5")
         st.markdown("---")
-        mode = st.radio("Account Access", ["Login", "Register"], index=["Login", "Register"].index(st.session_state.auth_mode))
+        mode = st.radio("Account Access", ["Login", "Register", "Forgot Password"], index=["Login", "Register", "Forgot Password"].index(st.session_state.auth_mode))
         st.session_state.auth_mode = mode
+        
         if mode == "Login":
             email = st.text_input("Email")
             pwd = st.text_input("Password", type="password")
@@ -137,6 +145,9 @@ with st.sidebar:
             inst_name = st.text_input("Institution Name")
             pwd = st.text_input("Password", type="password")
             if st.button("Create Account", use_container_width=True): register(email, pwd, name, inst_type, inst_name)
+        elif mode == "Forgot Password":
+            email = st.text_input("Enter your registered email")
+            if st.button("Send Reset Link", use_container_width=True): reset_password(email)
     else:
         st.success(f"🏛️ {st.session_state.user.user_metadata.get('institution_name', 'My Dashboard')}")
         st.info("✅ PRO Status Active")
