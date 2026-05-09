@@ -5,6 +5,7 @@ import plotly.express as px
 import streamlit.components.v1 as components
 import google.generativeai as genai
 import warnings
+import os
 from supabase import create_client
 
 warnings.filterwarnings('ignore')
@@ -29,7 +30,22 @@ def backup_survey_to_cloud(file_name, file_bytes):
             path=f"{user_id}/surveys/{file_name}",
             file_options={"upsert": "true"}
         )
-    except Exception as e: pass
+    except Exception as e: print(f"Backup failed: {e}")
+
+def restore_survey_from_cloud():
+    if supabase is None or st.session_state.user is None: return None
+    user_id = st.session_state.user.id
+    try:
+        files = supabase.storage.from_("user_vaults").list(f"{user_id}/surveys")
+        if files and len(files) > 0:
+            # Get the most recently uploaded file
+            file_name = files[0]['name']
+            data = supabase.storage.from_("user_vaults").download(f"{user_id}/surveys/{file_name}")
+            with open(file_name, 'wb') as f:
+                f.write(data)
+            return file_name
+    except Exception as e: print(f"Restore failed: {e}")
+    return None
 
 # ==========================================
 # 🧠 SESSION STATE SAFETY CHECK
@@ -37,6 +53,7 @@ def backup_survey_to_cloud(file_name, file_bytes):
 if 'user' not in st.session_state: st.session_state.user = None
 if 'guest_uses' not in st.session_state: st.session_state.guest_uses = 0
 if 'combo_count' not in st.session_state: st.session_state['combo_count'] = 1
+if 'restored_survey' not in st.session_state: st.session_state['restored_survey'] = None
 
 # --- INJECT PRINT CSS ---
 st.markdown("""
@@ -92,11 +109,11 @@ def parse_google_forms(df):
             questions[str(col)] = q_data
     return questions
 
-def process_file(file):
-    df = pd.read_excel(file)
+def process_file(file_obj_or_path):
+    df = pd.read_excel(file_obj_or_path)
     if len(df.columns) > 1 and "Unnamed" in str(df.columns[1]):
-        file.seek(0)
-        return parse_system_report(pd.read_excel(file, header=None))
+        if hasattr(file_obj_or_path, 'seek'): file_obj_or_path.seek(0)
+        return parse_system_report(pd.read_excel(file_obj_or_path, header=None))
     return parse_google_forms(df)
 
 # ==========================================
@@ -171,26 +188,50 @@ if not api_key_input:
         st.header("🧠 AI Settings")
         api_key_input = st.text_input("Gemini API Key", type="password")
 
+# --- CLOUD RESTORE BUTTON ---
+if st.session_state.user is not None:
+    if st.button("☁️ Load Last Saved Survey Workspace"):
+        with st.spinner("Pulling from your private vault..."):
+            restored_file = restore_survey_from_cloud()
+            if restored_file:
+                st.session_state['restored_survey'] = restored_file
+                st.success(f"✅ Workspace Loaded: {restored_file}")
+            else:
+                st.warning("No saved workspace found in the cloud.")
+
+st.markdown("---")
 uploaded_file = st.file_uploader("Upload Google/MS Forms Response Excel (.xlsx)", type=["xlsx"])
 
-if uploaded_file:
+# Determine which file to process: prioritize newly uploaded, fallback to restored
+active_file = uploaded_file or st.session_state.get('restored_survey')
+
+if active_file:
     try:
-        df_check = pd.read_excel(uploaded_file)
-        uploaded_file.seek(0)
+        # Safely read the file depending on if it's an upload widget or a string path
+        if isinstance(active_file, str):
+            df_check = pd.read_excel(active_file)
+        else:
+            active_file.seek(0)
+            df_check = pd.read_excel(active_file)
+            active_file.seek(0)
         
         if not check_survey_limits(df_check.shape[0], df_check.shape[1]): st.stop()
             
-        if st.session_state.user is None and f"counted_{uploaded_file.name}" not in st.session_state:
+        # Safely count guest uses
+        file_id = active_file if isinstance(active_file, str) else active_file.name
+        if st.session_state.user is None and f"counted_{file_id}" not in st.session_state:
             st.session_state.guest_uses += 1
-            st.session_state[f"counted_{uploaded_file.name}"] = True
+            st.session_state[f"counted_{file_id}"] = True
 
-        parsed_data = process_file(uploaded_file)
+        parsed_data = process_file(active_file)
         if not parsed_data: st.stop()
         
-        # --- MAGIC VAULT BACKUP (SURVEYS) ---
-        if st.session_state.user is not None:
+        # --- MAGIC VAULT BACKUP (Only backup NEW uploads, not restored files) ---
+        if st.session_state.user is not None and uploaded_file:
             uploaded_file.seek(0)
             backup_survey_to_cloud(uploaded_file.name, uploaded_file.read())
+            # Update session state so it doesn't disappear if they switch tabs
+            st.session_state['restored_survey'] = uploaded_file.name
         
         st.markdown("### 📥 Export Options")
         if st.session_state.user is not None:
