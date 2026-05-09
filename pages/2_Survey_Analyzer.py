@@ -5,20 +5,38 @@ import plotly.express as px
 import streamlit.components.v1 as components
 import google.generativeai as genai
 import warnings
+from supabase import create_client
 
 warnings.filterwarnings('ignore')
 
 st.set_page_config(page_title="Survey Analyzer Pro", layout="wide")
 
 # ==========================================
+# ☁️ SUPABASE & THE PRIVATE VAULT
+# ==========================================
+@st.cache_resource
+def init_supabase():
+    try: return create_client(st.secrets["SUPABASE_URL"], st.secrets["SUPABASE_KEY"])
+    except: return None
+supabase = init_supabase()
+
+def backup_survey_to_cloud(file_name, file_bytes):
+    if supabase is None or st.session_state.user is None: return
+    user_id = st.session_state.user.id
+    try:
+        supabase.storage.from_("user_vaults").upload(
+            file=file_bytes,
+            path=f"{user_id}/surveys/{file_name}",
+            file_options={"upsert": "true"}
+        )
+    except Exception as e: pass
+
+# ==========================================
 # 🧠 SESSION STATE SAFETY CHECK
 # ==========================================
-if 'user' not in st.session_state:
-    st.session_state.user = None
-if 'guest_uses' not in st.session_state:
-    st.session_state.guest_uses = 0
-if 'combo_count' not in st.session_state: 
-    st.session_state['combo_count'] = 1
+if 'user' not in st.session_state: st.session_state.user = None
+if 'guest_uses' not in st.session_state: st.session_state.guest_uses = 0
+if 'combo_count' not in st.session_state: st.session_state['combo_count'] = 1
 
 # --- INJECT PRINT CSS ---
 st.markdown("""
@@ -48,8 +66,7 @@ def parse_system_report(df):
             questions[current_q] = {"5": 0.0, "4": 0.0, "3": 0.0, "2": 0.0, "1": 0.0}
             continue
         if current_q and val_2 in ["5", "4", "3", "2", "1", "5.0", "4.0", "3.0", "2.0", "1.0"]:
-            try:
-                questions[current_q][str(int(float(val_2)))] = round(float(val_5), 2) if pd.notna(val_5) else 0.0
+            try: questions[current_q][str(int(float(val_2)))] = round(float(val_5), 2) if pd.notna(val_5) else 0.0
             except ValueError: pass
     return {q: data for q, data in questions.items() if sum(data.values()) > 0}
 
@@ -86,17 +103,13 @@ def process_file(file):
 # 🛑 FREEMIUM LIMIT CHECKER
 # ==========================================
 def check_survey_limits(num_responses, num_questions):
-    if st.session_state.user is not None:
-        return True # PRO users bypass all limits
-
+    if st.session_state.user is not None: return True
     if st.session_state.guest_uses >= 5:
         st.error("🚫 You have reached your 5 free trial uses. Please return to the main page to Register/Login.")
         return False
-    
     if num_responses > 50 or num_questions > 10:
-        st.error(f"🚫 Limit Exceeded: File has {num_responses} rows and {num_questions} columns. Free limit is 50 responses and 10 questions. Register on the Main Page for PRO.")
+        st.error(f"🚫 Limit Exceeded: File has {num_responses} rows and {num_questions} columns. Free limit is 50x10. Register on Main Page for PRO.")
         return False
-        
     return True
 
 def create_table_and_chart(q_name, q_data, unique_key):
@@ -108,13 +121,9 @@ def create_table_and_chart(q_name, q_data, unique_key):
     with col1:
         st.dataframe(df_table, use_container_width=True, hide_index=True)
         safe_name = "".join([c for c in q_name if c.isalnum() or c==' ']).rstrip()[:30]
-        
-        # --- GATEKEEPER: INDIVIDUAL TABLE DOWNLOAD ---
         if st.session_state.user is not None:
             st.download_button("📥 Download Table", data=df_table.to_csv(index=False).encode('utf-8'), file_name=f"{safe_name}.csv", mime="text/csv", key=f"dl_{unique_key}")
-        else:
-            st.caption("🔒 *Login to download table data*")
-            
+        else: st.caption("🔒 *Login to download table data*")
     with col2:
         if not df_chart.empty:
             fig = px.pie(df_chart, values='Percentage (%)', names='Response Type', color='Response Type',
@@ -123,35 +132,26 @@ def create_table_and_chart(q_name, q_data, unique_key):
             st.plotly_chart(fig, use_container_width=True, key=unique_key)
     st.divider()
 
-# --- BULLETPROOF AI AUTO-DETECTOR ---
 def generate_ai_summary(api_key, topic_name, data):
     try:
         genai.configure(api_key=api_key)
         available_models = [m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods]
-        if not available_models: return "❌ AI Error: Your API key is valid, but Google has not unlocked text generation for your region yet."
-            
+        if not available_models: return "❌ AI Error: Region restricted."
         chosen_model = available_models[0]
-        for pref in ['models/gemini-1.5-flash', 'models/gemini-1.5-pro', 'models/gemini-pro', 'models/gemini-1.0-pro']:
+        for pref in ['models/gemini-1.5-flash', 'models/gemini-1.5-pro', 'models/gemini-pro']:
             if pref in available_models:
-                chosen_model = pref
-                break
+                chosen_model = pref; break
                 
         model = genai.GenerativeModel(chosen_model)
-        prompt = f"""
-        You are an expert Educational Data Analyst and Argumentative AI. Analyze the following survey results for the metric: "{topic_name}".
-        Data (Percentages): Strongly Agree: {data['5']}%, Agree: {data['4']}%, Neutral: {data['3']}%, Disagree: {data['2']}%, Strongly Disagree: {data['1']}%
-        Your task: 1. Identify the core argument. 2. Synthesize a logical conclusion. 3. Provide one concrete, actionable recommendation.
-        Keep it professional, objective, and format it clearly with bold headings. Maximum 3 paragraphs. Do not use generic filler.
-        """
-        response = model.generate_content(prompt)
-        return response.text
-    except Exception as e:
-        return f"❌ AI Error: {e}"
+        prompt = f"""You are an Educational Data Analyst. Analyze survey results for: "{topic_name}".
+        Data: Strongly Agree: {data['5']}%, Agree: {data['4']}%, Neutral: {data['3']}%, Disagree: {data['2']}%, Strongly Disagree: {data['1']}%
+        Task: 1. Identify argument. 2. Logical conclusion. 3. Actionable recommendation. Max 3 paragraphs. Bold headings."""
+        return model.generate_content(prompt).text
+    except Exception as e: return f"❌ AI Error: {e}"
 
 # --- MAIN UI ---
 st.title("📊 Survey Analyzer Pro")
 
-# --- SIDEBAR & AUTH STATUS ---
 with st.sidebar:
     if st.session_state.user is None:
         st.warning("⚠️ **GUEST MODE**")
@@ -169,22 +169,17 @@ api_key_input = SYSTEM_API_KEY
 if not api_key_input:
     with st.sidebar:
         st.header("🧠 AI Settings")
-        st.markdown("Enter your Gemini API key to unlock Argumentative AI summaries.")
         api_key_input = st.text_input("Gemini API Key", type="password")
-        st.markdown("[Get a free API key here](https://aistudio.google.com/)")
 
 uploaded_file = st.file_uploader("Upload Google/MS Forms Response Excel (.xlsx)", type=["xlsx"])
 
 if uploaded_file:
     try:
-        # --- GATEKEEPER LIMIT CHECK BEFORE PROCESSING ---
         df_check = pd.read_excel(uploaded_file)
-        uploaded_file.seek(0) # Reset file pointer for the actual processor
+        uploaded_file.seek(0)
         
-        if not check_survey_limits(df_check.shape[0], df_check.shape[1]):
-            st.stop()
+        if not check_survey_limits(df_check.shape[0], df_check.shape[1]): st.stop()
             
-        # Count the guest usage safely (prevent double counting on tab switches)
         if st.session_state.user is None and f"counted_{uploaded_file.name}" not in st.session_state:
             st.session_state.guest_uses += 1
             st.session_state[f"counted_{uploaded_file.name}"] = True
@@ -192,9 +187,12 @@ if uploaded_file:
         parsed_data = process_file(uploaded_file)
         if not parsed_data: st.stop()
         
-        st.markdown("### 📥 Export Options")
+        # --- MAGIC VAULT BACKUP (SURVEYS) ---
+        if st.session_state.user is not None:
+            uploaded_file.seek(0)
+            backup_survey_to_cloud(uploaded_file.name, uploaded_file.read())
         
-        # --- GATEKEEPER: MASTER EXPORTS ---
+        st.markdown("### 📥 Export Options")
         if st.session_state.user is not None:
             c1, c2 = st.columns(2)
             with c1:
@@ -203,7 +201,7 @@ if uploaded_file:
             with c2:
                 components.html("""<script>function triggerPrint() {window.parent.print();}</script><button onclick="triggerPrint()" style="background-color:#ff4b4b; color:white; border:none; border-radius:8px; padding: 10px 15px; font-weight: 600; cursor: pointer; width: 100%; height: 42px; font-size: 16px;">🖨️ Print Dashboard to PDF</button>""", height=50)
         else:
-            st.error("🔒 **PRO Feature:** Register or Login on the Main Page to download Master CSV reports and Print full Dashboards.")
+            st.error("🔒 **PRO Feature:** Register or Login on the Main Page to download reports.")
             
         st.divider()
 
@@ -231,16 +229,10 @@ if uploaded_file:
                     if config["questions"]:
                         combined_data = {k: sum(parsed_data[q][k] for q in config["questions"]) / len(config["questions"]) for k in ["5", "4", "3", "2", "1"]}
                         combined_data = {k: round(v, 2) for k, v in combined_data.items()}
-                        
                         create_table_and_chart(config["name"], combined_data, unique_key=f"chart_combo_{i}")
-                        
                         if api_key_input:
                             with st.expander(f"✨ AI Executive Summary for: {config['name']}", expanded=True):
-                                with st.spinner("Asking Google for available models and analyzing data..."):
-                                    ai_response = generate_ai_summary(api_key_input, config["name"], combined_data)
-                                    st.markdown(ai_response)
-                        else:
-                            st.info("💡 Enter your Gemini API key in the sidebar to generate an automatic Argumentative AI summary.")
-                            
-    except Exception as e:
-        st.error(f"Error processing file: {e}")
+                                with st.spinner("Analyzing data..."):
+                                    st.markdown(generate_ai_summary(api_key_input, config["name"], combined_data))
+                        else: st.info("💡 Enter your Gemini API key in the sidebar for AI summaries.")
+    except Exception as e: st.error(f"Error processing file: {e}")

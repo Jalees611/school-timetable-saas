@@ -7,7 +7,7 @@ from supabase import create_client, Client
 st.set_page_config(page_title="Smart Timetable AI", page_icon="📅", layout="wide")
 
 # ==========================================
-# ☁️ SUPABASE INITIALIZATION
+# ☁️ SUPABASE & THE PRIVATE VAULT
 # ==========================================
 @st.cache_resource
 def init_supabase():
@@ -18,17 +18,39 @@ def init_supabase():
 
 supabase = init_supabase()
 
+def backup_to_cloud(file_name, folder="timetables"):
+    if supabase is None or st.session_state.user is None:
+        return
+    user_id = st.session_state.user.id
+    try:
+        with open(file_name, 'rb') as f:
+            supabase.storage.from_("user_vaults").upload(
+                file=f.read(),
+                path=f"{user_id}/{folder}/{file_name}",
+                file_options={"upsert": "true"}
+            )
+    except Exception as e:
+        print(f"Cloud backup failed: {e}")
+
+def restore_from_cloud(file_name, folder="timetables"):
+    if supabase is None or st.session_state.user is None:
+        return False
+    user_id = st.session_state.user.id
+    try:
+        data = supabase.storage.from_("user_vaults").download(f"{user_id}/{folder}/{file_name}")
+        with open(file_name, 'wb') as f:
+            f.write(data)
+        return True
+    except Exception:
+        return False # Fails silently if no backup exists yet
+
 # ==========================================
 # 🧠 SESSION STATE MANAGEMENT
 # ==========================================
-if 'timetable_ready' not in st.session_state:
-    st.session_state.timetable_ready = False
-if 'user' not in st.session_state:
-    st.session_state.user = None
-if 'guest_uses' not in st.session_state:
-    st.session_state.guest_uses = 0
-if 'auth_mode' not in st.session_state:
-    st.session_state.auth_mode = 'Login' # Can be 'Login', 'Register', 'Forgot'
+if 'timetable_ready' not in st.session_state: st.session_state.timetable_ready = False
+if 'user' not in st.session_state: st.session_state.user = None
+if 'guest_uses' not in st.session_state: st.session_state.guest_uses = 0
+if 'auth_mode' not in st.session_state: st.session_state.auth_mode = 'Login'
 
 # ==========================================
 # 🔐 AUTHENTICATION FUNCTIONS
@@ -38,6 +60,11 @@ def login(email, password):
         try:
             response = supabase.auth.sign_in_with_password({"email": email, "password": password})
             st.session_state.user = response.user
+            
+            # --- THE MAGIC VAULT RESTORE ---
+            if restore_from_cloud('final_timetable_result.csv'):
+                st.session_state.timetable_ready = True
+                
             st.success("Successfully logged in!")
             st.rerun()
         except Exception as e:
@@ -47,20 +74,12 @@ def register(email, password, full_name, inst_type, inst_name):
     if supabase:
         try:
             response = supabase.auth.sign_up({
-                "email": email,
-                "password": password,
-                "options": {
-                    "data": {
-                        "full_name": full_name,
-                        "institution_type": inst_type,
-                        "institution_name": inst_name
-                    }
-                }
+                "email": email, "password": password,
+                "options": {"data": {"full_name": full_name, "institution_type": inst_type, "institution_name": inst_name}}
             })
             st.success("✅ Registration successful! Please check your email for the verification link.")
             st.session_state.auth_mode = 'Login'
-        except Exception as e:
-            st.error(f"Registration failed: {e}")
+        except Exception as e: st.error(f"Registration failed: {e}")
 
 def reset_password(email):
     if supabase:
@@ -68,12 +87,10 @@ def reset_password(email):
             supabase.auth.reset_password_for_email(email)
             st.success("✅ Password reset link sent to your email!")
             st.session_state.auth_mode = 'Login'
-        except Exception as e:
-            st.error(f"Failed to send reset link: {e}")
+        except Exception as e: st.error(f"Failed to send reset link: {e}")
 
 def logout():
-    if supabase:
-        supabase.auth.sign_out()
+    if supabase: supabase.auth.sign_out()
     st.session_state.user = None
     st.session_state.timetable_ready = False
     st.rerun()
@@ -82,28 +99,19 @@ def logout():
 # 🛑 FREEMIUM LIMIT CHECKER
 # ==========================================
 def check_freemium_limits(df):
-    if st.session_state.user is not None:
-        return True # Pro/Logged-in users have no limits
-
-    # Guest Limits
+    if st.session_state.user is not None: return True
     if st.session_state.guest_uses >= 5:
         st.error("🚫 You have reached your 5 free trial generations. Please register to continue.")
         return False
     
-    # Clean column names to find class and teacher safely
     cols = [str(c).lower().replace('_', '').replace(' ', '') for c in df.columns]
     df.columns = cols
-    
     class_col = 'classname' if 'classname' in cols else cols[0]
     teacher_col = 'teachername' if 'teachername' in cols else cols[0]
 
-    num_classes = df[class_col].nunique()
-    num_teachers = df[teacher_col].nunique()
-
-    if num_classes > 10 or num_teachers > 20:
-        st.error(f"🚫 Freemium Limit Exceeded: Your file has {num_classes} classes and {num_teachers} teachers. The free limit is 10 classes and 20 teachers. Please register to unlock unlimited scheduling.")
+    if df[class_col].nunique() > 10 or df[teacher_col].nunique() > 20:
+        st.error(f"🚫 Limit Exceeded: Free limit is 10 classes and 20 teachers. Please register for unlimited scheduling.")
         return False
-        
     return True
 
 # ==========================================
@@ -113,7 +121,6 @@ with st.sidebar:
     if st.session_state.user is None:
         st.header("👋 Welcome, Guest")
         st.progress(st.session_state.guest_uses / 5.0, text=f"Free Uses: {st.session_state.guest_uses}/5")
-        
         st.markdown("---")
         mode = st.radio("Account Access", ["Login", "Register", "Forgot Password"], index=["Login", "Register", "Forgot Password"].index(st.session_state.auth_mode))
         st.session_state.auth_mode = mode
@@ -122,7 +129,6 @@ with st.sidebar:
             email = st.text_input("Email")
             pwd = st.text_input("Password", type="password")
             if st.button("Log In", use_container_width=True): login(email, pwd)
-            
         elif mode == "Register":
             name = st.text_input("Full Name")
             email = st.text_input("Email Address")
@@ -132,16 +138,14 @@ with st.sidebar:
             if st.button("Create Account", use_container_width=True):
                 if name and email and pwd: register(email, pwd, name, inst_type, inst_name)
                 else: st.warning("Please fill all fields.")
-                
         elif mode == "Forgot Password":
             email = st.text_input("Enter your registered email")
             if st.button("Send Reset Link"): reset_password(email)
-
     else:
         user_meta = st.session_state.user.user_metadata
         st.header(f"🏛️ {user_meta.get('institution_name', 'My Dashboard')}")
         st.caption(f"Logged in as: {st.session_state.user.email}")
-        st.success("✅ PRO Status: Unlimited Classes & Teachers")
+        st.success("✅ PRO Status: Unlimited Access")
         if st.button("🚪 Log Out", use_container_width=True): logout()
 
     st.markdown("---")
@@ -166,15 +170,14 @@ def clear_old_files():
         except: pass
 
 def save_file(uploaded_file, name):
-    with open(name, "wb") as f:
-        f.write(uploaded_file.getbuffer())
+    with open(name, "wb") as f: f.write(uploaded_file.getbuffer())
 
 # ==========================================
 # 🏢 MAIN UI TABS
 # ==========================================
 st.title("📅 AI-Powered Timetable Generator")
 if st.session_state.user is None:
-    st.warning("⚠️ **GUEST MODE:** You can generate up to 5 timetables with a maximum of 10 classes and 20 teachers. **Downloads are locked.** Register for free to unlock your data.")
+    st.warning("⚠️ **GUEST MODE:** Free limit active. **Downloads are locked.** Register for free to unlock your data.")
 
 tab1, tab2, tab3 = st.tabs(["🏫 School Mode", "🎓 College Mode", "🖨️ View & Download"])
 
@@ -198,8 +201,14 @@ with tab1:
                     solve_timetable(num_periods, num_working_days)
                     if os.path.exists('final_timetable_result.csv'):
                         st.session_state.timetable_ready = True
-                        if st.session_state.user is None: st.session_state.guest_uses += 1
-                        st.success("✅ Timetable Ready! Switch to Tab 3.")
+                        if st.session_state.user is None: 
+                            st.session_state.guest_uses += 1
+                        else:
+                            # --- MAGIC VAULT BACKUP ---
+                            backup_to_cloud('school_data.csv')
+                            if s_rest: backup_to_cloud('restrictions.csv')
+                            backup_to_cloud('final_timetable_result.csv')
+                        st.success("✅ Timetable Ready & Saved! Switch to Tab 3.")
                     else: st.error("❌ No solution. Try reducing teacher workload.")
 
 # --- TAB 2: COLLEGE ---
@@ -225,8 +234,15 @@ with tab2:
                     solve_timetable(num_periods, num_working_days)
                     if os.path.exists('final_timetable_result.csv'):
                         st.session_state.timetable_ready = True
-                        if st.session_state.user is None: st.session_state.guest_uses += 1
-                        st.success("✅ Done! Check 'View & Download' tab.")
+                        if st.session_state.user is None: 
+                            st.session_state.guest_uses += 1
+                        else:
+                            # --- MAGIC VAULT BACKUP ---
+                            backup_to_cloud('workload.csv')
+                            backup_to_cloud('resources.csv')
+                            if c_rest: backup_to_cloud('restrictions.csv')
+                            backup_to_cloud('final_timetable_result.csv')
+                        st.success("✅ Done! Saved to Vault. Check 'View & Download' tab.")
                     else: st.error("❌ Infeasible. Ensure you have enough rooms.")
 
 # --- TAB 3: VIEW & DOWNLOAD ---
@@ -246,18 +262,15 @@ with tab3:
             sel_class = st.selectbox("Select Class:", sorted(df['Class'].unique()))
             c_matrix = df[df['Class'] == sel_class].pivot_table(index='Period', columns='Day', values='Class_View', aggfunc=lambda x: x).reindex(index=active_periods, columns=days_order).fillna("---")
             st.dataframe(c_matrix, use_container_width=True)
-            
             master_c = df.pivot_table(index=['Day', 'Period'], columns='Class', values='Class_View', aggfunc=lambda x: x).fillna("---")
             if st.session_state.user is not None:
                 st.download_button("💾 Download Master Class Grid", master_c.to_csv().encode('utf-8'), "Master_Classes.csv")
-            else:
-                st.error("🔒 Downloads are locked in Demo Mode. Please register in the sidebar to download your files.")
+            else: st.error("🔒 Downloads locked in Demo Mode.")
 
         with v2:
             sel_teach = st.selectbox("Select Teacher:", sorted(df['Teacher'].unique()))
             t_matrix = df[df['Teacher'] == sel_teach].pivot_table(index='Period', columns='Day', values='Teacher_View', aggfunc=lambda x: x).reindex(index=active_periods, columns=days_order).fillna("---")
             st.dataframe(t_matrix, use_container_width=True)
-            
             master_t = df.pivot_table(index=['Day', 'Period'], columns='Teacher', values='Teacher_View', aggfunc=lambda x: x).fillna("---")
             if st.session_state.user is not None:
                 st.download_button("💾 Download Master Teacher Grid", master_t.to_csv().encode('utf-8'), "Master_Teachers.csv")
