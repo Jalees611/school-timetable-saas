@@ -5,12 +5,29 @@ import plotly.express as px
 import streamlit.components.v1 as components
 import google.generativeai as genai
 import warnings
-import os
 from supabase import create_client
 
 warnings.filterwarnings('ignore')
 
 st.set_page_config(page_title="Survey Analyzer Pro", layout="wide")
+
+# ==========================================
+# 🎨 MATERIAL DESIGN CSS & PRINT HACK
+# ==========================================
+st.markdown("""
+    <style>
+    .stApp { background-color: #f8f9fa; }
+    div[data-testid="stVerticalBlock"] > div:has(div.stMarkdown) {
+        background-color: white; padding: 1.5rem; border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 1rem;
+    }
+    @media print {
+        header, [data-testid="stSidebar"], [data-testid="stFileUploader"], .stDownloadButton, .stButton {display: none !important;}
+        div.element-container { page-break-inside: avoid !important; }
+        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 # ==========================================
 # ☁️ SUPABASE & THE PRIVATE VAULT
@@ -23,52 +40,31 @@ supabase = init_supabase()
 
 def backup_survey_to_cloud(file_name, file_bytes):
     if supabase is None or st.session_state.user is None: return
-    user_id = st.session_state.user.id
     try:
         supabase.storage.from_("user_vaults").upload(
-            file=file_bytes,
-            path=f"{user_id}/surveys/{file_name}",
-            file_options={"upsert": "true"}
+            file=file_bytes, path=f"{st.session_state.user.id}/surveys/{file_name}", file_options={"upsert": "true"}
         )
-    except Exception as e: print(f"Backup failed: {e}")
+    except: pass
 
 def restore_survey_from_cloud():
     if supabase is None or st.session_state.user is None: return None
-    user_id = st.session_state.user.id
     try:
-        files = supabase.storage.from_("user_vaults").list(f"{user_id}/surveys")
+        files = supabase.storage.from_("user_vaults").list(f"{st.session_state.user.id}/surveys")
         if files and len(files) > 0:
-            # Get the most recently uploaded file
             file_name = files[0]['name']
-            data = supabase.storage.from_("user_vaults").download(f"{user_id}/surveys/{file_name}")
-            with open(file_name, 'wb') as f:
-                f.write(data)
+            data = supabase.storage.from_("user_vaults").download(f"{st.session_state.user.id}/surveys/{file_name}")
+            with open(file_name, 'wb') as f: f.write(data)
             return file_name
-    except Exception as e: print(f"Restore failed: {e}")
+    except: return None
     return None
 
 # ==========================================
-# 🧠 SESSION STATE SAFETY CHECK
+# 🧠 STATE & LIKERT LOGIC
 # ==========================================
 if 'user' not in st.session_state: st.session_state.user = None
 if 'guest_uses' not in st.session_state: st.session_state.guest_uses = 0
 if 'combo_count' not in st.session_state: st.session_state['combo_count'] = 1
 if 'restored_survey' not in st.session_state: st.session_state['restored_survey'] = None
-
-# --- INJECT PRINT CSS ---
-st.markdown("""
-    <style>
-    @media print {
-        header {display: none !important;}
-        [data-testid="stSidebar"] {display: none !important;}
-        [data-testid="stFileUploader"] {display: none !important;}
-        .stDownloadButton {display: none !important;}
-        .stButton {display: none !important;}
-        div.element-container { page-break-inside: avoid !important; }
-        * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-    }
-    </style>
-""", unsafe_allow_html=True)
 
 LIKERT_MAP = {"5": "Strongly Agree", "4": "Agree", "3": "Neutral", "2": "Disagree", "1": "Strongly Disagree"}
 REVERSE_MAP = {"Strongly Agree": "5", "Agree": "4", "Neutral": "3", "Uncertain": "3", "Disagree": "2", "Strongly Disagree": "1"}
@@ -79,9 +75,7 @@ def parse_system_report(df):
     for index, row in df.iterrows():
         val_0, val_2, val_5 = str(row[0]).strip() if pd.notna(row[0]) else "", str(row[2]).strip() if pd.notna(row[2]) else "", row[5] if pd.notna(row[5]) else np.nan
         if val_0 and val_0[0].isdigit() and "." in val_0[:3]:
-            current_q = val_0
-            questions[current_q] = {"5": 0.0, "4": 0.0, "3": 0.0, "2": 0.0, "1": 0.0}
-            continue
+            current_q = val_0; questions[current_q] = {"5": 0.0, "4": 0.0, "3": 0.0, "2": 0.0, "1": 0.0}; continue
         if current_q and val_2 in ["5", "4", "3", "2", "1", "5.0", "4.0", "3.0", "2.0", "1.0"]:
             try: questions[current_q][str(int(float(val_2)))] = round(float(val_5), 2) if pd.notna(val_5) else 0.0
             except ValueError: pass
@@ -93,19 +87,14 @@ def parse_google_forms(df):
     for col in df.columns:
         if any(skip in str(col).lower() for skip in skip_cols): continue
         counts = df[col].value_counts(dropna=True)
-        total_responses = counts.sum()
-        if total_responses == 0: continue
-        q_data, valid_likert_found = {"5": 0.0, "4": 0.0, "3": 0.0, "2": 0.0, "1": 0.0}, False
+        if counts.sum() == 0: continue
+        q_data, valid = {"5": 0.0, "4": 0.0, "3": 0.0, "2": 0.0, "1": 0.0}, False
         for val, count in counts.items():
             val_str = str(val).strip()
-            if val_str in REVERSE_MAP:
-                q_data[REVERSE_MAP[val_str]] += count
-                valid_likert_found = True
-            elif val_str in ["5", "4", "3", "2", "1", "5.0", "4.0", "3.0", "2.0", "1.0"]:
-                q_data[str(int(float(val_str)))] += count
-                valid_likert_found = True
-        if valid_likert_found:
-            for k in q_data: q_data[k] = round((q_data[k] / total_responses) * 100, 2)
+            if val_str in REVERSE_MAP: q_data[REVERSE_MAP[val_str]] += count; valid = True
+            elif val_str in ["5", "4", "3", "2", "1", "5.0", "4.0", "3.0", "2.0", "1.0"]: q_data[str(int(float(val_str)))] += count; valid = True
+        if valid:
+            for k in q_data: q_data[k] = round((q_data[k] / counts.sum()) * 100, 2)
             questions[str(col)] = q_data
     return questions
 
@@ -116,71 +105,58 @@ def process_file(file_obj_or_path):
         return parse_system_report(pd.read_excel(file_obj_or_path, header=None))
     return parse_google_forms(df)
 
-# ==========================================
-# 🛑 FREEMIUM LIMIT CHECKER
-# ==========================================
 def check_survey_limits(num_responses, num_questions):
     if st.session_state.user is not None: return True
-    if st.session_state.guest_uses >= 5:
-        st.error("🚫 You have reached your 5 free trial uses. Please return to the main page to Register/Login.")
-        return False
-    if num_responses > 50 or num_questions > 10:
-        st.error(f"🚫 Limit Exceeded: File has {num_responses} rows and {num_questions} columns. Free limit is 50x10. Register on Main Page for PRO.")
-        return False
+    if st.session_state.guest_uses >= 5: st.error("🚫 Trial limit reached."); return False
+    if num_responses > 50 or num_questions > 10: st.error(f"🚫 Limit Exceeded: Free limit is 50x10."); return False
     return True
 
 def create_table_and_chart(q_name, q_data, unique_key):
-    table_data = [{"Option": k, "Response Type": LIKERT_MAP[k], "Percentage (%)": q_data[k]} for k in sorted(q_data.keys(), reverse=True)]
-    df_table, df_chart = pd.DataFrame(table_data), pd.DataFrame(table_data)[pd.DataFrame(table_data)["Percentage (%)"] > 0]
+    table_data = [{"Option": k, "Response": LIKERT_MAP[k], "%": q_data[k]} for k in sorted(q_data.keys(), reverse=True)]
+    df_table, df_chart = pd.DataFrame(table_data), pd.DataFrame(table_data)[pd.DataFrame(table_data)["%"] > 0]
     
-    st.subheader(q_name)
-    col1, col2 = st.columns([1, 2])
-    with col1:
-        st.dataframe(df_table, use_container_width=True, hide_index=True)
-        safe_name = "".join([c for c in q_name if c.isalnum() or c==' ']).rstrip()[:30]
-        if st.session_state.user is not None:
-            st.download_button("📥 Download Table", data=df_table.to_csv(index=False).encode('utf-8'), file_name=f"{safe_name}.csv", mime="text/csv", key=f"dl_{unique_key}")
-        else: st.caption("🔒 *Login to download table data*")
-    with col2:
-        if not df_chart.empty:
-            fig = px.pie(df_chart, values='Percentage (%)', names='Response Type', color='Response Type',
-                         color_discrete_map={"Strongly Agree": "#1f77b4", "Agree": "#2ca02c", "Neutral": "#ff7f0e", "Disagree": "#d62728", "Strongly Disagree": "#9467bd"})
-            fig.update_traces(textposition='inside', textinfo='percent+label')
-            st.plotly_chart(fig, use_container_width=True, key=unique_key)
-    st.divider()
+    with st.container():
+        st.markdown(f"#### {q_name}")
+        c1, c2 = st.columns([1, 2])
+        with c1:
+            st.dataframe(df_table, use_container_width=True, hide_index=True)
+            if st.session_state.user: st.download_button("📥 CSV", data=df_table.to_csv(index=False).encode('utf-8'), file_name=f"Chart.csv", key=f"dl_{unique_key}")
+        with c2:
+            if not df_chart.empty:
+                fig = px.pie(df_chart, values='%', names='Response', color='Response', color_discrete_map={"Strongly Agree": "#1f77b4", "Agree": "#2ca02c", "Neutral": "#ff7f0e", "Disagree": "#d62728", "Strongly Disagree": "#9467bd"})
+                fig.update_traces(textposition='inside', textinfo='percent+label')
+                st.plotly_chart(fig, use_container_width=True, key=unique_key)
 
 def generate_ai_summary(api_key, topic_name, data):
     try:
         genai.configure(api_key=api_key)
-        available_models = [m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods]
-        if not available_models: return "❌ AI Error: Region restricted."
-        chosen_model = available_models[0]
-        for pref in ['models/gemini-1.5-flash', 'models/gemini-1.5-pro', 'models/gemini-pro']:
-            if pref in available_models:
-                chosen_model = pref; break
-                
-        model = genai.GenerativeModel(chosen_model)
-        prompt = f"""You are an Educational Data Analyst. Analyze survey results for: "{topic_name}".
-        Data: Strongly Agree: {data['5']}%, Agree: {data['4']}%, Neutral: {data['3']}%, Disagree: {data['2']}%, Strongly Disagree: {data['1']}%
-        Task: 1. Identify argument. 2. Logical conclusion. 3. Actionable recommendation. Max 3 paragraphs. Bold headings."""
+        models = [m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods]
+        if not models: return "❌ AI Error: Region restricted."
+        model = genai.GenerativeModel(models[0])
+        prompt = f"""Educational Data Analyst. Analyze survey results for: "{topic_name}". Data: Strongly Agree: {data['5']}%, Agree: {data['4']}%, Neutral: {data['3']}%, Disagree: {data['2']}%, Strongly Disagree: {data['1']}%. 1. Identify argument. 2. Conclusion. 3. Recommendation. Max 3 paragraphs. Bold headings."""
         return model.generate_content(prompt).text
     except Exception as e: return f"❌ AI Error: {e}"
 
-# --- MAIN UI ---
+# ==========================================
+# 🏢 MAIN UI
+# ==========================================
 st.title("📊 Survey Analyzer Pro")
 
 with st.sidebar:
     if st.session_state.user is None:
-        st.warning("⚠️ **GUEST MODE**")
-        st.write("Free limits: Max 50 responses & 10 questions. Downloads locked.")
+        st.warning("⚠️ GUEST MODE")
         st.progress(st.session_state.guest_uses / 5.0, text=f"Free Uses: {st.session_state.guest_uses}/5")
     else:
-        user_meta = st.session_state.user.user_metadata
-        st.success(f"✅ **PRO USER:** {user_meta.get('institution_name', 'Institution')}")
+        st.success(f"✅ PRO USER")
+        if st.button("☁️ Load Saved Workspace"):
+            with st.spinner("Pulling from vault..."):
+                restored = restore_survey_from_cloud()
+                if restored: st.session_state['restored_survey'] = restored; st.success("Loaded!")
+                else: st.warning("No saved data found.")
     st.markdown("---")
 
 try: SYSTEM_API_KEY = st.secrets["GEMINI_API_KEY"]
-except (FileNotFoundError, KeyError): SYSTEM_API_KEY = None
+except: SYSTEM_API_KEY = None
 
 api_key_input = SYSTEM_API_KEY
 if not api_key_input:
@@ -188,92 +164,71 @@ if not api_key_input:
         st.header("🧠 AI Settings")
         api_key_input = st.text_input("Gemini API Key", type="password")
 
-# --- CLOUD RESTORE BUTTON ---
-if st.session_state.user is not None:
-    if st.button("☁️ Load Last Saved Survey Workspace"):
-        with st.spinner("Pulling from your private vault..."):
-            restored_file = restore_survey_from_cloud()
-            if restored_file:
-                st.session_state['restored_survey'] = restored_file
-                st.success(f"✅ Workspace Loaded: {restored_file}")
+with st.container():
+    st.markdown("### 📥 Upload Data")
+    uploaded_file = st.file_uploader("Upload Excel (.xlsx)", type=["xlsx"])
+    active_file = uploaded_file or st.session_state.get('restored_survey')
+
+    if active_file:
+        try:
+            if isinstance(active_file, str): df_check = pd.read_excel(active_file)
             else:
-                st.warning("No saved workspace found in the cloud.")
-
-st.markdown("---")
-uploaded_file = st.file_uploader("Upload Google/MS Forms Response Excel (.xlsx)", type=["xlsx"])
-
-# Determine which file to process: prioritize newly uploaded, fallback to restored
-active_file = uploaded_file or st.session_state.get('restored_survey')
-
-if active_file:
-    try:
-        # Safely read the file depending on if it's an upload widget or a string path
-        if isinstance(active_file, str):
-            df_check = pd.read_excel(active_file)
-        else:
-            active_file.seek(0)
-            df_check = pd.read_excel(active_file)
-            active_file.seek(0)
-        
-        if not check_survey_limits(df_check.shape[0], df_check.shape[1]): st.stop()
+                active_file.seek(0)
+                df_check = pd.read_excel(active_file)
+                active_file.seek(0)
             
-        # Safely count guest uses
-        file_id = active_file if isinstance(active_file, str) else active_file.name
-        if st.session_state.user is None and f"counted_{file_id}" not in st.session_state:
-            st.session_state.guest_uses += 1
-            st.session_state[f"counted_{file_id}"] = True
-
-        parsed_data = process_file(active_file)
-        if not parsed_data: st.stop()
-        
-        # --- MAGIC VAULT BACKUP (Only backup NEW uploads, not restored files) ---
-        if st.session_state.user is not None and uploaded_file:
-            uploaded_file.seek(0)
-            backup_survey_to_cloud(uploaded_file.name, uploaded_file.read())
-            # Update session state so it doesn't disappear if they switch tabs
-            st.session_state['restored_survey'] = uploaded_file.name
-        
-        st.markdown("### 📥 Export Options")
-        if st.session_state.user is not None:
-            c1, c2 = st.columns(2)
-            with c1:
-                df_master = pd.DataFrame([{"Question": q, **{f"{LIKERT_MAP[k]} (%)": data[k] for k in ["5","4","3","2","1"]}} for q, data in parsed_data.items()])
-                st.download_button("📥 Download Master Report (CSV)", data=df_master.to_csv(index=False).encode('utf-8'), file_name="Master.csv", mime="text/csv", type="primary", use_container_width=True)
-            with c2:
-                components.html("""<script>function triggerPrint() {window.parent.print();}</script><button onclick="triggerPrint()" style="background-color:#ff4b4b; color:white; border:none; border-radius:8px; padding: 10px 15px; font-weight: 600; cursor: pointer; width: 100%; height: 42px; font-size: 16px;">🖨️ Print Dashboard to PDF</button>""", height=50)
-        else:
-            st.error("🔒 **PRO Feature:** Register or Login on the Main Page to download reports.")
-            
-        st.divider()
-
-        tab1, tab2 = st.tabs(["📋 Individual Questions", "🔗 Custom Combiner & AI"])
-        
-        with tab1:
-            st.header("Individual Question Results")
-            for i, (q_name, q_data) in enumerate(parsed_data.items()): create_table_and_chart(q_name, q_data, unique_key=f"chart_tab1_{i}")
+            if not check_survey_limits(df_check.shape[0], df_check.shape[1]): st.stop()
                 
-        with tab2:
-            st.header("Dynamic Combiner & AI Analysis")
-            if st.button("➕ Add Another Combination"): st.session_state['combo_count'] += 1
-            st.divider()
+            file_id = active_file if isinstance(active_file, str) else active_file.name
+            if st.session_state.user is None and f"counted_{file_id}" not in st.session_state:
+                st.session_state.guest_uses += 1
+                st.session_state[f"counted_{file_id}"] = True
+
+            parsed_data = process_file(active_file)
+            if not parsed_data: st.stop()
             
-            combo_configs = []
-            for i in range(st.session_state['combo_count']):
-                with st.container(border=True):
-                    c_name = st.text_input("Label:", value=f"Combined Topic {i + 1}", key=f"name_{i}")
-                    c_qs = st.multiselect("Select Questions:", options=list(parsed_data.keys()), key=f"qs_{i}")
-                    combo_configs.append({"name": c_name, "questions": c_qs})
+            if st.session_state.user is not None and uploaded_file:
+                uploaded_file.seek(0)
+                backup_survey_to_cloud(uploaded_file.name, uploaded_file.read())
+                st.session_state['restored_survey'] = uploaded_file.name
             
-            if st.button("🚀 Generate All Combined Charts", type="primary"):
-                st.markdown("---")
-                for i, config in enumerate(combo_configs):
-                    if config["questions"]:
-                        combined_data = {k: sum(parsed_data[q][k] for q in config["questions"]) / len(config["questions"]) for k in ["5", "4", "3", "2", "1"]}
-                        combined_data = {k: round(v, 2) for k, v in combined_data.items()}
-                        create_table_and_chart(config["name"], combined_data, unique_key=f"chart_combo_{i}")
-                        if api_key_input:
-                            with st.expander(f"✨ AI Executive Summary for: {config['name']}", expanded=True):
-                                with st.spinner("Analyzing data..."):
-                                    st.markdown(generate_ai_summary(api_key_input, config["name"], combined_data))
-                        else: st.info("💡 Enter your Gemini API key in the sidebar for AI summaries.")
-    except Exception as e: st.error(f"Error processing file: {e}")
+            st.markdown("### 📥 Global Export")
+            if st.session_state.user:
+                c1, c2 = st.columns(2)
+                with c1:
+                    df_master = pd.DataFrame([{"Question": q, **{f"{LIKERT_MAP[k]} (%)": data[k] for k in ["5","4","3","2","1"]}} for q, data in parsed_data.items()])
+                    st.download_button("📥 Master Report (CSV)", df_master.to_csv(index=False).encode('utf-8'), "Master.csv", "text/csv", use_container_width=True)
+                with c2:
+                    components.html("""<script>function triggerPrint() {window.parent.print();}</script><button onclick="triggerPrint()" style="background-color:#0d47a1; color:white; border:none; border-radius:8px; padding: 10px; cursor: pointer; width: 100%; font-size: 16px;">🖨️ Print to PDF</button>""", height=50)
+            else: st.error("🔒 Login to export Master CSV & PDF.")
+                
+            tab1, tab2 = st.tabs(["📋 Visuals", "🔗 Combiner & AI"])
+            
+            with tab1:
+                for i, (q_name, q_data) in enumerate(parsed_data.items()): create_table_and_chart(q_name, q_data, f"c_{i}")
+                    
+            with tab2:
+                with st.container():
+                    st.markdown("### 🤖 Dynamic AI Summaries")
+                    if st.button("➕ Add Combination"): st.session_state['combo_count'] += 1
+                    
+                    combos = []
+                    for i in range(st.session_state['combo_count']):
+                        st.markdown(f"**Combination {i+1}**")
+                        c_name = st.text_input("Topic Label:", value=f"Topic {i + 1}", key=f"n_{i}")
+                        c_qs = st.multiselect("Select Questions:", options=list(parsed_data.keys()), key=f"q_{i}")
+                        combos.append({"name": c_name, "questions": c_qs})
+                        st.divider()
+                
+                if st.button("🚀 Run AI Analysis", type="primary"):
+                    for i, config in enumerate(combos):
+                        if config["questions"]:
+                            cmb_data = {k: round(sum(parsed_data[q][k] for q in config["questions"]) / len(config["questions"]), 2) for k in ["5", "4", "3", "2", "1"]}
+                            create_table_and_chart(config["name"], cmb_data, f"cmb_{i}")
+                            if api_key_input:
+                                with st.container():
+                                    st.markdown(f"#### ✨ AI Insight: {config['name']}")
+                                    with st.spinner("Gemini is analyzing..."):
+                                        st.write(generate_ai_summary(api_key_input, config["name"], cmb_data))
+                            else: st.info("🔑 Add Gemini Key in sidebar for text summary.")
+        except Exception as e: st.error(f"Error processing: {e}")
