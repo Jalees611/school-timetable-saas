@@ -12,10 +12,11 @@ warnings.filterwarnings('ignore')
 st.set_page_config(page_title="Survey Analyzer Pro", layout="wide")
 
 # ==========================================
-# 🎨 MATERIAL DESIGN CSS & PRINT HACK
+# 🎨 MATERIAL DESIGN CSS, PADDING FIX & PRINT HACK
 # ==========================================
 st.markdown("""
     <style>
+    .block-container { padding-top: 2rem; padding-bottom: 2rem; } /* PULLS CONTENT UP */
     .stApp { background-color: #f8f9fa; }
     div[data-testid="stVerticalBlock"] > div:has(div.stMarkdown) {
         background-color: white; padding: 1.5rem; border-radius: 12px;
@@ -138,10 +139,8 @@ def generate_ai_summary(api_key, topic_name, data):
     except Exception as e: return f"❌ AI Error: {e}"
 
 # ==========================================
-# 🏢 MAIN UI
+# 🏢 MAIN UI & INSTRUCTION BANNER
 # ==========================================
-st.title("📊 Survey Analyzer Pro")
-
 with st.sidebar:
     if st.session_state.user is None:
         st.warning("⚠️ GUEST MODE")
@@ -163,6 +162,20 @@ if not api_key_input:
     with st.sidebar:
         st.header("🧠 AI Settings")
         api_key_input = st.text_input("Gemini API Key", type="password")
+
+with st.expander("📖 Application Guide & Account Limits (Click to expand)", expanded=False):
+    st.markdown("""
+    ### 🛡️ User Tiers
+    * 🟡 **Guest Mode:** Maximum of 5 free trial uses. Data is limited to 50 rows (responses) and 10 columns (questions). PDF and CSV downloads are locked.
+    * 🟢 **PRO Mode:** Unlimited uses, massive dataset support, Gemini AI text summaries unlocked, and Print-to-PDF enabled. (Register for free on the sidebar).
+
+    ### 🤖 AI Survey Rules
+    * **Likert Processing:** The engine automatically detects standard 5-point scales (Strongly Agree to Strongly Disagree) and ignores irrelevant columns like Timestamps or Names.
+    * **Dynamic Combiner:** You can select multiple related questions to merge them into a single "Topic" metric.
+    * **Argumentative AI:** If you input a Gemini API Key, the AI will evaluate combined topics to determine the core argument, synthesize a conclusion, and provide actionable management recommendations.
+    """)
+
+st.title("📊 Survey Analyzer Pro")
 
 with st.container():
     st.markdown("### 📥 Upload Data")

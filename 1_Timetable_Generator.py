@@ -7,10 +7,11 @@ from supabase import create_client
 st.set_page_config(page_title="Smart Timetable AI", page_icon="📅", layout="wide")
 
 # ==========================================
-# 🎨 CUSTOM THEME: MATERIAL DESIGN & CARDS
+# 🎨 CUSTOM THEME & PADDING FIX
 # ==========================================
 st.markdown("""
     <style>
+    .block-container { padding-top: 2rem; padding-bottom: 2rem; } /* PULLS CONTENT UP */
     .stApp { background-color: #f8f9fa; }
     div[data-testid="stVerticalBlock"] > div:has(div.stMarkdown) {
         background-color: white; padding: 1.5rem; border-radius: 12px;
@@ -164,9 +165,21 @@ with st.sidebar:
     num_periods = st.slider("Periods Per Day", 4, 12, 8)
 
 # ==========================================
-# 🏢 MAIN UI
+# 🏢 MAIN UI & INSTRUCTION BANNER
 # ==========================================
+with st.expander("📖 Application Guide & Account Limits (Click to expand)", expanded=False):
+    st.markdown("""
+    ### 🛡️ User Tiers
+    * 🟡 **Guest Mode:** Maximum of 5 free trial generations. Data is limited to 10 classes and 20 teachers. Downloads and Cloud Vault are locked.
+    * 🟢 **PRO Mode:** Unlimited generations, unlimited data size, active Cloud Vault memory, and full CSV exporting. (Register for free on the sidebar).
+
+    ### 🤖 AI Scheduling Rules
+    * **School Mode:** The AI automatically balances teacher workloads across the week and strictly respects your "Restrictions" file (e.g., if a teacher is unavailable on Monday mornings).
+    * **College Mode:** The AI handles complex room allocation. It ensures subjects marked as "Lab" are placed in Lab rooms for 3-period continuous blocks, while standard classes are routed to standard classrooms.
+    """)
+
 st.title("📅 Smart Timetable AI")
+
 if st.session_state.user is None: st.warning("⚠️ **GUEST MODE:** Register to unlock downloads and cloud vault.")
 
 tab1, tab2, tab3 = st.tabs(["🏫 School Mode", "🎓 College Mode", "🖨️ View & Download"])
