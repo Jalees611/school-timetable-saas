@@ -10,6 +10,16 @@ warnings.filterwarnings('ignore')
 
 st.set_page_config(page_title="Survey Analyzer Pro", layout="wide")
 
+# ==========================================
+# 🧠 SESSION STATE SAFETY CHECK
+# ==========================================
+if 'user' not in st.session_state:
+    st.session_state.user = None
+if 'guest_uses' not in st.session_state:
+    st.session_state.guest_uses = 0
+if 'combo_count' not in st.session_state: 
+    st.session_state['combo_count'] = 1
+
 # --- INJECT PRINT CSS ---
 st.markdown("""
     <style>
@@ -72,6 +82,23 @@ def process_file(file):
         return parse_system_report(pd.read_excel(file, header=None))
     return parse_google_forms(df)
 
+# ==========================================
+# 🛑 FREEMIUM LIMIT CHECKER
+# ==========================================
+def check_survey_limits(num_responses, num_questions):
+    if st.session_state.user is not None:
+        return True # PRO users bypass all limits
+
+    if st.session_state.guest_uses >= 5:
+        st.error("🚫 You have reached your 5 free trial uses. Please return to the main page to Register/Login.")
+        return False
+    
+    if num_responses > 50 or num_questions > 10:
+        st.error(f"🚫 Limit Exceeded: File has {num_responses} rows and {num_questions} columns. Free limit is 50 responses and 10 questions. Register on the Main Page for PRO.")
+        return False
+        
+    return True
+
 def create_table_and_chart(q_name, q_data, unique_key):
     table_data = [{"Option": k, "Response Type": LIKERT_MAP[k], "Percentage (%)": q_data[k]} for k in sorted(q_data.keys(), reverse=True)]
     df_table, df_chart = pd.DataFrame(table_data), pd.DataFrame(table_data)[pd.DataFrame(table_data)["Percentage (%)"] > 0]
@@ -81,7 +108,13 @@ def create_table_and_chart(q_name, q_data, unique_key):
     with col1:
         st.dataframe(df_table, use_container_width=True, hide_index=True)
         safe_name = "".join([c for c in q_name if c.isalnum() or c==' ']).rstrip()[:30]
-        st.download_button("📥 Download Table", data=df_table.to_csv(index=False).encode('utf-8'), file_name=f"{safe_name}.csv", mime="text/csv", key=f"dl_{unique_key}")
+        
+        # --- GATEKEEPER: INDIVIDUAL TABLE DOWNLOAD ---
+        if st.session_state.user is not None:
+            st.download_button("📥 Download Table", data=df_table.to_csv(index=False).encode('utf-8'), file_name=f"{safe_name}.csv", mime="text/csv", key=f"dl_{unique_key}")
+        else:
+            st.caption("🔒 *Login to download table data*")
+            
     with col2:
         if not df_chart.empty:
             fig = px.pie(df_chart, values='Percentage (%)', names='Response Type', color='Response Type',
@@ -94,38 +127,20 @@ def create_table_and_chart(q_name, q_data, unique_key):
 def generate_ai_summary(api_key, topic_name, data):
     try:
         genai.configure(api_key=api_key)
-        
-        # 1. Ask Google what models are unlocked for this specific API key
         available_models = [m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods]
-        
-        if not available_models:
-            return "❌ AI Error: Your API key is valid, but Google has not unlocked text generation for your region yet."
+        if not available_models: return "❌ AI Error: Your API key is valid, but Google has not unlocked text generation for your region yet."
             
-        # 2. Pick the best available model automatically
-        chosen_model = available_models[0] # Fallback to whatever is first
+        chosen_model = available_models[0]
         for pref in ['models/gemini-1.5-flash', 'models/gemini-1.5-pro', 'models/gemini-pro', 'models/gemini-1.0-pro']:
             if pref in available_models:
                 chosen_model = pref
                 break
                 
         model = genai.GenerativeModel(chosen_model)
-        
         prompt = f"""
-        You are an expert Educational Data Analyst and Argumentative AI. 
-        Analyze the following survey results for the metric: "{topic_name}".
-        
-        Data (Percentages):
-        Strongly Agree: {data['5']}%
-        Agree: {data['4']}%
-        Neutral: {data['3']}%
-        Disagree: {data['2']}%
-        Strongly Disagree: {data['1']}%
-        
-        Your task:
-        1. Identify the core argument the data makes (e.g., is this overwhelmingly positive, deeply divided, or leaning negative?).
-        2. Synthesize a logical conclusion based strictly on these numbers.
-        3. Provide one concrete, actionable recommendation for management/educators to improve or maintain this metric.
-        
+        You are an expert Educational Data Analyst and Argumentative AI. Analyze the following survey results for the metric: "{topic_name}".
+        Data (Percentages): Strongly Agree: {data['5']}%, Agree: {data['4']}%, Neutral: {data['3']}%, Disagree: {data['2']}%, Strongly Disagree: {data['1']}%
+        Your task: 1. Identify the core argument. 2. Synthesize a logical conclusion. 3. Provide one concrete, actionable recommendation.
         Keep it professional, objective, and format it clearly with bold headings. Maximum 3 paragraphs. Do not use generic filler.
         """
         response = model.generate_content(prompt)
@@ -136,13 +151,21 @@ def generate_ai_summary(api_key, topic_name, data):
 # --- MAIN UI ---
 st.title("📊 Survey Analyzer Pro")
 
-try:
-    SYSTEM_API_KEY = st.secrets["GEMINI_API_KEY"]
-except (FileNotFoundError, KeyError):
-    SYSTEM_API_KEY = None
+# --- SIDEBAR & AUTH STATUS ---
+with st.sidebar:
+    if st.session_state.user is None:
+        st.warning("⚠️ **GUEST MODE**")
+        st.write("Free limits: Max 50 responses & 10 questions. Downloads locked.")
+        st.progress(st.session_state.guest_uses / 5.0, text=f"Free Uses: {st.session_state.guest_uses}/5")
+    else:
+        user_meta = st.session_state.user.user_metadata
+        st.success(f"✅ **PRO USER:** {user_meta.get('institution_name', 'Institution')}")
+    st.markdown("---")
+
+try: SYSTEM_API_KEY = st.secrets["GEMINI_API_KEY"]
+except (FileNotFoundError, KeyError): SYSTEM_API_KEY = None
 
 api_key_input = SYSTEM_API_KEY
-
 if not api_key_input:
     with st.sidebar:
         st.header("🧠 AI Settings")
@@ -150,22 +173,38 @@ if not api_key_input:
         api_key_input = st.text_input("Gemini API Key", type="password")
         st.markdown("[Get a free API key here](https://aistudio.google.com/)")
 
-if 'combo_count' not in st.session_state: st.session_state['combo_count'] = 1
-
 uploaded_file = st.file_uploader("Upload Google/MS Forms Response Excel (.xlsx)", type=["xlsx"])
 
 if uploaded_file:
     try:
+        # --- GATEKEEPER LIMIT CHECK BEFORE PROCESSING ---
+        df_check = pd.read_excel(uploaded_file)
+        uploaded_file.seek(0) # Reset file pointer for the actual processor
+        
+        if not check_survey_limits(df_check.shape[0], df_check.shape[1]):
+            st.stop()
+            
+        # Count the guest usage safely (prevent double counting on tab switches)
+        if st.session_state.user is None and f"counted_{uploaded_file.name}" not in st.session_state:
+            st.session_state.guest_uses += 1
+            st.session_state[f"counted_{uploaded_file.name}"] = True
+
         parsed_data = process_file(uploaded_file)
         if not parsed_data: st.stop()
         
         st.markdown("### 📥 Export Options")
-        c1, c2 = st.columns(2)
-        with c1:
-            df_master = pd.DataFrame([{"Question": q, **{f"{LIKERT_MAP[k]} (%)": data[k] for k in ["5","4","3","2","1"]}} for q, data in parsed_data.items()])
-            st.download_button("📥 Download Master Report (CSV)", data=df_master.to_csv(index=False).encode('utf-8'), file_name="Master.csv", mime="text/csv", type="primary", use_container_width=True)
-        with c2:
-            components.html("""<script>function triggerPrint() {window.parent.print();}</script><button onclick="triggerPrint()" style="background-color:#ff4b4b; color:white; border:none; border-radius:8px; padding: 10px 15px; font-weight: 600; cursor: pointer; width: 100%; height: 42px; font-size: 16px;">🖨️ Print Dashboard to PDF</button>""", height=50)
+        
+        # --- GATEKEEPER: MASTER EXPORTS ---
+        if st.session_state.user is not None:
+            c1, c2 = st.columns(2)
+            with c1:
+                df_master = pd.DataFrame([{"Question": q, **{f"{LIKERT_MAP[k]} (%)": data[k] for k in ["5","4","3","2","1"]}} for q, data in parsed_data.items()])
+                st.download_button("📥 Download Master Report (CSV)", data=df_master.to_csv(index=False).encode('utf-8'), file_name="Master.csv", mime="text/csv", type="primary", use_container_width=True)
+            with c2:
+                components.html("""<script>function triggerPrint() {window.parent.print();}</script><button onclick="triggerPrint()" style="background-color:#ff4b4b; color:white; border:none; border-radius:8px; padding: 10px 15px; font-weight: 600; cursor: pointer; width: 100%; height: 42px; font-size: 16px;">🖨️ Print Dashboard to PDF</button>""", height=50)
+        else:
+            st.error("🔒 **PRO Feature:** Register or Login on the Main Page to download Master CSV reports and Print full Dashboards.")
+            
         st.divider()
 
         tab1, tab2 = st.tabs(["📋 Individual Questions", "🔗 Custom Combiner & AI"])
