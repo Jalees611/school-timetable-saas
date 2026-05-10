@@ -52,7 +52,7 @@ def restore_from_cloud(file_name, folder="timetables"):
     except: return False
 
 # ==========================================
-# 🧠 HELPERS & LOGIC
+# 🧠 HELPERS, LOGIC & CSV SANITIZER
 # ==========================================
 def style_timetable(df):
     def get_colors(val):
@@ -68,8 +68,18 @@ def clear_old_files():
             try: os.remove(f)
             except: pass
 
+# --- NEW CSV SANITIZER TO FIX EXCEL DECODE ERRORS ---
+def read_csv_safe(uploaded_file):
+    uploaded_file.seek(0)
+    try:
+        return pd.read_csv(uploaded_file, encoding='utf-8')
+    except UnicodeDecodeError:
+        uploaded_file.seek(0)
+        return pd.read_csv(uploaded_file, encoding='cp1252') # Fallback for Excel
+
 def save_file(uploaded_file, name):
-    with open(name, "wb") as f: f.write(uploaded_file.getbuffer())
+    df = read_csv_safe(uploaded_file)
+    df.to_csv(name, index=False, encoding='utf-8') # Guarantees pure UTF-8 for main_engine
 
 @st.cache_data
 def get_template(mode):
@@ -142,7 +152,7 @@ with st.sidebar:
         elif mode == "Register":
             name = st.text_input("Full Name")
             email = st.text_input("Email")
-            inst_type = st.selectbox("Type", ["School", "College", "University"]) # FIXED DROPDOWN
+            inst_type = st.selectbox("Type", ["School", "College", "University"]) 
             inst_name = st.text_input("Institution Name")
             pwd = st.text_input("Password", type="password")
             if st.button("Create Account", use_container_width=True): register(email, pwd, name, inst_type, inst_name)
@@ -194,11 +204,9 @@ with tab1:
         
         if st.button("🚀 Generate School Schedule", type="primary"):
             try:
-                # FIXED FILE LOGIC: Correctly overwrites or keeps files without crashing
                 if s_data:
-                    df_check = pd.read_csv(s_data)
+                    df_check = read_csv_safe(s_data)
                     if not check_freemium_limits(df_check): st.stop()
-                    s_data.seek(0)
                     save_file(s_data, "school_data.csv")
                     if not s_rest and os.path.exists('restrictions.csv'): os.remove('restrictions.csv')
                 if s_rest:
@@ -235,11 +243,9 @@ with tab2:
 
         if st.button("🚀 Generate College Schedule", type="primary"):
             try:
-                # FIXED FILE LOGIC: Correctly overwrites or keeps files without crashing
                 if c_data:
-                    df_check = pd.read_csv(c_data)
+                    df_check = read_csv_safe(c_data)
                     if not check_freemium_limits(df_check): st.stop()
-                    c_data.seek(0)
                     save_file(c_data, "workload.csv")
                     if not c_rest and os.path.exists('restrictions.csv'): os.remove('restrictions.csv')
                 if c_res: save_file(c_res, "resources.csv")
@@ -274,7 +280,6 @@ with tab3:
         with st.container():
             st.markdown("### 🖨️ Interactive Grid & Macro Download")
             
-            # FIXED MACRO DOWNLOAD: Giant, obvious button placed outside the sub-tabs
             if st.session_state.user: 
                 st.download_button("📥 DOWNLOAD FULL MACRO-READY CSV", df.to_csv(index=False).encode('utf-8'), "Macro_Timetable_Data.csv", use_container_width=True, type="primary")
             else: 
