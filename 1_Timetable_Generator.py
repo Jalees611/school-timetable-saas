@@ -203,6 +203,7 @@ with tab1:
         
         if st.button("🚀 Generate School Schedule", type="primary"):
             try:
+                # Purge College data to prevent Engine cross-contamination
                 if os.path.exists('workload.csv'): os.remove('workload.csv')
                 if os.path.exists('resources.csv'): os.remove('resources.csv')
 
@@ -245,6 +246,7 @@ with tab2:
 
         if st.button("🚀 Generate College Schedule", type="primary"):
             try:
+                # Purge School data to prevent Engine cross-contamination
                 if os.path.exists('school_data.csv'): os.remove('school_data.csv')
 
                 if c_data:
@@ -285,17 +287,26 @@ with tab3:
             st.markdown("### 🖨️ Interactive Grid & Macro Download")
             
             if st.session_state.user: 
-                # --- MACRO FIX: Pivot the data to match the Excel VBA exact requirements ---
-                macro_df = df.pivot_table(index=['Day', 'Period'], columns='Class', values='Class_View', aggfunc=lambda x: x).reset_index()
+                # 1. Pivot for Classes
+                macro_class = df.pivot_table(index=['Day', 'Period'], columns='Class', values='Class_View', aggfunc=lambda x: x).reset_index()
+                macro_class['Day'] = pd.Categorical(macro_class['Day'], categories=days, ordered=True)
+                macro_class['Period'] = pd.Categorical(macro_class['Period'], categories=periods, ordered=True)
+                macro_class = macro_class.sort_values(['Day', 'Period'])
                 
-                # Sort it properly so Monday Period 1 is at the top
-                macro_df['Day'] = pd.Categorical(macro_df['Day'], categories=days, ordered=True)
-                macro_df['Period'] = pd.Categorical(macro_df['Period'], categories=periods, ordered=True)
-                macro_df = macro_df.sort_values(['Day', 'Period'])
+                # 2. Pivot for Teachers
+                macro_teach = df.pivot_table(index=['Day', 'Period'], columns='Teacher', values='Teacher_View', aggfunc=lambda x: x).reset_index()
+                macro_teach['Day'] = pd.Categorical(macro_teach['Day'], categories=days, ordered=True)
+                macro_teach['Period'] = pd.Categorical(macro_teach['Period'], categories=periods, ordered=True)
+                macro_teach = macro_teach.sort_values(['Day', 'Period'])
                 
-                st.download_button("📥 DOWNLOAD FULL MACRO-READY CSV", macro_df.to_csv(index=False).encode('utf-8'), "Macro_Timetable_Data.csv", use_container_width=True, type="primary")
+                # Create two side-by-side buttons
+                c1, c2 = st.columns(2)
+                with c1:
+                    st.download_button("📥 Download Macro CSV (Classes)", macro_class.to_csv(index=False).encode('utf-8'), "Macro_Classes.csv", use_container_width=True, type="primary")
+                with c2:
+                    st.download_button("📥 Download Macro CSV (Teachers)", macro_teach.to_csv(index=False).encode('utf-8'), "Macro_Teachers.csv", use_container_width=True, type="primary")
             else: 
-                st.error("🔒 Login to unlock Full Macro CSV Download.")
+                st.error("🔒 Login to unlock Full Macro CSV Downloads.")
 
             v1, v2 = st.tabs(["🎒 Class View", "👨‍🏫 Teacher View"])
             
