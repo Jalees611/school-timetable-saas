@@ -299,14 +299,21 @@ with tab3:
                 macro_teach['Period'] = pd.Categorical(macro_teach['Period'], categories=periods, ordered=True)
                 macro_teach = macro_teach.sort_values(['Day', 'Period'])
                 
-                # Create two side-by-side buttons
-                c1, c2 = st.columns(2)
+                # Create THREE side-by-side buttons
+                c1, c2, c3 = st.columns(3)
                 with c1:
-                    st.download_button("📥 Download Macro CSV (Classes)", macro_class.to_csv(index=False).encode('utf-8'), "Macro_Classes.csv", use_container_width=True, type="primary")
+                    st.download_button("📥 1. Download CSV (Classes)", macro_class.to_csv(index=False).encode('utf-8'), "Macro_Classes.csv", use_container_width=True, type="primary")
                 with c2:
-                    st.download_button("📥 Download Macro CSV (Teachers)", macro_teach.to_csv(index=False).encode('utf-8'), "Macro_Teachers.csv", use_container_width=True, type="primary")
+                    st.download_button("📥 1. Download CSV (Teachers)", macro_teach.to_csv(index=False).encode('utf-8'), "Macro_Teachers.csv", use_container_width=True, type="primary")
+                with c3:
+                    try:
+                        with open("Timetable_Macro_Tool.xlsm", "rb") as f:
+                            macro_bytes = f.read()
+                        st.download_button("🛠️ 2. Download Excel Macro Tool", macro_bytes, "Timetable_Macro_Tool.xlsm", use_container_width=True, type="secondary")
+                    except FileNotFoundError:
+                        st.button("🛠️ Macro Tool Offline", disabled=True, use_container_width=True)
             else: 
-                st.error("🔒 Login to unlock Full Macro CSV Downloads.")
+                st.error("🔒 Login to unlock Full Macro CSV Downloads & Excel Tools.")
 
             v1, v2 = st.tabs(["🎒 Class View", "👨‍🏫 Teacher View"])
             
