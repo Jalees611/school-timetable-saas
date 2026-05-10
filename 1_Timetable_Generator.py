@@ -203,10 +203,8 @@ with tab1:
         
         if st.button("🚀 Generate School Schedule", type="primary"):
             try:
-                # --- CROSS-CONTAMINATION FIX ---
                 if os.path.exists('workload.csv'): os.remove('workload.csv')
                 if os.path.exists('resources.csv'): os.remove('resources.csv')
-                # -------------------------------
 
                 if s_data:
                     df_check = read_csv_safe(s_data)
@@ -247,9 +245,7 @@ with tab2:
 
         if st.button("🚀 Generate College Schedule", type="primary"):
             try:
-                # --- CROSS-CONTAMINATION FIX ---
                 if os.path.exists('school_data.csv'): os.remove('school_data.csv')
-                # -------------------------------
 
                 if c_data:
                     df_check = read_csv_safe(c_data)
@@ -289,7 +285,15 @@ with tab3:
             st.markdown("### 🖨️ Interactive Grid & Macro Download")
             
             if st.session_state.user: 
-                st.download_button("📥 DOWNLOAD FULL MACRO-READY CSV", df.to_csv(index=False).encode('utf-8'), "Macro_Timetable_Data.csv", use_container_width=True, type="primary")
+                # --- MACRO FIX: Pivot the data to match the Excel VBA exact requirements ---
+                macro_df = df.pivot_table(index=['Day', 'Period'], columns='Class', values='Class_View', aggfunc=lambda x: x).reset_index()
+                
+                # Sort it properly so Monday Period 1 is at the top
+                macro_df['Day'] = pd.Categorical(macro_df['Day'], categories=days, ordered=True)
+                macro_df['Period'] = pd.Categorical(macro_df['Period'], categories=periods, ordered=True)
+                macro_df = macro_df.sort_values(['Day', 'Period'])
+                
+                st.download_button("📥 DOWNLOAD FULL MACRO-READY CSV", macro_df.to_csv(index=False).encode('utf-8'), "Macro_Timetable_Data.csv", use_container_width=True, type="primary")
             else: 
                 st.error("🔒 Login to unlock Full Macro CSV Download.")
 
