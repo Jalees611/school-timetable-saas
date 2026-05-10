@@ -68,18 +68,17 @@ def clear_old_files():
             try: os.remove(f)
             except: pass
 
-# --- NEW CSV SANITIZER TO FIX EXCEL DECODE ERRORS ---
 def read_csv_safe(uploaded_file):
     uploaded_file.seek(0)
     try:
         return pd.read_csv(uploaded_file, encoding='utf-8')
     except UnicodeDecodeError:
         uploaded_file.seek(0)
-        return pd.read_csv(uploaded_file, encoding='cp1252') # Fallback for Excel
+        return pd.read_csv(uploaded_file, encoding='cp1252')
 
 def save_file(uploaded_file, name):
     df = read_csv_safe(uploaded_file)
-    df.to_csv(name, index=False, encoding='utf-8') # Guarantees pure UTF-8 for main_engine
+    df.to_csv(name, index=False, encoding='utf-8')
 
 @st.cache_data
 def get_template(mode):
@@ -204,6 +203,11 @@ with tab1:
         
         if st.button("🚀 Generate School Schedule", type="primary"):
             try:
+                # --- CROSS-CONTAMINATION FIX ---
+                if os.path.exists('workload.csv'): os.remove('workload.csv')
+                if os.path.exists('resources.csv'): os.remove('resources.csv')
+                # -------------------------------
+
                 if s_data:
                     df_check = read_csv_safe(s_data)
                     if not check_freemium_limits(df_check): st.stop()
@@ -243,6 +247,10 @@ with tab2:
 
         if st.button("🚀 Generate College Schedule", type="primary"):
             try:
+                # --- CROSS-CONTAMINATION FIX ---
+                if os.path.exists('school_data.csv'): os.remove('school_data.csv')
+                # -------------------------------
+
                 if c_data:
                     df_check = read_csv_safe(c_data)
                     if not check_freemium_limits(df_check): st.stop()
