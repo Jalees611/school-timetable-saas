@@ -11,7 +11,7 @@ st.set_page_config(page_title="Smart Timetable AI", page_icon="📅", layout="wi
 # ==========================================
 st.markdown("""
     <style>
-    .block-container { padding-top: 2rem; padding-bottom: 2rem; } /* PULLS CONTENT UP */
+    .block-container { padding-top: 2rem; padding-bottom: 2rem; }
     .stApp { background-color: #f8f9fa; }
     div[data-testid="stVerticalBlock"] > div:has(div.stMarkdown) {
         background-color: white; padding: 1.5rem; border-radius: 12px;
@@ -142,7 +142,7 @@ with st.sidebar:
         elif mode == "Register":
             name = st.text_input("Full Name")
             email = st.text_input("Email")
-            inst_type = st.selectbox("Type", ["School", "College"])
+            inst_type = st.selectbox("Type", ["School", "College", "University"]) # FIXED DROPDOWN
             inst_name = st.text_input("Institution Name")
             pwd = st.text_input("Password", type="password")
             if st.button("Create Account", use_container_width=True): register(email, pwd, name, inst_type, inst_name)
@@ -165,21 +165,16 @@ with st.sidebar:
     num_periods = st.slider("Periods Per Day", 4, 12, 8)
 
 # ==========================================
-# 🏢 MAIN UI & INSTRUCTION BANNER
+# 🏢 MAIN UI & BANNER
 # ==========================================
-with st.expander("📖 Application Guide & Account Limits (Click to expand)", expanded=False):
+with st.expander("📖 Application Guide & Account Limits", expanded=False):
     st.markdown("""
     ### 🛡️ User Tiers
-    * 🟡 **Guest Mode:** Maximum of 5 free trial generations. Data is limited to 10 classes and 20 teachers. Downloads and Cloud Vault are locked.
-    * 🟢 **PRO Mode:** Unlimited generations, unlimited data size, active Cloud Vault memory, and full CSV exporting. (Register for free on the sidebar).
-
-    ### 🤖 AI Scheduling Rules
-    * **School Mode:** The AI automatically balances teacher workloads across the week and strictly respects your "Restrictions" file (e.g., if a teacher is unavailable on Monday mornings).
-    * **College Mode:** The AI handles complex room allocation. It ensures subjects marked as "Lab" are placed in Lab rooms for 3-period continuous blocks, while standard classes are routed to standard classrooms.
+    * 🟡 **Guest Mode:** Max 5 free trial generations. Data limited to 10 classes and 20 teachers. Downloads locked.
+    * 🟢 **PRO Mode:** Unlimited generations, unlimited data size, active Cloud Vault memory, and full CSV exporting.
     """)
 
 st.title("📅 Smart Timetable AI")
-
 if st.session_state.user is None: st.warning("⚠️ **GUEST MODE:** Register to unlock downloads and cloud vault.")
 
 tab1, tab2, tab3 = st.tabs(["🏫 School Mode", "🎓 College Mode", "🖨️ View & Download"])
@@ -198,13 +193,16 @@ with tab1:
         if has_saved and not s_data: st.info("☁️ Using saved Workload from Vault. Ready to Generate!")
         
         if st.button("🚀 Generate School Schedule", type="primary"):
-            if s_data or has_saved:
+            try:
+                # FIXED FILE LOGIC: Correctly overwrites or keeps files without crashing
                 if s_data:
                     df_check = pd.read_csv(s_data)
                     if not check_freemium_limits(df_check): st.stop()
-                    clear_old_files()
+                    s_data.seek(0)
                     save_file(s_data, "school_data.csv")
-                    if s_rest: save_file(s_rest, "restrictions.csv")
+                    if not s_rest and os.path.exists('restrictions.csv'): os.remove('restrictions.csv')
+                if s_rest:
+                    save_file(s_rest, "restrictions.csv")
                 
                 with st.spinner("AI solving constraints..."):
                     solve_timetable(num_periods, num_days)
@@ -218,6 +216,7 @@ with tab1:
                             backup_to_cloud('final_timetable_result.csv')
                         st.success("✅ Generated! Switch to View tab.")
                     else: st.error("❌ No solution found.")
+            except Exception as e: st.error(f"Generation Error: {str(e)}")
 
 with tab2:
     with st.container():
@@ -235,14 +234,16 @@ with tab2:
         if has_saved_c and not c_data: st.info("☁️ Using saved College Data from Vault. Ready to Generate!")
 
         if st.button("🚀 Generate College Schedule", type="primary"):
-            if (c_data and c_res) or has_saved_c:
-                if c_data and c_res:
+            try:
+                # FIXED FILE LOGIC: Correctly overwrites or keeps files without crashing
+                if c_data:
                     df_check = pd.read_csv(c_data)
                     if not check_freemium_limits(df_check): st.stop()
-                    clear_old_files()
+                    c_data.seek(0)
                     save_file(c_data, "workload.csv")
-                    save_file(c_res, "resources.csv")
-                    if c_rest: save_file(c_rest, "restrictions.csv")
+                    if not c_rest and os.path.exists('restrictions.csv'): os.remove('restrictions.csv')
+                if c_res: save_file(c_res, "resources.csv")
+                if c_rest: save_file(c_rest, "restrictions.csv")
                 
                 with st.spinner("AI solving labs & rooms..."):
                     solve_timetable(num_periods, num_days)
@@ -257,6 +258,7 @@ with tab2:
                             backup_to_cloud('final_timetable_result.csv')
                         st.success("✅ Generated! Switch to View tab.")
                     else: st.error("❌ No solution found.")
+            except Exception as e: st.error(f"Generation Error: {str(e)}")
 
 with tab3:
     if st.session_state.timetable_ready and os.path.exists('final_timetable_result.csv'):
@@ -270,23 +272,23 @@ with tab3:
         df['Teacher_View'] = df['Subject'] + " (" + df['Class'] + ") [" + df['Room'] + "]"
 
         with st.container():
-            st.markdown("### 🖨️ Interactive Grid")
-            v1, v2, v3 = st.tabs(["🎒 Class View", "👨‍🏫 Teacher View", "📄 Raw Data"])
+            st.markdown("### 🖨️ Interactive Grid & Macro Download")
+            
+            # FIXED MACRO DOWNLOAD: Giant, obvious button placed outside the sub-tabs
+            if st.session_state.user: 
+                st.download_button("📥 DOWNLOAD FULL MACRO-READY CSV", df.to_csv(index=False).encode('utf-8'), "Macro_Timetable_Data.csv", use_container_width=True, type="primary")
+            else: 
+                st.error("🔒 Login to unlock Full Macro CSV Download.")
+
+            v1, v2 = st.tabs(["🎒 Class View", "👨‍🏫 Teacher View"])
             
             with v1:
                 sel_class = st.selectbox("Select Class:", sorted(df['Class'].unique()))
                 view_df = df[df['Class'] == sel_class].pivot_table(index='Period', columns='Day', values='Class_View', aggfunc=lambda x: x).reindex(index=periods, columns=days).fillna("---")
                 st.table(style_timetable(view_df))
-                if st.session_state.user: st.download_button("💾 Export Class CSV", view_df.to_csv().encode('utf-8'), f"{sel_class}.csv")
-                else: st.caption("🔒 Login to download.")
 
             with v2:
                 sel_teach = st.selectbox("Select Teacher:", sorted(df['Teacher'].unique()))
                 t_df = df[df['Teacher'] == sel_teach].pivot_table(index='Period', columns='Day', values='Teacher_View', aggfunc=lambda x: x).reindex(index=periods, columns=days).fillna("---")
                 st.table(style_timetable(t_df))
-                if st.session_state.user: st.download_button("💾 Export Teacher CSV", t_df.to_csv().encode('utf-8'), f"{sel_teach}.csv")
-
-            with v3:
-                st.dataframe(df, use_container_width=True)
-                if st.session_state.user: st.download_button("💾 Download All", df.to_csv(index=False).encode('utf-8'), "Full.csv")
     else: st.info("ℹ️ No active schedule. Upload data and Generate to begin.")

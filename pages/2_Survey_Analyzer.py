@@ -12,19 +12,20 @@ warnings.filterwarnings('ignore')
 st.set_page_config(page_title="Survey Analyzer Pro", layout="wide")
 
 # ==========================================
-# 🎨 MATERIAL DESIGN CSS, PADDING FIX & PRINT HACK
+# 🎨 PRINT FIX: Removing overflow hides so full page prints perfectly
 # ==========================================
 st.markdown("""
     <style>
-    .block-container { padding-top: 2rem; padding-bottom: 2rem; } /* PULLS CONTENT UP */
+    .block-container { padding-top: 2rem; padding-bottom: 2rem; }
     .stApp { background-color: #f8f9fa; }
     div[data-testid="stVerticalBlock"] > div:has(div.stMarkdown) {
         background-color: white; padding: 1.5rem; border-radius: 12px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 1rem;
     }
     @media print {
-        header, [data-testid="stSidebar"], [data-testid="stFileUploader"], .stDownloadButton, .stButton {display: none !important;}
+        header, [data-testid="stSidebar"], [data-testid="stFileUploader"], .stDownloadButton, .stButton, details {display: none !important;}
         div.element-container { page-break-inside: avoid !important; }
+        .stApp { background-color: white !important; }
         * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
     }
     </style>
@@ -163,16 +164,11 @@ if not api_key_input:
         st.header("🧠 AI Settings")
         api_key_input = st.text_input("Gemini API Key", type="password")
 
-with st.expander("📖 Application Guide & Account Limits (Click to expand)", expanded=False):
+with st.expander("📖 Application Guide & Account Limits", expanded=False):
     st.markdown("""
     ### 🛡️ User Tiers
-    * 🟡 **Guest Mode:** Maximum of 5 free trial uses. Data is limited to 50 rows (responses) and 10 columns (questions). PDF and CSV downloads are locked.
-    * 🟢 **PRO Mode:** Unlimited uses, massive dataset support, Gemini AI text summaries unlocked, and Print-to-PDF enabled. (Register for free on the sidebar).
-
-    ### 🤖 AI Survey Rules
-    * **Likert Processing:** The engine automatically detects standard 5-point scales (Strongly Agree to Strongly Disagree) and ignores irrelevant columns like Timestamps or Names.
-    * **Dynamic Combiner:** You can select multiple related questions to merge them into a single "Topic" metric.
-    * **Argumentative AI:** If you input a Gemini API Key, the AI will evaluate combined topics to determine the core argument, synthesize a conclusion, and provide actionable management recommendations.
+    * 🟡 **Guest Mode:** Max 5 free trial uses. Limited to 50 rows.
+    * 🟢 **PRO Mode:** Unlimited uses, Gemini AI text summaries unlocked, and Print-to-PDF enabled.
     """)
 
 st.title("📊 Survey Analyzer Pro")
@@ -205,43 +201,41 @@ with st.container():
                 backup_survey_to_cloud(uploaded_file.name, uploaded_file.read())
                 st.session_state['restored_survey'] = uploaded_file.name
             
-            st.markdown("### 📥 Global Export")
+            # FIXED PRINT LOGIC: Removed Tabs so the browser prints everything straight down the page.
+            st.markdown("---")
+            st.markdown("## 📊 Master Report & Export")
             if st.session_state.user:
                 c1, c2 = st.columns(2)
                 with c1:
                     df_master = pd.DataFrame([{"Question": q, **{f"{LIKERT_MAP[k]} (%)": data[k] for k in ["5","4","3","2","1"]}} for q, data in parsed_data.items()])
-                    st.download_button("📥 Master Report (CSV)", df_master.to_csv(index=False).encode('utf-8'), "Master.csv", "text/csv", use_container_width=True)
+                    st.download_button("📥 Download Master CSV", df_master.to_csv(index=False).encode('utf-8'), "Master_Report.csv", "text/csv", use_container_width=True, type="primary")
                 with c2:
-                    components.html("""<script>function triggerPrint() {window.parent.print();}</script><button onclick="triggerPrint()" style="background-color:#0d47a1; color:white; border:none; border-radius:8px; padding: 10px; cursor: pointer; width: 100%; font-size: 16px;">🖨️ Print to PDF</button>""", height=50)
+                    components.html("""<script>function triggerPrint() {window.parent.print();}</script><button onclick="triggerPrint()" style="background-color:#0d47a1; color:white; border:none; border-radius:8px; padding: 10px; cursor: pointer; width: 100%; font-size: 16px;">🖨️ Print Full Page to PDF</button>""", height=50)
             else: st.error("🔒 Login to export Master CSV & PDF.")
                 
-            tab1, tab2 = st.tabs(["📋 Visuals", "🔗 Combiner & AI"])
+            st.markdown("### 📋 Individual Visuals")
+            for i, (q_name, q_data) in enumerate(parsed_data.items()): create_table_and_chart(q_name, q_data, f"c_{i}")
+                    
+            st.markdown("---")
+            st.markdown("### 🤖 Dynamic Combiner & AI")
+            if st.button("➕ Add Combination Topic"): st.session_state['combo_count'] += 1
             
-            with tab1:
-                for i, (q_name, q_data) in enumerate(parsed_data.items()): create_table_and_chart(q_name, q_data, f"c_{i}")
-                    
-            with tab2:
+            combos = []
+            for i in range(st.session_state['combo_count']):
                 with st.container():
-                    st.markdown("### 🤖 Dynamic AI Summaries")
-                    if st.button("➕ Add Combination"): st.session_state['combo_count'] += 1
-                    
-                    combos = []
-                    for i in range(st.session_state['combo_count']):
-                        st.markdown(f"**Combination {i+1}**")
-                        c_name = st.text_input("Topic Label:", value=f"Topic {i + 1}", key=f"n_{i}")
-                        c_qs = st.multiselect("Select Questions:", options=list(parsed_data.keys()), key=f"q_{i}")
-                        combos.append({"name": c_name, "questions": c_qs})
-                        st.divider()
-                
-                if st.button("🚀 Run AI Analysis", type="primary"):
-                    for i, config in enumerate(combos):
-                        if config["questions"]:
-                            cmb_data = {k: round(sum(parsed_data[q][k] for q in config["questions"]) / len(config["questions"]), 2) for k in ["5", "4", "3", "2", "1"]}
-                            create_table_and_chart(config["name"], cmb_data, f"cmb_{i}")
-                            if api_key_input:
-                                with st.container():
-                                    st.markdown(f"#### ✨ AI Insight: {config['name']}")
-                                    with st.spinner("Gemini is analyzing..."):
-                                        st.write(generate_ai_summary(api_key_input, config["name"], cmb_data))
-                            else: st.info("🔑 Add Gemini Key in sidebar for text summary.")
+                    c_name = st.text_input("Topic Label:", value=f"Topic {i + 1}", key=f"n_{i}")
+                    c_qs = st.multiselect("Select Questions to Combine:", options=list(parsed_data.keys()), key=f"q_{i}")
+                    combos.append({"name": c_name, "questions": c_qs})
+            
+            if st.button("🚀 Run Combiner Analysis", type="primary"):
+                for i, config in enumerate(combos):
+                    if config["questions"]:
+                        cmb_data = {k: round(sum(parsed_data[q][k] for q in config["questions"]) / len(config["questions"]), 2) for k in ["5", "4", "3", "2", "1"]}
+                        create_table_and_chart(config["name"], cmb_data, f"cmb_{i}")
+                        if api_key_input:
+                            with st.container():
+                                st.markdown(f"#### ✨ AI Insight: {config['name']}")
+                                with st.spinner("Gemini is analyzing..."):
+                                    st.write(generate_ai_summary(api_key_input, config["name"], cmb_data))
+                        else: st.info("🔑 Add Gemini Key in sidebar for text summary.")
         except Exception as e: st.error(f"Error processing: {e}")
