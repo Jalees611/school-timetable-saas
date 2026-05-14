@@ -52,6 +52,28 @@ def restore_from_cloud(file_name, folder="timetables"):
     except: return False
 
 # ==========================================
+# 📊 DATABASE HELPERS (PROFILES & USAGE)
+# ==========================================
+if 'is_pro' not in st.session_state: st.session_state.is_pro = False
+
+def fetch_user_profile():
+    if st.session_state.user is None: return
+    try:
+        res = supabase.table("profiles").select("is_pro").eq("id", st.session_state.user.id).execute()
+        if res.data: st.session_state.is_pro = res.data[0].get("is_pro", False)
+    except: pass
+
+def increment_usage_count():
+    if st.session_state.user is None: return
+    try:
+        # Check current count and add 1
+        res = supabase.table("profiles").select("usage_count").eq("id", st.session_state.user.id).execute()
+        if res.data:
+            new_count = res.data[0].get("usage_count", 0) + 1
+            supabase.table("profiles").update({"usage_count": new_count}).eq("id", st.session_state.user.id).execute()
+    except: pass
+
+# ==========================================
 # 🧠 HELPERS, LOGIC & CSV SANITIZER
 # ==========================================
 def style_timetable(df):
@@ -100,6 +122,7 @@ def login(email, password):
     try:
         res = supabase.auth.sign_in_with_password({"email": email, "password": password})
         st.session_state.user = res.user
+        fetch_user_profile() # <--- NEW: Checks if they are PRO in the database
         with st.spinner("Restoring Vault..."):
             for f in ['school_data.csv', 'workload.csv', 'resources.csv', 'restrictions.csv']: restore_from_cloud(f)
             if restore_from_cloud('final_timetable_result.csv'): st.session_state.timetable_ready = True
@@ -160,7 +183,7 @@ with st.sidebar:
             if st.button("Send Reset Link", use_container_width=True): reset_password(email)
     else:
         st.success(f"🏛️ {st.session_state.user.user_metadata.get('institution_name', 'My Dashboard')}")
-        st.info("✅ PRO Status Active")
+        st.info("✅ PRO Status Active" if st.session_state.is_pro else "🟡 Standard User Active")
         if st.button("🚪 Log Out", use_container_width=True): 
             supabase.auth.sign_out()
             st.session_state.user = None
@@ -225,6 +248,7 @@ with tab1:
                             backup_to_cloud('school_data.csv')
                             if os.path.exists('restrictions.csv'): backup_to_cloud('restrictions.csv')
                             backup_to_cloud('final_timetable_result.csv')
+                            increment_usage_count() # <--- NEW: Logs the usage in the database
                         st.success("✅ Generated! Switch to View tab.")
                     else: st.error("❌ No solution found.")
             except Exception as e: st.error(f"Generation Error: {str(e)}")
@@ -268,6 +292,7 @@ with tab2:
                             backup_to_cloud('resources.csv')
                             if os.path.exists('restrictions.csv'): backup_to_cloud('restrictions.csv')
                             backup_to_cloud('final_timetable_result.csv')
+                            increment_usage_count() # <--- NEW: Logs the usage in the database
                         st.success("✅ Generated! Switch to View tab.")
                     else: st.error("❌ No solution found.")
             except Exception as e: st.error(f"Generation Error: {str(e)}")
