@@ -24,6 +24,37 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
+# 🔐 AUTHENTICATION & SAAS TIER LOGIC
+# ==========================================
+if 'user' not in st.session_state or st.session_state.user is None:
+    st.warning("🔒 Please log in or register on the Home page to access the Timetable Generator.")
+    st.page_link("Home.py", label="Go to Home Page", icon="🏠")
+    st.stop()
+
+PUBLIC_DOMAINS = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com', 'aol.com']
+
+def get_user_tier():
+    if st.session_state.get('is_pro', False): return "Pro"
+    email_domain = st.session_state.user.email.split('@')[1].lower() if st.session_state.user.email else ""
+    if any(domain in email_domain for domain in PUBLIC_DOMAINS): return "Guest"
+    return "Standard"
+
+user_tier = get_user_tier()
+
+if user_tier == "Pro":
+    MAX_GENS, MAX_CLASSES, MAX_TEACHERS = float('inf'), float('inf'), float('inf')
+    CAN_VAULT, CAN_EXPORT = True, True
+elif user_tier == "Standard":
+    MAX_GENS, MAX_CLASSES, MAX_TEACHERS = 15, 15, 30
+    CAN_VAULT, CAN_EXPORT = True, False
+else: # Guest
+    MAX_GENS, MAX_CLASSES, MAX_TEACHERS = 5, 5, 20
+    CAN_VAULT, CAN_EXPORT = False, False
+
+if 'timetable_usage' not in st.session_state: st.session_state.timetable_usage = 0
+if 'timetable_ready' not in st.session_state: st.session_state.timetable_ready = False
+
+# ==========================================
 # ☁️ SUPABASE & THE PRIVATE VAULT
 # ==========================================
 @st.cache_resource
@@ -43,30 +74,9 @@ def backup_to_cloud(file_name, folder="timetables"):
                 )
     except: pass
 
-def restore_from_cloud(file_name, folder="timetables"):
-    if supabase is None or st.session_state.user is None: return False
-    try:
-        data = supabase.storage.from_("user_vaults").download(f"{st.session_state.user.id}/{folder}/{file_name}")
-        with open(file_name, 'wb') as f: f.write(data)
-        return True
-    except: return False
-
-# ==========================================
-# 📊 DATABASE HELPERS (PROFILES & USAGE)
-# ==========================================
-if 'is_pro' not in st.session_state: st.session_state.is_pro = False
-
-def fetch_user_profile():
-    if st.session_state.user is None: return
-    try:
-        res = supabase.table("profiles").select("is_pro").eq("id", st.session_state.user.id).execute()
-        if res.data: st.session_state.is_pro = res.data[0].get("is_pro", False)
-    except: pass
-
 def increment_usage_count():
     if st.session_state.user is None: return
     try:
-        # Check current count and add 1
         res = supabase.table("profiles").select("usage_count").eq("id", st.session_state.user.id).execute()
         if res.data:
             new_count = res.data[0].get("usage_count", 0) + 1
@@ -110,86 +120,36 @@ def get_template(mode):
     else: df = pd.DataFrame({"teacher_name": ["Dr. Jalees"], "day": ["Mon"], "period": ["Period 2"], "restriction_type": ["Unavailable"]})
     return df.to_csv(index=False).encode('utf-8')
 
-# ==========================================
-# 🔐 AUTH & FREEMIUM LIMITS
-# ==========================================
-if 'timetable_ready' not in st.session_state: st.session_state.timetable_ready = False
-if 'user' not in st.session_state: st.session_state.user = None
-if 'guest_uses' not in st.session_state: st.session_state.guest_uses = 0
-if 'auth_mode' not in st.session_state: st.session_state.auth_mode = 'Login'
-
-def login(email, password):
-    try:
-        res = supabase.auth.sign_in_with_password({"email": email, "password": password})
-        st.session_state.user = res.user
-        fetch_user_profile() # <--- NEW: Checks if they are PRO in the database
-        with st.spinner("Restoring Vault..."):
-            for f in ['school_data.csv', 'workload.csv', 'resources.csv', 'restrictions.csv']: restore_from_cloud(f)
-            if restore_from_cloud('final_timetable_result.csv'): st.session_state.timetable_ready = True
-        st.rerun()
-    except Exception as e: st.error(f"Login Error: {e}")
-
-def register(email, password, full_name, inst_type, inst_name):
-    try:
-        supabase.auth.sign_up({"email": email, "password": password, "options": {"data": {"full_name": full_name, "institution_type": inst_type, "institution_name": inst_name}}})
-        st.success("✅ Registration successful! Please log in.")
-        st.session_state.auth_mode = 'Login'
-    except Exception as e: st.error(f"Error: {e}")
-
-def reset_password(email):
-    try:
-        supabase.auth.reset_password_for_email(email)
-        st.success("✅ Password reset link sent to your email!")
-        st.session_state.auth_mode = 'Login'
-    except Exception as e: st.error(f"Error: {e}")
-
-def check_freemium_limits(df):
-    if st.session_state.user is not None: return True
-    if st.session_state.guest_uses >= 5:
-        st.error("🚫 Trial reached. Please register.")
+def check_saas_limits(df):
+    if st.session_state.timetable_usage >= MAX_GENS:
+        st.error(f"🚫 **{user_tier} Tier Limit:** You have used all {MAX_GENS} generations for this session.")
         return False
     cols = [str(c).lower().replace('_', '').replace(' ', '') for c in df.columns]
     class_col = 'classname' if 'classname' in cols else cols[0]
     teacher_col = 'teachername' if 'teachername' in cols else cols[0]
-    if df.iloc[:, cols.index(class_col)].nunique() > 10 or df.iloc[:, cols.index(teacher_col)].nunique() > 20:
-        st.error(f"🚫 Limit Exceeded: 10 classes / 20 teachers max for guests.")
+    
+    if df.iloc[:, cols.index(class_col)].nunique() > MAX_CLASSES:
+        st.error(f"🚫 **{user_tier} Tier Limit:** Max {MAX_CLASSES} classes allowed. Please upgrade.")
+        return False
+    if df.iloc[:, cols.index(teacher_col)].nunique() > MAX_TEACHERS:
+        st.error(f"🚫 **{user_tier} Tier Limit:** Max {MAX_TEACHERS} teachers allowed. Please upgrade.")
         return False
     return True
 
 # ==========================================
-# ⚙️ SIDEBAR (USER SETTINGS)
+# ⚙️ SIDEBAR (USER DASHBOARD)
 # ==========================================
 with st.sidebar:
-    if st.session_state.user is None:
-        st.header("👋 Welcome, Guest")
-        st.progress(st.session_state.guest_uses / 5.0, text=f"Free Uses: {st.session_state.guest_uses}/5")
-        st.markdown("---")
-        mode = st.radio("Account Access", ["Login", "Register", "Forgot Password"], index=["Login", "Register", "Forgot Password"].index(st.session_state.auth_mode))
-        st.session_state.auth_mode = mode
-        
-        if mode == "Login":
-            email = st.text_input("Email")
-            pwd = st.text_input("Password", type="password")
-            if st.button("Log In", use_container_width=True): login(email, pwd)
-        elif mode == "Register":
-            name = st.text_input("Full Name")
-            email = st.text_input("Email")
-            inst_type = st.selectbox("Type", ["School", "College", "University"]) 
-            inst_name = st.text_input("Institution Name")
-            pwd = st.text_input("Password", type="password")
-            if st.button("Create Account", use_container_width=True): register(email, pwd, name, inst_type, inst_name)
-        elif mode == "Forgot Password":
-            email = st.text_input("Enter your registered email")
-            if st.button("Send Reset Link", use_container_width=True): reset_password(email)
-    else:
-        st.success(f"🏛️ {st.session_state.user.user_metadata.get('institution_name', 'My Dashboard')}")
-        st.info("✅ PRO Status Active" if st.session_state.is_pro else "🟡 Standard User Active")
-        if st.button("🚪 Log Out", use_container_width=True): 
-            supabase.auth.sign_out()
-            st.session_state.user = None
-            st.session_state.timetable_ready = False
-            clear_old_files()
-            st.rerun()
+    st.success(f"🏛️ {st.session_state.user.user_metadata.get('institution_name', 'My Dashboard')}")
+    st.info(f"👤 **Account Tier:** {user_tier}")
+    st.write(f"📊 **Usage:** {st.session_state.timetable_usage} / {MAX_GENS if MAX_GENS != float('inf') else 'Unlimited'}")
+    
+    if st.button("🚪 Log Out", use_container_width=True): 
+        supabase.auth.sign_out()
+        st.session_state.user = None
+        st.session_state.timetable_ready = False
+        clear_old_files()
+        st.rerun()
 
     st.markdown("---")
     st.header("⚙️ Configuration")
@@ -202,12 +162,15 @@ with st.sidebar:
 with st.expander("📖 Application Guide & Account Limits", expanded=False):
     st.markdown("""
     ### 🛡️ User Tiers
-    * 🟡 **Guest Mode:** Max 5 free trial generations. Data limited to 10 classes and 20 teachers. Downloads locked.
-    * 🟢 **PRO Mode:** Unlimited generations, unlimited data size, active Cloud Vault memory, and full CSV exporting.
+    | Feature | 🟡 Guest (Free Trial) | 🔵 Standard (Institutional) | 🟢 PRO (Premium) |
+    | :--- | :--- | :--- | :--- |
+    | **Timetable Uses** | Max 5 Total | Max 15 Total | ✅ **Unlimited** |
+    | **Timetable Size** | 5 Classes / 20 Teachers | 15 Classes / 30 Teachers | ✅ **Unlimited** |
+    | **Cloud Vault** | ❌ No | ✅ Yes | ✅ Yes |
+    | **Excel Exports**| ❌ No | ❌ No | ✅ **Yes** |
     """)
 
 st.title("📅 Smart Timetable AI")
-if st.session_state.user is None: st.warning("⚠️ **GUEST MODE:** Register to unlock downloads and cloud vault.")
 
 tab1, tab2, tab3 = st.tabs(["🏫 School Mode", "🎓 College Mode", "🖨️ View & Download"])
 
@@ -221,18 +184,14 @@ with tab1:
         s_data = st.file_uploader("Upload Workload CSV", type=['csv'], key="s_up")
         s_rest = st.file_uploader("Upload Restrictions (Optional)", type=['csv'], key="sr_up")
         
-        has_saved = os.path.exists('school_data.csv') and st.session_state.user is not None
-        if has_saved and not s_data: st.info("☁️ Using saved Workload from Vault. Ready to Generate!")
-        
         if st.button("🚀 Generate School Schedule", type="primary"):
             try:
-                # Purge College data to prevent Engine cross-contamination
                 if os.path.exists('workload.csv'): os.remove('workload.csv')
                 if os.path.exists('resources.csv'): os.remove('resources.csv')
 
                 if s_data:
                     df_check = read_csv_safe(s_data)
-                    if not check_freemium_limits(df_check): st.stop()
+                    if not check_saas_limits(df_check): st.stop() # SAAS LIMIT ENFORCER
                     save_file(s_data, "school_data.csv")
                     if not s_rest and os.path.exists('restrictions.csv'): os.remove('restrictions.csv')
                 if s_rest:
@@ -243,12 +202,14 @@ with tab1:
                     if os.path.exists('final_timetable_result.csv'):
                         st.session_state.timetable_ready = True
                         st.session_state.active_config = {"days": num_days, "periods": num_periods}
-                        if st.session_state.user is None: st.session_state.guest_uses += 1
-                        else:
+                        st.session_state.timetable_usage += 1 # INCREMENT USAGE
+                        
+                        if CAN_VAULT:
                             backup_to_cloud('school_data.csv')
                             if os.path.exists('restrictions.csv'): backup_to_cloud('restrictions.csv')
                             backup_to_cloud('final_timetable_result.csv')
-                            increment_usage_count() # <--- NEW: Logs the usage in the database
+                        
+                        increment_usage_count()
                         st.success("✅ Generated! Switch to View tab.")
                     else: st.error("❌ No solution found.")
             except Exception as e: st.error(f"Generation Error: {str(e)}")
@@ -264,18 +225,14 @@ with tab2:
         c_data = st.file_uploader("Upload Workload", type=['csv'], key="c_up")
         c_res = st.file_uploader("Upload Rooms", type=['csv'], key="cr_up")
         c_rest = st.file_uploader("Upload Restrictions", type=['csv'], key="cre_up")
-        
-        has_saved_c = os.path.exists('workload.csv') and os.path.exists('resources.csv') and st.session_state.user is not None
-        if has_saved_c and not c_data: st.info("☁️ Using saved College Data from Vault. Ready to Generate!")
 
         if st.button("🚀 Generate College Schedule", type="primary"):
             try:
-                # Purge School data to prevent Engine cross-contamination
                 if os.path.exists('school_data.csv'): os.remove('school_data.csv')
 
                 if c_data:
                     df_check = read_csv_safe(c_data)
-                    if not check_freemium_limits(df_check): st.stop()
+                    if not check_saas_limits(df_check): st.stop() # SAAS LIMIT ENFORCER
                     save_file(c_data, "workload.csv")
                     if not c_rest and os.path.exists('restrictions.csv'): os.remove('restrictions.csv')
                 if c_res: save_file(c_res, "resources.csv")
@@ -286,13 +243,15 @@ with tab2:
                     if os.path.exists('final_timetable_result.csv'):
                         st.session_state.timetable_ready = True
                         st.session_state.active_config = {"days": num_days, "periods": num_periods}
-                        if st.session_state.user is None: st.session_state.guest_uses += 1
-                        else:
+                        st.session_state.timetable_usage += 1 # INCREMENT USAGE
+                        
+                        if CAN_VAULT:
                             backup_to_cloud('workload.csv')
                             backup_to_cloud('resources.csv')
                             if os.path.exists('restrictions.csv'): backup_to_cloud('restrictions.csv')
                             backup_to_cloud('final_timetable_result.csv')
-                            increment_usage_count() # <--- NEW: Logs the usage in the database
+                        
+                        increment_usage_count()
                         st.success("✅ Generated! Switch to View tab.")
                     else: st.error("❌ No solution found.")
             except Exception as e: st.error(f"Generation Error: {str(e)}")
@@ -311,34 +270,40 @@ with tab3:
         with st.container():
             st.markdown("### 🖨️ Interactive Grid & Macro Download")
             
-            if st.session_state.user: 
-                # 1. Pivot for Classes
-                macro_class = df.pivot_table(index=['Day', 'Period'], columns='Class', values='Class_View', aggfunc=lambda x: x).reset_index()
-                macro_class['Day'] = pd.Categorical(macro_class['Day'], categories=days, ordered=True)
-                macro_class['Period'] = pd.Categorical(macro_class['Period'], categories=periods, ordered=True)
-                macro_class = macro_class.sort_values(['Day', 'Period'])
-                
-                # 2. Pivot for Teachers
-                macro_teach = df.pivot_table(index=['Day', 'Period'], columns='Teacher', values='Teacher_View', aggfunc=lambda x: x).reset_index()
-                macro_teach['Day'] = pd.Categorical(macro_teach['Day'], categories=days, ordered=True)
-                macro_teach['Period'] = pd.Categorical(macro_teach['Period'], categories=periods, ordered=True)
-                macro_teach = macro_teach.sort_values(['Day', 'Period'])
-                
-                # Create THREE side-by-side buttons
-                c1, c2, c3 = st.columns(3)
-                with c1:
+            macro_class = df.pivot_table(index=['Day', 'Period'], columns='Class', values='Class_View', aggfunc=lambda x: x).reset_index()
+            macro_class['Day'] = pd.Categorical(macro_class['Day'], categories=days, ordered=True)
+            macro_class['Period'] = pd.Categorical(macro_class['Period'], categories=periods, ordered=True)
+            macro_class = macro_class.sort_values(['Day', 'Period'])
+            
+            macro_teach = df.pivot_table(index=['Day', 'Period'], columns='Teacher', values='Teacher_View', aggfunc=lambda x: x).reset_index()
+            macro_teach['Day'] = pd.Categorical(macro_teach['Day'], categories=days, ordered=True)
+            macro_teach['Period'] = pd.Categorical(macro_teach['Period'], categories=periods, ordered=True)
+            macro_teach = macro_teach.sort_values(['Day', 'Period'])
+            
+            c1, c2, c3 = st.columns(3)
+            with c1:
+                if CAN_EXPORT:
                     st.download_button("📥 1. Download CSV (Classes)", macro_class.to_csv(index=False).encode('utf-8'), "Macro_Classes.csv", use_container_width=True, type="primary")
-                with c2:
+                else:
+                    st.button("📥 Download CSV (Classes) - PRO", disabled=True, use_container_width=True)
+            with c2:
+                if CAN_EXPORT:
                     st.download_button("📥 1. Download CSV (Teachers)", macro_teach.to_csv(index=False).encode('utf-8'), "Macro_Teachers.csv", use_container_width=True, type="primary")
-                with c3:
+                else:
+                    st.button("📥 Download CSV (Teachers) - PRO", disabled=True, use_container_width=True)
+            with c3:
+                if CAN_EXPORT:
                     try:
                         with open("Timetable_Macro_Tool.xlsm", "rb") as f:
                             macro_bytes = f.read()
                         st.download_button("🛠️ 2. Download Excel Macro Tool", macro_bytes, "Timetable_Macro_Tool.xlsm", use_container_width=True, type="secondary")
                     except FileNotFoundError:
                         st.button("🛠️ Macro Tool Offline", disabled=True, use_container_width=True)
-            else: 
-                st.error("🔒 Login to unlock Full Macro CSV Downloads & Excel Tools.")
+                else:
+                    st.button("🛠️ Excel Macro Tool - PRO Only", disabled=True, use_container_width=True)
+            
+            if not CAN_EXPORT:
+                st.error("🔒 Upgrade to PRO to unlock Full Macro CSV Downloads & Excel Tools.")
 
             v1, v2 = st.tabs(["🎒 Class View", "👨‍🏫 Teacher View"])
             

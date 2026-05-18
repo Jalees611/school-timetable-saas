@@ -12,7 +12,7 @@ warnings.filterwarnings('ignore')
 st.set_page_config(page_title="Survey Analyzer Pro", layout="wide")
 
 # ==========================================
-# 🎨 PRINT FIX: Removing overflow hides so full page prints perfectly
+# 🎨 PRINT FIX & THEME
 # ==========================================
 st.markdown("""
     <style>
@@ -30,6 +30,38 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+
+# ==========================================
+# 🔐 AUTHENTICATION & SAAS TIER LOGIC
+# ==========================================
+if 'user' not in st.session_state or st.session_state.user is None:
+    st.warning("🔒 Please log in or register on the Home page to access the Survey Analyzer.")
+    st.page_link("Home.py", label="Go to Home Page", icon="🏠")
+    st.stop()
+
+PUBLIC_DOMAINS = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com', 'aol.com']
+
+def get_user_tier():
+    if st.session_state.get('is_pro', False): return "Pro"
+    email_domain = st.session_state.user.email.split('@')[1].lower() if st.session_state.user.email else ""
+    if any(domain in email_domain for domain in PUBLIC_DOMAINS): return "Guest"
+    return "Standard"
+
+user_tier = get_user_tier()
+
+if user_tier == "Pro":
+    MAX_ANALYSES, MAX_ROWS, MAX_QUESTIONS = float('inf'), float('inf'), float('inf')
+    CAN_VAULT, CAN_EXPORT, CAN_AI = True, True, True
+elif user_tier == "Standard":
+    MAX_ANALYSES, MAX_ROWS, MAX_QUESTIONS = 15, 100, 15
+    CAN_VAULT, CAN_EXPORT, CAN_AI = True, False, False
+else: # Guest
+    MAX_ANALYSES, MAX_ROWS, MAX_QUESTIONS = 5, 50, 10
+    CAN_VAULT, CAN_EXPORT, CAN_AI = False, False, False
+
+if 'survey_usage' not in st.session_state: st.session_state.survey_usage = 0
+if 'combo_count' not in st.session_state: st.session_state['combo_count'] = 1
+if 'restored_survey' not in st.session_state: st.session_state['restored_survey'] = None
 
 # ==========================================
 # ☁️ SUPABASE & THE PRIVATE VAULT
@@ -60,21 +92,6 @@ def restore_survey_from_cloud():
     except: return None
     return None
 
-# ==========================================
-# 📊 DATABASE HELPERS (PROFILES & USAGE)
-# ==========================================
-if 'is_pro' not in st.session_state: st.session_state.is_pro = False
-
-def fetch_user_profile():
-    # Only fetch once per session to keep the app blazing fast
-    if st.session_state.user is None or st.session_state.get('profile_fetched'): return
-    try:
-        res = supabase.table("profiles").select("is_pro").eq("id", st.session_state.user.id).execute()
-        if res.data: 
-            st.session_state.is_pro = res.data[0].get("is_pro", False)
-            st.session_state.profile_fetched = True
-    except: pass
-
 def increment_usage_count():
     if st.session_state.user is None: return
     try:
@@ -84,17 +101,9 @@ def increment_usage_count():
             supabase.table("profiles").update({"usage_count": new_count}).eq("id", st.session_state.user.id).execute()
     except: pass
 
-# Automatically run the fast check if they bypassed the login page
-fetch_user_profile() 
-
 # ==========================================
-# 🧠 STATE & LIKERT LOGIC
+# 🧠 LIKERT LOGIC & PARSING
 # ==========================================
-if 'user' not in st.session_state: st.session_state.user = None
-if 'guest_uses' not in st.session_state: st.session_state.guest_uses = 0
-if 'combo_count' not in st.session_state: st.session_state['combo_count'] = 1
-if 'restored_survey' not in st.session_state: st.session_state['restored_survey'] = None
-
 LIKERT_MAP = {"5": "Strongly Agree", "4": "Agree", "3": "Neutral", "2": "Disagree", "1": "Strongly Disagree"}
 REVERSE_MAP = {"Strongly Agree": "5", "Agree": "4", "Neutral": "3", "Uncertain": "3", "Disagree": "2", "Strongly Disagree": "1"}
 
@@ -134,10 +143,16 @@ def process_file(file_obj_or_path):
         return parse_system_report(pd.read_excel(file_obj_or_path, header=None))
     return parse_google_forms(df)
 
-def check_survey_limits(num_responses, num_questions):
-    if st.session_state.user is not None: return True
-    if st.session_state.guest_uses >= 5: st.error("🚫 Trial limit reached."); return False
-    if num_responses > 50 or num_questions > 10: st.error(f"🚫 Limit Exceeded: Free limit is 50x10."); return False
+def check_saas_limits(num_responses, num_questions):
+    if st.session_state.survey_usage >= MAX_ANALYSES:
+        st.error(f"🚫 **{user_tier} Tier Limit:** You used all {MAX_ANALYSES} analyses for this session.")
+        return False
+    if num_responses > MAX_ROWS:
+        st.error(f"🚫 **{user_tier} Tier Limit:** Max {MAX_ROWS} rows allowed. You have {num_responses}.")
+        return False
+    if num_questions > MAX_QUESTIONS:
+        st.error(f"🚫 **{user_tier} Tier Limit:** Max {MAX_QUESTIONS} questions allowed. You have {num_questions}.")
+        return False
     return True
 
 def create_table_and_chart(q_name, q_data, unique_key):
@@ -149,7 +164,8 @@ def create_table_and_chart(q_name, q_data, unique_key):
         c1, c2 = st.columns([1, 2])
         with c1:
             st.dataframe(df_table, use_container_width=True, hide_index=True)
-            if st.session_state.user: st.download_button("📥 CSV", data=df_table.to_csv(index=False).encode('utf-8'), file_name=f"Chart.csv", key=f"dl_{unique_key}")
+            if CAN_EXPORT:
+                st.download_button("📥 CSV", data=df_table.to_csv(index=False).encode('utf-8'), file_name=f"Chart.csv", key=f"dl_{unique_key}")
         with c2:
             if not df_chart.empty:
                 fig = px.pie(df_chart, values='%', names='Response', color='Response', color_discrete_map={"Strongly Agree": "#1f77b4", "Agree": "#2ca02c", "Neutral": "#ff7f0e", "Disagree": "#d62728", "Strongly Disagree": "#9467bd"})
@@ -167,20 +183,21 @@ def generate_ai_summary(api_key, topic_name, data):
     except Exception as e: return f"❌ AI Error: {e}"
 
 # ==========================================
-# 🏢 MAIN UI & INSTRUCTION BANNER
+# 🏢 SIDEBAR DASHBOARD
 # ==========================================
 with st.sidebar:
-    if st.session_state.user is None:
-        st.warning("⚠️ GUEST MODE")
-        st.progress(st.session_state.guest_uses / 5.0, text=f"Free Uses: {st.session_state.guest_uses}/5")
-    else:
-        # <--- NEW: Dynamic status badge based on Supabase database! --->
-        st.success("✅ PRO Status Active" if st.session_state.is_pro else "🟡 Standard User Active")
+    st.success(f"🏛️ {st.session_state.user.user_metadata.get('institution_name', 'My Dashboard')}")
+    st.info(f"👤 **Account Tier:** {user_tier}")
+    st.write(f"📊 **Usage:** {st.session_state.survey_usage} / {MAX_ANALYSES if MAX_ANALYSES != float('inf') else 'Unlimited'}")
+    
+    if CAN_VAULT:
         if st.button("☁️ Load Saved Workspace"):
             with st.spinner("Pulling from vault..."):
                 restored = restore_survey_from_cloud()
                 if restored: st.session_state['restored_survey'] = restored; st.success("Loaded!")
                 else: st.warning("No saved data found.")
+    else:
+        st.button("☁️ Load Workspace (Standard/PRO)", disabled=True)
     st.markdown("---")
 
 try: SYSTEM_API_KEY = st.secrets["GEMINI_API_KEY"]
@@ -195,8 +212,13 @@ if not api_key_input:
 with st.expander("📖 Application Guide & Account Limits", expanded=False):
     st.markdown("""
     ### 🛡️ User Tiers
-    * 🟡 **Guest Mode:** Max 5 free trial uses. Limited to 50 rows.
-    * 🟢 **PRO Mode:** Unlimited uses, Gemini AI text summaries unlocked, and Print-to-PDF enabled.
+    | Feature | 🟡 Guest (Free Trial) | 🔵 Standard (Institutional) | 🟢 PRO (Premium) |
+    | :--- | :--- | :--- | :--- |
+    | **Survey Uses** | Max 5 Total | Max 15 Total | ✅ **Unlimited** |
+    | **Survey Size** | 50 Rows / 10 Questions | 100 Rows / 15 Questions| ✅ **Unlimited** |
+    | **Cloud Vault Access** | ❌ No | ✅ Yes | ✅ Yes |
+    | **Excel & PDF Exports**| ❌ No | ❌ No | ✅ **Yes** |
+    | **Gemini AI Insights** | ❌ No | ❌ No | ✅ **Yes** |
     """)
 
 st.title("📊 Survey Analyzer Pro")
@@ -214,37 +236,33 @@ with st.container():
                 df_check = pd.read_excel(active_file)
                 active_file.seek(0)
             
-            if not check_survey_limits(df_check.shape[0], df_check.shape[1]): st.stop()
+            if not check_saas_limits(df_check.shape[0], df_check.shape[1]): st.stop() # SAAS ENFORCER
                 
             file_id = active_file if isinstance(active_file, str) else active_file.name
             
-            # <--- NEW: Smart counting that updates your Supabase Database --->
             if f"counted_{file_id}" not in st.session_state:
-                if st.session_state.user is None:
-                    st.session_state.guest_uses += 1
-                else:
-                    increment_usage_count()
+                increment_usage_count()
+                st.session_state.survey_usage += 1
                 st.session_state[f"counted_{file_id}"] = True
 
             parsed_data = process_file(active_file)
             if not parsed_data: st.stop()
             
-            if st.session_state.user is not None and uploaded_file:
+            if CAN_VAULT and uploaded_file:
                 uploaded_file.seek(0)
                 backup_survey_to_cloud(uploaded_file.name, uploaded_file.read())
                 st.session_state['restored_survey'] = uploaded_file.name
             
-            # FIXED PRINT LOGIC: Removed Tabs so the browser prints everything straight down the page.
             st.markdown("---")
             st.markdown("## 📊 Master Report & Export")
-            if st.session_state.user:
+            if CAN_EXPORT:
                 c1, c2 = st.columns(2)
                 with c1:
                     df_master = pd.DataFrame([{"Question": q, **{f"{LIKERT_MAP[k]} (%)": data[k] for k in ["5","4","3","2","1"]}} for q, data in parsed_data.items()])
                     st.download_button("📥 Download Master CSV", df_master.to_csv(index=False).encode('utf-8'), "Master_Report.csv", "text/csv", use_container_width=True, type="primary")
                 with c2:
                     components.html("""<script>function triggerPrint() {window.parent.print();}</script><button onclick="triggerPrint()" style="background-color:#0d47a1; color:white; border:none; border-radius:8px; padding: 10px; cursor: pointer; width: 100%; font-size: 16px;">🖨️ Print Full Page to PDF</button>""", height=50)
-            else: st.error("🔒 Login to export Master CSV & PDF.")
+            else: st.error("🔒 Upgrade to PRO to export Master CSV & Print PDF.")
                 
             st.markdown("### 📋 Individual Visuals")
             for i, (q_name, q_data) in enumerate(parsed_data.items()): create_table_and_chart(q_name, q_data, f"c_{i}")
@@ -265,10 +283,14 @@ with st.container():
                     if config["questions"]:
                         cmb_data = {k: round(sum(parsed_data[q][k] for q in config["questions"]) / len(config["questions"]), 2) for k in ["5", "4", "3", "2", "1"]}
                         create_table_and_chart(config["name"], cmb_data, f"cmb_{i}")
-                        if api_key_input:
-                            with st.container():
-                                st.markdown(f"#### ✨ AI Insight: {config['name']}")
-                                with st.spinner("Gemini is analyzing..."):
-                                    st.write(generate_ai_summary(api_key_input, config["name"], cmb_data))
-                        else: st.info("🔑 Add Gemini Key in sidebar for text summary.")
+                        
+                        if CAN_AI:
+                            if api_key_input:
+                                with st.container():
+                                    st.markdown(f"#### ✨ AI Insight: {config['name']}")
+                                    with st.spinner("Gemini is analyzing..."):
+                                        st.write(generate_ai_summary(api_key_input, config["name"], cmb_data))
+                            else: st.info("🔑 Add Gemini Key in sidebar for text summary.")
+                        else:
+                            st.info("⭐️ **Upgrade to PRO to unlock automated Gemini AI Insights!**")
         except Exception as e: st.error(f"Error processing: {e}")
