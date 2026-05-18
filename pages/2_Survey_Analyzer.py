@@ -61,6 +61,33 @@ def restore_survey_from_cloud():
     return None
 
 # ==========================================
+# 📊 DATABASE HELPERS (PROFILES & USAGE)
+# ==========================================
+if 'is_pro' not in st.session_state: st.session_state.is_pro = False
+
+def fetch_user_profile():
+    # Only fetch once per session to keep the app blazing fast
+    if st.session_state.user is None or st.session_state.get('profile_fetched'): return
+    try:
+        res = supabase.table("profiles").select("is_pro").eq("id", st.session_state.user.id).execute()
+        if res.data: 
+            st.session_state.is_pro = res.data[0].get("is_pro", False)
+            st.session_state.profile_fetched = True
+    except: pass
+
+def increment_usage_count():
+    if st.session_state.user is None: return
+    try:
+        res = supabase.table("profiles").select("usage_count").eq("id", st.session_state.user.id).execute()
+        if res.data:
+            new_count = res.data[0].get("usage_count", 0) + 1
+            supabase.table("profiles").update({"usage_count": new_count}).eq("id", st.session_state.user.id).execute()
+    except: pass
+
+# Automatically run the fast check if they bypassed the login page
+fetch_user_profile() 
+
+# ==========================================
 # 🧠 STATE & LIKERT LOGIC
 # ==========================================
 if 'user' not in st.session_state: st.session_state.user = None
@@ -147,7 +174,8 @@ with st.sidebar:
         st.warning("⚠️ GUEST MODE")
         st.progress(st.session_state.guest_uses / 5.0, text=f"Free Uses: {st.session_state.guest_uses}/5")
     else:
-        st.success(f"✅ PRO USER")
+        # <--- NEW: Dynamic status badge based on Supabase database! --->
+        st.success("✅ PRO Status Active" if st.session_state.is_pro else "🟡 Standard User Active")
         if st.button("☁️ Load Saved Workspace"):
             with st.spinner("Pulling from vault..."):
                 restored = restore_survey_from_cloud()
@@ -189,8 +217,13 @@ with st.container():
             if not check_survey_limits(df_check.shape[0], df_check.shape[1]): st.stop()
                 
             file_id = active_file if isinstance(active_file, str) else active_file.name
-            if st.session_state.user is None and f"counted_{file_id}" not in st.session_state:
-                st.session_state.guest_uses += 1
+            
+            # <--- NEW: Smart counting that updates your Supabase Database --->
+            if f"counted_{file_id}" not in st.session_state:
+                if st.session_state.user is None:
+                    st.session_state.guest_uses += 1
+                else:
+                    increment_usage_count()
                 st.session_state[f"counted_{file_id}"] = True
 
             parsed_data = process_file(active_file)
