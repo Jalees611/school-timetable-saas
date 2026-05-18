@@ -50,6 +50,14 @@ def reset_password(email):
         st.session_state.auth_mode = 'Login'
     except Exception as e: st.error(f"Error: {e}")
 
+# NEW: Function to actually save the new password
+def update_password(new_password):
+    try:
+        supabase.auth.update_user({"password": new_password})
+        st.success("✅ Password successfully updated!")
+    except Exception as e:
+        st.error(f"Error updating password: {e}")
+
 # ==========================================
 # ⚙️ SIDEBAR (THE FRONT DOOR)
 # ==========================================
@@ -57,7 +65,6 @@ with st.sidebar:
     if st.session_state.user is None:
         st.header("👋 Welcome to SmartEd")
         
-        # Updated Radio buttons to include Forgot Password
         mode = st.radio("Account Access", ["Login", "Register", "Forgot Password"], index=["Login", "Register", "Forgot Password"].index(st.session_state.auth_mode))
         st.session_state.auth_mode = mode
         
@@ -91,6 +98,16 @@ with st.sidebar:
             st.info("🔵 Standard Tier Active")
             
         st.write(f"Logged in as: **{st.session_state.user.email}**")
+        
+        # NEW: The secure box to update their password!
+        with st.expander("🔐 Update Account Password"):
+            new_pwd = st.text_input("Enter New Password", type="password")
+            if st.button("Save New Password", use_container_width=True, type="primary"):
+                if len(new_pwd) >= 6:
+                    update_password(new_pwd)
+                else:
+                    st.error("Password must be at least 6 characters.")
+
         if st.button("🚪 Log Out", use_container_width=True): 
             supabase.auth.sign_out()
             st.session_state.user = None
