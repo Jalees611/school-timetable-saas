@@ -46,17 +46,8 @@ def register(email, password, full_name, inst_type, inst_name):
 def reset_password(email):
     try:
         supabase.auth.reset_password_for_email(email)
-        st.success("✅ Password reset link sent to your email!")
-        st.session_state.auth_mode = 'Login'
+        st.success("✅ 6-Digit Code sent to your email!")
     except Exception as e: st.error(f"Error: {e}")
-
-# NEW: Function to actually save the new password
-def update_password(new_password):
-    try:
-        supabase.auth.update_user({"password": new_password})
-        st.success("✅ Password successfully updated!")
-    except Exception as e:
-        st.error(f"Error updating password: {e}")
 
 # ==========================================
 # ⚙️ SIDEBAR (THE FRONT DOOR)
@@ -76,37 +67,60 @@ with st.sidebar:
         elif mode == "Register":
             name = st.text_input("Full Name")
             email = st.text_input("Email")
-            if any(domain in email.lower() for domain in PUBLIC_DOMAINS): st.caption("⚠️ Note: Public emails (Gmail, etc.) are limited to the Guest Free Trial.")
+            if any(domain in email.lower() for domain in PUBLIC_DOMAINS): st.caption("⚠️ Note: Public emails are limited to the Guest Tier.")
             inst_type = st.selectbox("Type", ["School", "College", "University"]) 
             inst_name = st.text_input("Institution Name")
             pwd = st.text_input("Password", type="password")
             if st.button("Create Account", use_container_width=True, type="primary"): register(email, pwd, name, inst_type, inst_name)
             
         elif mode == "Forgot Password":
-            st.info("Enter your registered email address to receive a password reset link.")
-            email = st.text_input("Registered Email")
-            if st.button("Send Reset Link", use_container_width=True, type="primary"): reset_password(email)
+            st.info("Step 1: Request a reset code.")
+            reset_email = st.text_input("Registered Email")
+            if st.button("Send Reset Code", use_container_width=True): 
+                reset_password(reset_email)
+            
+            st.markdown("---")
+            st.info("Step 2: Enter your code to set a new password.")
+            reset_code = st.text_input("6-Digit Code")
+            new_pwd = st.text_input("New Password", type="password")
+            
+            if st.button("Update Password", use_container_width=True, type="primary"):
+                if len(new_pwd) < 6:
+                    st.error("Password must be at least 6 characters.")
+                elif not reset_email or not reset_code:
+                    st.error("Please enter your email and the 6-digit code.")
+                else:
+                    try:
+                        # 1. Verify the 6-digit code
+                        supabase.auth.verify_otp({"email": reset_email, "token": reset_code, "type": "recovery"})
+                        # 2. Update to the new password
+                        supabase.auth.update_user({"password": new_pwd})
+                        # 3. Log them out securely so they can log in fresh
+                        supabase.auth.sign_out()
+                        
+                        st.success("✅ Password successfully updated! Please log in.")
+                    except Exception as e:
+                        st.error(f"Error: Invalid code or email. Please try again.")
             
     else:
         # What they see when logged in
         email_domain = st.session_state.user.email.split('@')[1].lower() if st.session_state.user.email else ""
-        if st.session_state.is_pro:
-            st.success("✅ PRO Status Active")
-        elif email_domain in PUBLIC_DOMAINS:
-            st.warning("🟡 Guest Tier (Free Trial)")
-        else:
-            st.info("🔵 Standard Tier Active")
+        if st.session_state.is_pro: st.success("✅ PRO Status Active")
+        elif email_domain in PUBLIC_DOMAINS: st.warning("🟡 Guest Tier (Free Trial)")
+        else: st.info("🔵 Standard Tier Active")
             
         st.write(f"Logged in as: **{st.session_state.user.email}**")
         
-        # NEW: The secure box to update their password!
-        with st.expander("🔐 Update Account Password"):
-            new_pwd = st.text_input("Enter New Password", type="password")
+        # Keep the logged-in update password box just in case they want to change it later
+        with st.expander("🔐 Change Password"):
+            new_pwd = st.text_input("Enter New Password", type="password", key="logged_in_pwd")
             if st.button("Save New Password", use_container_width=True, type="primary"):
                 if len(new_pwd) >= 6:
-                    update_password(new_pwd)
-                else:
-                    st.error("Password must be at least 6 characters.")
+                    try:
+                        supabase.auth.update_user({"password": new_pwd})
+                        st.success("✅ Password updated!")
+                    except Exception as e: st.error(f"Error: {e}")
+                else: st.error("Password must be at least 6 characters.")
 
         if st.button("🚪 Log Out", use_container_width=True): 
             supabase.auth.sign_out()
@@ -140,8 +154,6 @@ else:
 st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown("---")
-
-# The exact SaaS Matrix we planned
 st.markdown("<h2 style='text-align: center;'>Transparent Pricing & Tiers</h2>", unsafe_allow_html=True)
 st.markdown("""
 | Feature | 🟡 Guest (Free Trial) | 🔵 Standard (Institutional) | 🟢 PRO (Premium) |
